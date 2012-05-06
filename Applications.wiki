@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+Applications are in fact just [Implemenation#Component components], the suffix Application is merely added for semantic reasons.
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+= iTunes =
+Connection to iTunes is established using [http://dot-totally.co.uk/software/itunescon/ iTunes Controller], which depends on [http://danadler.com/jacob/ JACOB Java-COM Bridge]. Detecting that iTunes runs should be possible using [Native], but this approach proved to be unreliable as no information on iTunes' COM state can be acquired. Releasing the COM connection requires the use of 'ComThread.Release()',  so possible side effects on other COM connections are expected. Listening to events is made optional through the constructor. When this option is enabled, iTunes is exited because of the absence of reliable ways to release 'DispatchEvents'. These COM issues can be investigated by enabling the *com.jacob.debug* system property. Testing with *com.jacob.autogc* is [http://stackoverflow.com/questions/980483/jacob-doesnt-release-the-objects-properly suggested] to be a promising starting point.
