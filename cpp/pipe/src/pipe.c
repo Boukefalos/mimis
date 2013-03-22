@@ -5,7 +5,7 @@
 
 #define	DEBUG	0
 
-JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateNamedPipe
+JNIEXPORT jint JNICALL Java_pipe_Pipe_CreateNamedPipe
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -43,7 +43,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateNamedPipe
 	return (jint) pipeHandler;
 }
 
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_ConnectNamedPipe
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_ConnectNamedPipe
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -57,7 +57,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_ConnectNamedPipe
 	return fConnected;
 }
 
-JNIEXPORT jint JNICALL Java_pipe_Pipes_GetLastError
+JNIEXPORT jint JNICALL Java_pipe_Pipe_GetLastError
 (
 	 JNIEnv *env,
 	 jclass className
@@ -67,7 +67,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_GetLastError
 	return (jint) errorNumber;
 }
 
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_CloseHandle
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_CloseHandle
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -80,7 +80,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_CloseHandle
 	return result;
 }
 
-JNIEXPORT jbyteArray JNICALL Java_pipe_Pipes_ReadFile
+JNIEXPORT jbyteArray JNICALL Java_pipe_Pipe_ReadFile
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -117,7 +117,7 @@ JNIEXPORT jbyteArray JNICALL Java_pipe_Pipes_ReadFile
 	return lpBuffer;
 }
 
-JNIEXPORT jint JNICALL Java_pipe_Pipes_WriteFile
+JNIEXPORT jint JNICALL Java_pipe_Pipe_WriteFile
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -156,7 +156,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_WriteFile
 	return bytesWritten;
 }
 
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_FlushFileBuffers
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_FlushFileBuffers
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -169,7 +169,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_FlushFileBuffers
 	return result;
 }
 
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_DisconnectNamedPipe
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_DisconnectNamedPipe
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -182,7 +182,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_DisconnectNamedPipe
 	return result;
 }
 
-JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateFile
+JNIEXPORT jint JNICALL Java_pipe_Pipe_CreateFile
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -205,7 +205,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateFile
 	return (jint) pipeHandler;
 }
 
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_WaitNamedPipe
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_WaitNamedPipe
 (
 	 JNIEnv *env,
 	 jclass className,
@@ -222,7 +222,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_WaitNamedPipe
 	return result;
 }
 
-JNIEXPORT jstring JNICALL Java_pipe_Pipes_FormatMessage
+JNIEXPORT jstring JNICALL Java_pipe_Pipe_FormatMessage
 (
 	JNIEnv *env,
 	jclass className,
@@ -250,7 +250,7 @@ JNIEXPORT jstring JNICALL Java_pipe_Pipes_FormatMessage
 	return (jstring) (*env)->NewStringUTF(env, lpDisplayBuf);
 }
 
-JNIEXPORT void JNICALL Java_pipe_Pipes_Print(JNIEnv *env, jclass className, jstring lpMsgBuf)
+JNIEXPORT void JNICALL Java_pipe_Pipe_Print(JNIEnv *env, jclass className, jstring lpMsgBuf)
 {
 	const jbyte *str;
 	str = (*env)->GetStringUTFChars(env, lpMsgBuf, NULL);

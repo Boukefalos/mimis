@@ -12,7 +12,7 @@ extern "C" {
  * Method:    CreateNamedPipe
  * Signature: (Ljava/lang/String;IIIIIII)I
  */
-JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateNamedPipe
+JNIEXPORT jint JNICALL Java_pipe_Pipe_CreateNamedPipe
   (JNIEnv *, jclass, jstring, jint, jint, jint, jint, jint, jint, jint);
 
 /*
@@ -20,7 +20,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateNamedPipe
  * Method:    ConnectNamedPipe
  * Signature: (II)Z
  */
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_ConnectNamedPipe
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_ConnectNamedPipe
   (JNIEnv *, jclass, jint, jint);
 
 /*
@@ -28,7 +28,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_ConnectNamedPipe
  * Method:    GetLastError
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_pipe_Pipes_GetLastError
+JNIEXPORT jint JNICALL Java_pipe_Pipe_GetLastError
   (JNIEnv *, jclass);
 
 /*
@@ -36,7 +36,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_GetLastError
  * Method:    CloseHandle
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_CloseHandle
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_CloseHandle
   (JNIEnv *, jclass, jint);
 
 /*
@@ -44,7 +44,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_CloseHandle
  * Method:    ReadFile
  * Signature: (II)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_pipe_Pipes_ReadFile
+JNIEXPORT jbyteArray JNICALL Java_pipe_Pipe_ReadFile
   (JNIEnv *, jclass, jint, jint);
 
 /*
@@ -52,7 +52,7 @@ JNIEXPORT jbyteArray JNICALL Java_pipe_Pipes_ReadFile
  * Method:    WriteFile
  * Signature: (I[BI)I
  */
-JNIEXPORT jint JNICALL Java_pipe_Pipes_WriteFile
+JNIEXPORT jint JNICALL Java_pipe_Pipe_WriteFile
   (JNIEnv *, jclass, jint, jbyteArray, jint);
 
 /*
@@ -60,7 +60,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_WriteFile
  * Method:    FlushFileBuffers
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_FlushFileBuffers
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_FlushFileBuffers
   (JNIEnv *, jclass, jint);
 
 /*
@@ -68,7 +68,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_FlushFileBuffers
  * Method:    DisconnectNamedPipe
  * Signature: (I)Z
  */
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_DisconnectNamedPipe
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_DisconnectNamedPipe
   (JNIEnv *, jclass, jint);
 
 /*
@@ -76,7 +76,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_DisconnectNamedPipe
  * Method:    CreateFile
  * Signature: (Ljava/lang/String;IIIIII)I
  */
-JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateFile
+JNIEXPORT jint JNICALL Java_pipe_Pipe_CreateFile
   (JNIEnv *, jclass, jstring, jint, jint, jint, jint, jint, jint);
 
 /*
@@ -84,7 +84,7 @@ JNIEXPORT jint JNICALL Java_pipe_Pipes_CreateFile
  * Method:    WaitNamedPipe
  * Signature: (Ljava/lang/String;I)Z
  */
-JNIEXPORT jboolean JNICALL Java_pipe_Pipes_WaitNamedPipe
+JNIEXPORT jboolean JNICALL Java_pipe_Pipe_WaitNamedPipe
   (JNIEnv *, jclass, jstring, jint);
 
 /*
@@ -92,7 +92,7 @@ JNIEXPORT jboolean JNICALL Java_pipe_Pipes_WaitNamedPipe
  * Method:    FormatMessage
  * Signature: (I)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_pipe_Pipes_FormatMessage
+JNIEXPORT jstring JNICALL Java_pipe_Pipe_FormatMessage
   (JNIEnv *, jclass, jint);
 
 /*
@@ -100,7 +100,7 @@ JNIEXPORT jstring JNICALL Java_pipe_Pipes_FormatMessage
  * Method:    Print
  * Signature: (Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_pipe_Pipes_Print
+JNIEXPORT void JNICALL Java_pipe_Pipe_Print
   (JNIEnv *, jclass, jstring);
 
 #ifdef __cplusplus
