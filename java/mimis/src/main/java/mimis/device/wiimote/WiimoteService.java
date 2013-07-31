@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 import mimis.exception.device.DeviceNotFoundException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
@@ -28,7 +28,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiimoteService extends WiiUseApiManager implements WiimoteListener {
-    protected Log log = LogFactory.getLog(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
     
     /*public static void main(String[] args) {
         Log log = LogFactory.getLog(WiimoteService.class);
@@ -113,7 +113,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     public void onClassicControllerRemovedEvent(ClassicControllerRemovedEvent event) {}
 
     public void onBalanceBoardInsertedEvent(BalanceBoardInsertedEvent e) {
-        log.debug(e);        
+        logger.debug("", e);        
     }
 
     public void onBalanceBoardRemovedEvent(BalanceBoardRemovedEvent e) {

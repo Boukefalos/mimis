@@ -14,12 +14,13 @@ import mimis.util.swing.HoldButton;
 import mimis.util.swing.HoldButtonListener;
 import mimis.util.swing.ToggleButton;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Panel extends JFrame implements HoldButtonListener {
     protected static final long serialVersionUID = 1L;
-    protected Log log = LogFactory.getLog(getClass());
+
+    protected Logger logger = LoggerFactory.getLogger(getClass());
     protected final static String TITLE = "MIMIS Panel Device";
 
     protected PanelDevice panelDevice;
@@ -173,7 +174,7 @@ public class Panel extends JFrame implements HoldButtonListener {
 
     protected void processWindowEvent(WindowEvent event) {
         if (event.getID() == WindowEvent.WINDOW_CLOSING) {
-            log.debug("Window closing");
+            logger.debug("Window closing");
             panelDevice.stop();
         }
     }

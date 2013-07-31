@@ -8,12 +8,12 @@ import javax.swing.JToggleButton;
 import mimis.worker.Component;
 import mimis.worker.Worker;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WorkerButton extends JToggleButton implements MouseListener {
     protected static final long serialVersionUID = 1L;
-    protected Log log = LogFactory.getLog(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected Worker worker;
 
@@ -28,10 +28,10 @@ public class WorkerButton extends JToggleButton implements MouseListener {
 
     public void mouseClicked(MouseEvent event) {
         if (worker.active()) {
-            log.trace("Stop");
+            logger.trace("Stop");
             worker.stop();
         } else {
-            log.trace("Start");
+            logger.trace("Start");
             worker.start();
         }        
     }

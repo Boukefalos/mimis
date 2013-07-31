@@ -20,14 +20,10 @@ import mimis.value.Target;
 import mimis.worker.Component;
 import mimis.worker.Worker;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class NetworkDevice extends Component implements Device {
     protected static final String TITLE = "Network";
     public static final int PORT = 6789;
 
-    protected Log log = LogFactory.getLog(NetworkDevice.class);
     protected Server server;
     protected ConcurrentLinkedQueue<Client> clientList;
 
