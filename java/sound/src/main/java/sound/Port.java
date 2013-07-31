@@ -9,18 +9,12 @@ import javax.sound.sampled.AudioFormat;
 import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.worker.Worker;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import sound.Format.Standard;
 import sound.SoxBuilder.File;
-import sound.SoxBuilder.Option;
 import sound.SoxBuilder.File.Type;
+import sound.SoxBuilder.Option;
 
 public class Port extends Worker implements Consumer {
-	protected Log log = LogFactory.getLog(getClass());
-
 	protected static final int BUFFER_SIZE = 1024 * 4; // in bytes
 
 	protected String device;
@@ -55,7 +49,7 @@ public class Port extends Worker implements Consumer {
 			.addFile(File.setType(Type.DEVICE))
 			.build();
 		
-		log.debug(String.format("Build process (\"%s\")", command));
+		logger.debug(String.format("Build process (\"%s\")", command));
 		processBuilder = new ProcessBuilder(command.split(" "));
 		processBuilder.environment().put("AUDIODEV", device);
 
@@ -68,7 +62,7 @@ public class Port extends Worker implements Consumer {
 			try {
 				process = processBuilder.start();
 			} catch (IOException e) {
-				log.error(e);
+				logger.error("", e);
 				throw new ActivateException();
 			}
 			processOutputStream = process.getOutputStream();
@@ -81,22 +75,22 @@ public class Port extends Worker implements Consumer {
     	try {
 			processOutputStream.flush();
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 			throw new DeactivateException();
 		}
     }
 
     public void exit() {
     	try {
-			log.debug("close process output stream");
+			logger.debug("close process output stream");
 			processOutputStream.close();
 
-			log.debug("wait for process to terminate");
+			logger.debug("wait for process to terminate");
 			process.waitFor();
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 		} catch (InterruptedException e) {
-			log.error(e);
+			logger.error("", e);
 		} finally {
 			process = null;
 		}
@@ -112,8 +106,20 @@ public class Port extends Worker implements Consumer {
 	        	exit();
 	        }
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 			exit();
 		}
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -4,11 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GreedyInputStream extends BufferedInputStream {
-	protected Log log = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected static final int SLEEP = 500;
 	protected static final int BUFFER_SIZE = 30000; // in bytes
@@ -54,10 +54,10 @@ public class GreedyInputStream extends BufferedInputStream {
 				try {
 					Thread.sleep(SLEEP);
 				} catch (InterruptedException e) {
-					log.warn(e);
+					logger.warn("", e);
 				}
 			} while (available() < BUFFER_SIZE);
-			log.debug(String.format("Buffered %d bytes in %s milliseconds", BUFFER_SIZE - available, System.currentTimeMillis() - time));
+			logger.debug(String.format("Buffered %d bytes in %s milliseconds", BUFFER_SIZE - available, System.currentTimeMillis() - time));
 		}
 	}
 

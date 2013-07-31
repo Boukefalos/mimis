@@ -78,7 +78,7 @@ public class List extends Worker {
 				return;
 			}
 		} catch (FileNotFoundException e) {
-			log.error(e);
+			logger.error("", e);
 		}
 		throw new ActivateException();		
 	}
@@ -113,7 +113,7 @@ public class List extends Worker {
 			setNext();
 			swap();
 		} catch (IllegalStateException e) {
-			log.error(e);
+			logger.error("", e);
 		}
 		sleep(STEP);
 	}
@@ -124,21 +124,21 @@ public class List extends Worker {
 
 	public synchronized void setNext() {
 		if (nextMp3 == null) {
-			log.debug("Initialize next mp3");
+			logger.debug("Initialize next mp3");
 			nextMp3 = new Mp3(getRandomFile(), rate);
 		} else if (next) {
-			log.debug("Load next mp3");
+			logger.debug("Load next mp3");
 			nextMp3.setFile(getRandomFile());
 		}
 	}
 
 	public synchronized void next() {		
-		log.debug("Stop current mp3");
+		logger.debug("Stop current mp3");
 		mp3.stop();
 	}
 
 	public void swap() {
-		log.debug("Swap to next mp3");
+		logger.debug("Swap to next mp3");
 		Mp3 swapMp3 = mp3;
 		mp3 = nextMp3;
 		nextMp3 = swapMp3;
@@ -149,11 +149,11 @@ public class List extends Worker {
 		try {
 			circularStringBuffer.write(mp3.getTitle());
 		} catch (BufferOverflowException e) {
-			log.error(e);
+			logger.error("", e);
 		} catch (IllegalStateException e) {
-			log.error(e);
+			logger.error("", e);
 		} catch (InterruptedException e) {
-			log.error(e);
+			logger.error("", e);
 		}
 	}
 
@@ -163,7 +163,7 @@ public class List extends Worker {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				log.error(e);
+				logger.error("", e);
 			}
 		}
 		return circularByteBuffer.getInputStream();
@@ -175,7 +175,7 @@ public class List extends Worker {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				log.error(e);
+				logger.error("", e);
 			}
 		}
 		return circularStringBuffer;

@@ -29,7 +29,7 @@ public class Mp3 extends Converter {
 		try {
 			sourceInputStream = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
-			log.error(e);
+			logger.error("", e);
 			throw new ActivateException();
 		}
 
@@ -44,11 +44,11 @@ public class Mp3 extends Converter {
 			} else {
 				title = String.format("%s - %s {%s}", artist, track, album);
 			}
-			log.debug("Title: " + title);
+			logger.debug("Title: " + title);
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 		} catch (TagException e) {
-			log.error(e);
+			logger.error("", e);
 		}
 		try {
 			sourceInputStream.skip(100000);

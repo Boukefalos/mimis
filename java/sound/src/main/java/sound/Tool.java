@@ -14,11 +14,11 @@ import javax.sound.sampled.Port.Info;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Tool {
-	protected static Log log = LogFactory.getLog(Tool.class);
+	protected static Logger logger = LoggerFactory.getLogger(Tool.class);
 
     protected static HashMap<String, Device<TargetDataLine>> targetMap;
     protected static HashMap<String, Device<SourceDataLine>> sourceMap;
@@ -44,7 +44,7 @@ public class Tool {
 				String lineClassName = lineInfo.getLineClass().getName();
 				if (lineClassName.equals("javax.sound.sampled.SourceDataLine")) {
 					if (mixer.isLineSupported(lineInfo)) {
-						log.debug("<Source> " + name);
+						logger.debug("<Source> " + name);
 						sourceMap.put(name, tool.new Device<SourceDataLine>(mixer, lineInfo));
 					}
 				}
@@ -53,7 +53,7 @@ public class Tool {
 				String lineClassName = lineInfo.getLineClass().getName();
 				if (lineClassName.equals("javax.sound.sampled.TargetDataLine")) {
 					if (mixer.isLineSupported(lineInfo)) {
-						log.debug("<Target> " + name);
+						logger.debug("<Target> " + name);
 						targetMap.put(name, tool.new Device<TargetDataLine>(mixer, lineInfo));
 					}
 				} else if (lineClassName.equals("javax.sound.sampled.Port")) {
@@ -62,11 +62,11 @@ public class Tool {
 						Port port = (Port) mixer.getLine(lineInfo);
 						Port.Info portInfo =  (Info) port.getLineInfo();
 						if (!targetMap.containsKey(name) || portInfo.equals(Port.Info.LINE_OUT) || portInfo.equals(Port.Info.SPEAKER)) {
-							log.debug("<Port> " + name);
+							logger.debug("<Port> " + name);
 							portList.add(name);
 						}
 					} catch (LineUnavailableException e) {
-						log.error(e);
+						logger.error("", e);
 					}
 				}
 			}

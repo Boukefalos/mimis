@@ -55,19 +55,19 @@ public class Converter extends Worker {
 			rate = bitStream.readFrame().bitrate() / 1000;
 			buffer = BUFFER * rate / 8;
 		} catch (BitstreamException e) {
-			log.error(e);
+			logger.error("", e);
 			throw new ActivateException();
 		}
 
 		/* Check for need to convert */
 		if (targetRate < 0 || rate == targetRate) {
-			log.debug("No conversion required");
+			logger.debug("No conversion required");
 			inputStream = sourceInputStream;
 		} else {
-			log.debug("Converting from " + rate + "kbps to " + targetRate + "kbps");
+			logger.debug("Converting from " + rate + "kbps to " + targetRate + "kbps");
 			try {
 				String command = String.format(COMMAND, rate > targetRate ? "-B " + targetRate : "-F -b " + targetRate);
-				log.debug("Starting process: " + command);
+				logger.debug("Starting process: " + command);
 				process = Runtime.getRuntime().exec(command);
 				processInputStream = process.getInputStream();
 				processOutputStream = process.getOutputStream();
@@ -78,7 +78,7 @@ public class Converter extends Worker {
 				bufferWorker.start();
 				convert = true;
 			} catch (IOException e) {
-				log.error(e);
+				logger.error("", e);
 				throw new ActivateException();
 			}
 		}
@@ -97,7 +97,7 @@ public class Converter extends Worker {
 			}
 			inputStream.close();
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 			throw new DeactivateException();
 		}
 	}
@@ -109,30 +109,30 @@ public class Converter extends Worker {
 					wait();
 				}
 			} catch (InterruptedException e) {
-				log.error(e);
+				logger.error("", e);
 			}
 			return;
 		}
 		byte[] bytes = new byte[BYTES];
 		int read = 0;
 		try {
-			log.debug("Writing input to process");
+			logger.debug("Writing input to process");
 			while ((read = sourceInputStream.read(bytes)) > 0 && !deactivate) {
 				/* Limit buffer size */
 				while (inputStream.available() > buffer) {
 	  				int progress = (int) ((1 - (inputStream.available() - buffer) / (float) buffer) * 100);
-					log.trace("Waiting for buffer to empty: " + progress + "%");
+					logger.trace("Waiting for buffer to empty: " + progress + "%");
 					sleep(BUFFERING);
 				}
 				processOutputStream.write(bytes, 0, read);
 			}
 			processOutputStream.close();
-			log.debug("Stopped writing input to process");
+			logger.debug("Stopped writing input to process");
 			process.waitFor();
-			log.debug("Process finished");
+			logger.debug("Process finished");
 		} catch (IOException e) {
 		} catch (InterruptedException e) {
-			log.error(e);
+			logger.error("", e);
 		}
 		stop();
 	}
@@ -145,7 +145,7 @@ public class Converter extends Worker {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				log.error(e);
+				logger.error("", e);
 			}
 		}
 		return inputStream;
@@ -161,11 +161,11 @@ public class Converter extends Worker {
 			int read = 0;
 			try {
 				OutputStream bufferOutputStream = circularByteBuffer.getOutputStream();
-				log.debug("Start buffering process output");
+				logger.debug("Start buffering process output");
 				while ((read = processInputStream.read(bytes, 0, BYTES)) > 0) {
 					bufferOutputStream.write(bytes, 0, read);
 				}
-				log.debug("Finished buffering process output");
+				logger.debug("Finished buffering process output");
 				bufferOutputStream.close();
 			} catch (IOException e) {}
 			stop();

@@ -116,7 +116,7 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 		try {
 			greedyInputStream.clear();
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 			throw new DeactivateException();
 		}
 	}
@@ -148,7 +148,7 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 				audioCircularByteBuffer.getOutputStream().write(bytes);
 			}	
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 			stop();
 		}
 	}
@@ -167,15 +167,15 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 			if (!newMetaData.isEmpty() && !newMetaData.equals(metaData)) {
 				metaData = newMetaData;
 				metaCircularObjectBuffer.write(new String(data));
-				log.debug("data: " +  metaData);
+				logger.debug("data: " +  metaData);
 			}
 			return;
 		} catch (IOException e) {
-			log.error(e);
+			logger.error("", e);
 		} catch (IllegalStateException e) {
-			log.error(e);
+			logger.error("", e);
 		} catch (InterruptedException e) {
-			log.error(e);
+			logger.error("", e);
 		}
 		stop();
 	}

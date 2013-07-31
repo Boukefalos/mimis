@@ -13,11 +13,11 @@ import mimis.exception.worker.ActivateException;
 import mimis.exception.worker.DeactivateException;
 import mimis.worker.Worker;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Source implements Consumer {
-	protected Log log = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected static final int BUFFER_SIZE = 1024 * 4;	// in bytes
 	protected static final int PLAY_FRAMES = 10;		// count
@@ -44,10 +44,10 @@ public class Source implements Consumer {
 			worker.exit();
 		}
 		if (producer instanceof Format.Standard) {
-			log.debug("Format.Standard");
+			logger.debug("Format.Standard");
 			worker = new DefaultWorker((Format.Standard) producer);
 		} else if (producer instanceof Format.Mp3) {
-			log.debug("Format.Mp3");
+			logger.debug("Format.Mp3");
 			worker = new Mp3Worker((Format.Mp3) producer);
 		}
 		start();
@@ -83,7 +83,7 @@ public class Source implements Consumer {
 					line.open();
 				}
 			} catch (LineUnavailableException e) {
-				log.error(e);
+				logger.error("", e);
 				throw new ActivateException();
 			}
 			if (!line.isRunning()) {
@@ -112,7 +112,7 @@ public class Source implements Consumer {
 		        	exit();
 		        }
 			} catch (IOException e) {
-				log.error(e);
+				logger.error("", e);
 				exit();
 			}
 		}
@@ -149,7 +149,7 @@ public class Source implements Consumer {
 				}
 				player.play(PLAY_FRAMES);
 			} catch (JavaLayerException e) {
-				log.error(e);
+				logger.error("", e);
 			}
 			if (player.isComplete()) {
 				stop();

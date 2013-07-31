@@ -7,11 +7,11 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Target implements Producer, Format.Standard {
-	protected Log log = LogFactory.getLog(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected Standard format;
 
@@ -21,14 +21,14 @@ public class Target implements Producer, Format.Standard {
 	protected AudioFormat audioFormat;
 
 	public Target(String name) throws LineUnavailableException {
-		log.debug(String.format("Target \"%s\" without format", name));
+		logger.debug(String.format("Target \"%s\" without format", name));
 		line = Tool.getTargetDataLine(name);
 		audioFormat = line.getFormat();
 		targetInputStream = new TargetInputStream();
 	}
 
 	public Target(String name, AudioFormat audioFormat) throws LineUnavailableException {
-		log.debug(String.format("Target \"%s\" with format: %s", name, audioFormat));
+		logger.debug(String.format("Target \"%s\" with format: %s", name, audioFormat));
 		this.audioFormat = audioFormat;
 		line = Tool.getTargetDataLine(name, audioFormat);
 		targetInputStream = new TargetInputStream();
@@ -73,7 +73,7 @@ public class Target implements Producer, Format.Standard {
 			try {
 				line.open();
 			} catch (LineUnavailableException e) {
-				log.error(e);
+				logger.error("", e);
 			}
 		}
 		if (!line.isRunning()) {
