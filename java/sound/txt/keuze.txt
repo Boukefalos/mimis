@@ -1,0 +1,13 @@
+from pcm:
+
+-r -s <freq in khz> [--unsigned] [--big-endian]
+
+to mp3:
+--cbr -b <bitrate>
+
+
+mp3 to pcm:
+--decode
+
+always:
+ - - --quiet
