@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.mingw.so.debug.1025362616">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.mingw.so.debug.1025362616" moduleId="org.eclipse.cdt.core.settings" name="Debug">
@@ -65,8 +63,8 @@
 								<option id="gnu.cpp.link.option.libs.102697521" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="wiiuse"/>
 								</option>
-								<option id="gnu.cpp.link.option.flags.2098946116" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--kill-at -static-libgcc" valueType="string"/>
-								<option id="gnu.cpp.link.option.strip.193866268" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.link.option.flags.2098946116" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,-add-stdcall-alias -static-libgcc -static-libstdc++" valueType="string"/>
+								<option id="gnu.cpp.link.option.strip.193866268" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1307869739" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -141,8 +139,8 @@
 								<option id="gnu.cpp.link.option.libs.173366246" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="wiiuse"/>
 								</option>
-								<option id="gnu.cpp.link.option.flags.1334245987" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--kill-at -static-libgcc" valueType="string"/>
-								<option id="gnu.cpp.link.option.strip.611886908" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.link.option.flags.1334245987" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,-add-stdcall-alias -static-libgcc -static-libstdc++" valueType="string"/>
+								<option id="gnu.cpp.link.option.strip.611886908" name="Omit all symbol information (-s)" superClass="gnu.cpp.link.option.strip" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.790138545" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

@@ -18,4 +18,10 @@ jar {
 	manifest {
 		attributes 'Main-Class': mainClass
 	}
+	dependsOn configurations.runtime
+	from {
+		configurations.runtime.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
 }

@@ -1,1 +1,1 @@
-copy wiiusej.dll ..\..\Mimis\wiiusej.dll
+copy wiiusej.dll  ..\..\..\java\wiiusej\wiiusej.dll
