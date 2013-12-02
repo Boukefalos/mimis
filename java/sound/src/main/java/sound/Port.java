@@ -6,9 +6,9 @@ import java.io.OutputStream;
 
 import javax.sound.sampled.AudioFormat;
 
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
-import mimis.worker.Worker;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 import sound.Format.Standard;
 import sound.SoxBuilder.File;
 import sound.SoxBuilder.File.Type;

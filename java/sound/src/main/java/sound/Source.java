@@ -9,12 +9,13 @@ import javax.sound.sampled.SourceDataLine;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
-import mimis.worker.Worker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 
 public class Source implements Consumer {
 	protected Logger logger = LoggerFactory.getLogger(getClass());

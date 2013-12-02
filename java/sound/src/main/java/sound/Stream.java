@@ -7,9 +7,9 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.URL;
 
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
-import mimis.worker.Worker;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 
 import com.Ostermiller.util.CircularByteBuffer;
 import com.Ostermiller.util.CircularObjectBuffer;

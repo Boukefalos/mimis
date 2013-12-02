@@ -8,9 +8,9 @@ import java.io.OutputStream;
 
 import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.BitstreamException;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
-import mimis.worker.Worker;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 
 import com.Ostermiller.util.CircularByteBuffer;
 

@@ -5,10 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import mimis.exception.worker.ActivateException;
-
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
+
+import base.exception.worker.ActivateException;
 
 public class Mp3 extends Converter {
 	protected File file;

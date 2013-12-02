@@ -8,8 +8,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import mimis.exception.worker.ActivateException;
-import mimis.worker.Worker;
+import base.exception.worker.ActivateException;
+import base.worker.Worker;
 
 import com.Ostermiller.util.BufferOverflowException;
 import com.Ostermiller.util.CircularByteBuffer;

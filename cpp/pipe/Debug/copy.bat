@@ -1,1 +1,1 @@
-copy pipe.dll ..\..\..\java\pipe.dll
+copy pipe.dll ..\..\..\java\sound\pipe.dll
