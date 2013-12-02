@@ -5,11 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 import mimis.input.Feedback;
 import mimis.input.Task;
-import mimis.worker.Worker;
 
 public class GlobalRouter extends Router {
     protected String ip;

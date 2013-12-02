@@ -1,8 +1,8 @@
 package mimis.application.cmd.windows;
 
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
 import mimis.application.cmd.CMDApplication;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 import mimis.value.Command;
 import mimis.value.Key;

@@ -13,14 +13,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
+import base.worker.Component;
+import base.worker.Worker;
 import mimis.input.Task;
 import mimis.router.Router;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 import mimis.value.Signal;
 import mimis.value.Target;
-import mimis.worker.Component;
-import mimis.worker.Worker;
 
 public class CurrentButtonManager extends ButtonManager implements ActionListener {
     protected Router router;

@@ -3,8 +3,8 @@ package mimis.device.javainput;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import base.worker.Worker;
 import mimis.exception.ButtonException;
-import mimis.worker.Worker;
 import de.hardcode.jxinput.Button;
 import de.hardcode.jxinput.Directional;
 import de.hardcode.jxinput.JXInputDevice;

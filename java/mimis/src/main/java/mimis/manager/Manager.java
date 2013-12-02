@@ -3,9 +3,9 @@ package mimis.manager;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import mimis.exception.worker.DeactivateException;
-import mimis.worker.IntervalWorker;
-import mimis.worker.Worker;
+import base.exception.worker.DeactivateException;
+import base.worker.IntervalWorker;
+import base.worker.Worker;
 
 public class Manager extends IntervalWorker {
     protected static final int INTERVAL = 1000;

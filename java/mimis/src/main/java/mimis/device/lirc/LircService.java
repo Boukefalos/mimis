@@ -15,12 +15,12 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 import mimis.exception.button.UnknownButtonException;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 import mimis.value.Registry;
-import mimis.worker.Worker;
 
 public class LircService extends Worker {
     public static final String IP = "localhost";

@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
-import mimis.worker.Worker;
+import base.worker.Worker;
 
 public class ButtonManager extends Manager {
     protected static final String TITLE = "Workers";

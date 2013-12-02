@@ -8,18 +8,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Component;
+import base.worker.Worker;
 import mimis.device.lirc.LircButton;
 import mimis.device.lirc.remote.PhiliphsRCLE011Button;
 import mimis.device.wiimote.WiimoteDevice;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.input.Button;
 import mimis.input.button.ColorButton;
 import mimis.input.button.NumberButton;
 import mimis.input.state.State;
 import mimis.value.Action;
-import mimis.worker.Component;
-import mimis.worker.Worker;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 
 public class MotionDevice extends Component {

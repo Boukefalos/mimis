@@ -1,8 +1,8 @@
 package mimis.application.mpc;
 
+import base.worker.Worker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
-import mimis.worker.Worker;
 
 public class MPCApplication extends WindowsApplication {
     protected final static String PROGRAM = "mpc-hc.exe";

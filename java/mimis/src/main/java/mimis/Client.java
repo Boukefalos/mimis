@@ -1,6 +1,6 @@
 package mimis;
 
-import mimis.exception.worker.ActivateException;
+import base.exception.worker.ActivateException;
 import mimis.router.GlobalRouter;
 import mimis.util.swing.Dialog;
 

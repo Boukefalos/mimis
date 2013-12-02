@@ -1,12 +1,12 @@
 package mimis.device.panel;
 
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Component;
 import mimis.device.Device;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
 import mimis.value.Action;
-import mimis.worker.Component;
 
 public class PanelDevice extends Component implements Device {
     protected static final String TITLE = "Panel";

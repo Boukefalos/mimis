@@ -1,11 +1,11 @@
 package mimis.application.itunes;
 
 import mimis.application.Application;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
-import mimis.worker.Component;
-import mimis.worker.Worker;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Component;
+import base.worker.Worker;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
 import com.dt.iTunesController.ITTrack;

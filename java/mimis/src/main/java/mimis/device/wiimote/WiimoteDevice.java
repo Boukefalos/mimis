@@ -1,14 +1,10 @@
 package mimis.device.wiimote;
 
-import java.io.IOException;
-
 import mimis.device.Device;
 import mimis.device.wiimote.gesture.GestureDevice;
 import mimis.device.wiimote.motion.MotionDevice;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.device.DeviceNotFoundException;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.input.Button;
 import mimis.input.Feedback;
 import mimis.input.state.Press;
@@ -16,8 +12,6 @@ import mimis.input.state.Release;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 import mimis.value.Signal;
-import mimis.worker.Component;
-import mimis.worker.Worker;
 
 import org.wiigee.event.GestureEvent;
 import org.wiigee.event.GestureListener;
@@ -27,6 +21,10 @@ import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Component;
+import base.worker.Worker;
 
 public class WiimoteDevice extends Component implements Device, GestureListener {
     protected static final String TITLE = "Wiimote";

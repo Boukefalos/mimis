@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import mimis.exception.worker.ActivateException;
+import base.exception.worker.ActivateException;
+import base.worker.Component;
 import mimis.input.Input;
 import mimis.input.Task;
 import mimis.input.state.State;
@@ -14,7 +15,6 @@ import mimis.state.TaskMap;
 import mimis.value.Action;
 import mimis.value.Signal;
 import mimis.value.Target;
-import mimis.worker.Component;
 
 public class Parser extends Component {
     protected TaskMap taskMap;

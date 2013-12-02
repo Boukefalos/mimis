@@ -5,13 +5,13 @@ import java.util.ServiceLoader;
 
 import javax.swing.UIManager;
 
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Component;
 import mimis.input.Task;
 import mimis.manager.ButtonManager;
 import mimis.manager.CurrentButtonManager;
 import mimis.value.Action;
-import mimis.worker.Component;
 
 public class Main extends Mimis {
     protected CurrentButtonManager applicationManager;

@@ -1,8 +1,8 @@
 package mimis.application.cmd.windows.wmp;
 
+import base.worker.Worker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
-import mimis.worker.Worker;
 
 public class WMPApplication extends WindowsApplication {
     protected final static String PROGRAM = "wmplayer.exe";

@@ -1,9 +1,9 @@
 package mimis.parser;
 
+import base.worker.Component;
 import mimis.input.Input;
 import mimis.state.TaskMap;
 import mimis.value.Action;
-import mimis.worker.Component;
 
 public class ParserInput implements Input {
     protected static final long serialVersionUID = 1L;

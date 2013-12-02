@@ -1,10 +1,10 @@
 package mimis.device.javainput.rumblepad;
 
+import base.exception.worker.ActivateException;
 import mimis.device.javainput.DirectionButton;
 import mimis.device.javainput.JavaInputDevice;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
-import mimis.exception.worker.ActivateException;
 import mimis.input.Button;
 import mimis.value.Action;
 import de.hardcode.jxinput.event.JXInputButtonEvent;

@@ -1,9 +1,9 @@
 package mimis.input.state;
 
+import base.worker.Component;
 import mimis.input.Button;
 import mimis.input.Input;
 import mimis.input.state.State;
-import mimis.worker.Component;
 
 public abstract class State implements Input {
     protected static final long serialVersionUID = 1L;

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import base.worker.Component;
 import mimis.Main;
 import mimis.application.Application;
 import mimis.device.Device;
 import mimis.input.Input;
 import mimis.input.Task;
-import mimis.worker.Component;
 
 public class Router extends Component {
     protected HashMap<Component, ArrayList<Class<? extends Input>>> listenMap;

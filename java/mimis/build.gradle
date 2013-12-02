@@ -1,6 +1,7 @@
 def mainClass = 'mimis.Main'
 
 dependencies {
+	compile project(':base')
 	compile project(':itunescontroller')
 	compile project(':wiiusej')
 	compile project(':wiigee')
@@ -10,7 +11,7 @@ dependencies {
 
 	compile 'commons-collections:commons-collections:3.+'
 	compile 'org.slf4j:slf4j-api:1.+'
-	compile 'org.slf4j:slf4j-log4j12:1.7.5'
+	compile 'org.slf4j:slf4j-log4j12:1.+'
 	compile 'com.melloware:jintellitype:1.+'
 }
 
@@ -22,6 +23,19 @@ jar {
 	from {
 		configurations.runtime.collect {
 			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			repository(url: "http://server:8081/artifactory/test-local") {
+				authentication(userName: System.getenv("UPLOAD_USERNAME"), password: System.getenv("UPLOAD_PASSWORD"))
+			}
+			pom.groupId = 'testgroup'
+			pom.artifactId = 'bla'			
+			pom.version = '5.6'
 		}
 	}
 }

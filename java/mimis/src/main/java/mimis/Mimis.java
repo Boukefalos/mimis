@@ -1,7 +1,8 @@
 package mimis;
 
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Component;
 import mimis.input.Feedback;
 import mimis.input.Task;
 import mimis.manager.Manager;
@@ -10,7 +11,6 @@ import mimis.router.Router;
 import mimis.util.ArrayCycle;
 import mimis.value.Action;
 import mimis.value.Target;
-import mimis.worker.Component;
 
 public abstract class Mimis extends Component {
     protected Component[] currentArray;

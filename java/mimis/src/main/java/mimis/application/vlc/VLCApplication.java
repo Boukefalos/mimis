@@ -7,14 +7,14 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 import mimis.application.cmd.CMDApplication;
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
 import mimis.util.Native;
 import mimis.value.Action;
 import mimis.value.Amount;
 import mimis.value.Registry;
-import mimis.worker.Worker;
 
 public class VLCApplication extends CMDApplication {
     protected final static Registry REGISTRY = Registry.CLASSES_ROOT;

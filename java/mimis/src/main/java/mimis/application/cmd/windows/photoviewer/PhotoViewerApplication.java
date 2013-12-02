@@ -1,11 +1,11 @@
 package mimis.application.cmd.windows.photoviewer;
 
+import base.exception.worker.DeactivateException;
+import base.worker.Worker;
 import mimis.application.cmd.windows.WindowsApplication;
-import mimis.exception.worker.DeactivateException;
 import mimis.value.Action;
 import mimis.value.Key;
 import mimis.value.Type;
-import mimis.worker.Worker;
 
 public class PhotoViewerApplication extends WindowsApplication {
     protected final static String TITLE = "Photo Viewer";

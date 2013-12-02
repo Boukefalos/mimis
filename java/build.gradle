@@ -4,6 +4,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
 	apply plugin: 'cpp-lib'
+	apply plugin: 'maven'
 
     repositories {
        mavenCentral()

@@ -1,8 +1,8 @@
 package mimis.util;
 
+import base.worker.Worker;
 import mimis.util.multiplexer.SignalListener;
 import mimis.value.Signal;
-import mimis.worker.Worker;
 
 public class Multiplexer<T> extends Worker {
     public static final int TIMEOUT = 150;
