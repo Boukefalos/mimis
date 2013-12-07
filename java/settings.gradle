@@ -1,1 +1,1 @@
-include "base", "mimis", "wiiusej", "wiigee", "itunescontroller"
+include "base", "mimis", "wiiusej", "wiigee", "itunescontroller", "sound"
