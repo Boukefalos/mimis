@@ -10,6 +10,8 @@ import javax.sound.sampled.TargetDataLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sound.util.Tool;
+
 public class Target implements Producer, Format.Standard {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 

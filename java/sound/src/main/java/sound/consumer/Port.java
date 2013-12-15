@@ -1,4 +1,4 @@
-package sound;
+package sound.consumer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,13 +6,17 @@ import java.io.OutputStream;
 
 import javax.sound.sampled.AudioFormat;
 
+import sound.Consumer;
+import sound.Format;
+import sound.Format.Standard;
+import sound.Producer;
+import sound.util.SoxBuilder;
+import sound.util.SoxBuilder.File;
+import sound.util.SoxBuilder.File.Type;
+import sound.util.SoxBuilder.Option;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.worker.Worker;
-import sound.Format.Standard;
-import sound.SoxBuilder.File;
-import sound.SoxBuilder.File.Type;
-import sound.SoxBuilder.Option;
 
 public class Port extends Worker implements Consumer {
 	protected static final int BUFFER_SIZE = 1024 * 4; // in bytes
@@ -48,7 +52,7 @@ public class Port extends Worker implements Consumer {
 			.setOption(Option.QUIET)
 			.addFile(File.setType(Type.DEVICE))
 			.build();
-		
+
 		logger.debug(String.format("Build process (\"%s\")", command));
 		processBuilder = new ProcessBuilder(command.split(" "));
 		processBuilder.environment().put("AUDIODEV", device);

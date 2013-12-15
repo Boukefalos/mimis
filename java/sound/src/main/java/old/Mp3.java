@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
 
+import sound.util.Utils;
 import base.exception.worker.ActivateException;
 
 public class Mp3 extends Converter {

@@ -1,4 +1,4 @@
-package old;
+package sound.util;
 
 import java.io.BufferedInputStream;
 import java.io.File;

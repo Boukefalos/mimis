@@ -1,4 +1,4 @@
-package sound;
+package sound.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

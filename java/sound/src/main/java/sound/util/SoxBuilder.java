@@ -1,13 +1,12 @@
-package sound;
+package sound.util;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import javax.sound.sampled.AudioFormat;
 
-import sound.SoxBuilder.Option.Combine;
-import sound.SoxBuilder.Option.Replay;
-
+import sound.util.SoxBuilder.Option.Combine;
+import sound.util.SoxBuilder.Option.Replay;
 
 public final class SoxBuilder {
 	protected static SoxBuilder instance;

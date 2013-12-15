@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class GreedyInputStream extends BufferedInputStream {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected static final int SLEEP = 500;
+    protected static final int SLEEP = 500; // in milliseconds
 	protected static final int BUFFER_SIZE = 30000; // in bytes
 	protected static final int MINIMUM_SIZE = 1000; // in bytes
 

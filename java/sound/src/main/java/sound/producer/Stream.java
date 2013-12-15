@@ -1,4 +1,4 @@
-package sound;
+package sound.producer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +7,9 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.URL;
 
+import sound.Format;
+import sound.GreedyInputStream;
+import sound.Producer;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.worker.Worker;
@@ -15,7 +18,6 @@ import com.Ostermiller.util.CircularByteBuffer;
 import com.Ostermiller.util.CircularObjectBuffer;
 
 public class Stream extends Worker implements Producer, Format.Mp3 {
-	public static final String HTTP = "http://shoutcast.omroep.nl:8104/";
 	public static final int STEP = 80; // in milliseconds
 
 	protected String http;
@@ -31,12 +33,7 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 	protected CircularObjectBuffer<String> metaCircularObjectBuffer;
 	protected String metaData;
 
-	public Stream() {
-		this(HTTP);
-	}
-
 	public Stream(String http) {
-		super(true);
 		this.http = http;
 		meta = -1;
 		rate = -1;
@@ -52,9 +49,13 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 			socketOutputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
 
 			/* Write stream request */
-			socketOutputStreamWriter.write("GET " + url.getFile() + " HTTP/1.1\r\n");
+			if (url.getFile().equals("")) {
+				socketOutputStreamWriter.write("GET / HTTP/1.1\r\n");
+			} else {
+				socketOutputStreamWriter.write("GET " + url.getFile() + " HTTP/1.1\r\n");
+			}
 			socketOutputStreamWriter.write("Host: " + url.getHost() + "\r\n");
-			socketOutputStreamWriter.write("Icy-MetaData: 1\r\n");
+			//socketOutputStreamWriter.write("Icy-MetaData: 1\r\n");
 			socketOutputStreamWriter.write("Connection: close\r\n");
 			socketOutputStreamWriter.write("\r\n");
 			socketOutputStreamWriter.flush();
@@ -104,7 +105,7 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 		}
 
 		/* Calculate streaming parameters */
-		untilMeta = meta;
+		//untilMeta = meta;
 		chunk = STEP * rate / 8;
 		super.activate();
 	}
@@ -124,19 +125,18 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 	protected void work() {
 		int left = chunk;
 
-		/* Handle media at appropriate times */
+		/* Handle media at appropriate times *
 		while (meta > 0 && left >= untilMeta) {
 			stream(untilMeta);
-			meta();
 			left -= untilMeta;
+			meta();
 			untilMeta = meta;
-		}
+		}*/
 
 		/* Stream at fixed rate */
 		stream(left);
-		untilMeta -= left;
+		//untilMeta -= left;
 		sleep(STEP);
-				 
 	}
 
 	protected void stream(int length) {
@@ -146,9 +146,9 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 			while (length > 0 && (read = socketInputStream.read(bytes)) > 0) {
 				length -= read;
 				audioCircularByteBuffer.getOutputStream().write(bytes);
-			}	
+			}
 		} catch (IOException e) {
-			logger.error("", e);
+			logger.error(e.getMessage());
 			stop();
 		}
 	}
@@ -158,6 +158,7 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 			/* Retrieve data length */
 			byte[] data = new byte[1];
 			socketInputStream.read(data);
+
 			int length = 16 * data[0];			
 			data = new byte[length];
 			socketInputStream.read(data);
@@ -178,10 +179,13 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 			logger.error("", e);
 		}
 		stop();
+		return;
 	}
 
 	public InputStream getInputStream() {
-		greedyInputStream = new GreedyInputStream(audioCircularByteBuffer.getInputStream());
+		if (greedyInputStream == null) {
+			greedyInputStream = new GreedyInputStream(audioCircularByteBuffer.getInputStream());
+		}
 		return greedyInputStream;
 	}
 

@@ -5,6 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
+import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
 public class Main {
@@ -18,8 +19,12 @@ public class Main {
 			for (Line.Info lineInfo : mixer.getTargetLineInfo()) {
 				try {
 					Line line = mixer.getLine(lineInfo);
-					if (mixer.isLineSupported(lineInfo) && line instanceof TargetDataLine) {	
-						new TargetLine(mixer, (TargetDataLine) line);
+					if (mixer.isLineSupported(lineInfo)) {
+						if (line instanceof TargetDataLine) {
+							new TargetLine(mixer, (TargetDataLine) line);
+						}/* else if (line instanceof SourceDataLine) {
+							new SourceLine(mixer, (SourceDataLine) line);							
+						}*/
 					}
 				} catch (LineUnavailableException e) {}
 			}
