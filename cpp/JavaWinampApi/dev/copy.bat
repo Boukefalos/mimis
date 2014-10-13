@@ -1,1 +1,0 @@
-copy wpcom.dll ..\..\..\java\native\

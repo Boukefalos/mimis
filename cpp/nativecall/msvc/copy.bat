@@ -1,1 +1,0 @@
-copy Release\nativecall.dll ..\..\..\java\native

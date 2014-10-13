@@ -1,2 +1,0 @@
-all-after:
-	copy.bat
