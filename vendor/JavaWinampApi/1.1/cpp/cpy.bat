@@ -1,1 +1,0 @@
-copy /y wpcom.dll c:\winnt\system32\
