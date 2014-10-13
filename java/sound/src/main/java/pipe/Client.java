@@ -8,8 +8,10 @@ public class Client {
 			// Connect to the pipe
 			RandomAccessFile pipe = new RandomAccessFile("\\\\.\\pipe\\detest", "rw");
 			String echoText = "Hello word\n";
+
 			// write to pipe
 			pipe.write(echoText.getBytes());
+
 			// read response
 			String echoResponse = pipe.readLine();
 			System.out.println(echoResponse);

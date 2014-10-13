@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.net.URL;
 
 import sound.Format;
-import sound.GreedyInputStream;
 import sound.Producer;
+import sound.stream.HoardedInputStream;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.worker.Worker;
@@ -24,7 +24,7 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 	protected Socket socket;
 	protected InputStream socketInputStream;
 	protected OutputStreamWriter socketOutputStreamWriter;
-	protected GreedyInputStream greedyInputStream;
+	protected HoardedInputStream hoardedInputStream;
 	protected int meta;
 	protected int rate;
 	protected int chunk;
@@ -115,7 +115,7 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 		audioCircularByteBuffer.clear();
 		metaCircularObjectBuffer.clear();
 		try {
-			greedyInputStream.clear();
+			hoardedInputStream.clear();
 		} catch (IOException e) {
 			logger.error("", e);
 			throw new DeactivateException();
@@ -183,10 +183,10 @@ public class Stream extends Worker implements Producer, Format.Mp3 {
 	}
 
 	public InputStream getInputStream() {
-		if (greedyInputStream == null) {
-			greedyInputStream = new GreedyInputStream(audioCircularByteBuffer.getInputStream());
+		if (hoardedInputStream == null) {
+			hoardedInputStream = new HoardedInputStream(audioCircularByteBuffer.getInputStream());
 		}
-		return greedyInputStream;
+		return hoardedInputStream;
 	}
 
 	public CircularObjectBuffer<String> getMetaBufferStream() {

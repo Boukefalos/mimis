@@ -20,14 +20,19 @@ public class TestPipe {
 	}
 
 	private boolean createPipe() {
-		namedPipeHandle = Pipe.CreateNamedPipe(pipeName, Pipe.PIPE_ACCESS_DUPLEX,
-				Pipe.PIPE_WAIT, 5, pipeBuffer, pipeBuffer, 0xffffffff, 0);
+		namedPipeHandle = Pipe.CreateNamedPipe(
+			pipeName,
+			Pipe.PIPE_ACCESS_DUPLEX,
+			Pipe.PIPE_WAIT,
+			5,
+			pipeBuffer,
+			pipeBuffer,
+			0xffffffff,
+			0);
 		if (namedPipeHandle == -1) {
-			log("CreateNamedPipe failed for " + pipeName + " for error "
-					+ " Message " + Pipe.FormatMessage(Pipe.GetLastError()));
+			log("CreateNamedPipe failed for " + pipeName + " for error Message " + Pipe.FormatMessage(Pipe.GetLastError()));
 		} else {
-			log("Named Pipe " + pipeName + " created successfully Handle="
-					+ namedPipeHandle);
+			log("Named Pipe " + pipeName + " created successfully Handle=" + namedPipeHandle);
 		}
 		return namedPipeHandle != -1;
 	}
@@ -40,8 +45,7 @@ public class TestPipe {
 			if (lastError == Pipe.ERROR_PIPE_CONNECTED)
 				connected = true;
 		}
-		log((connected ? "Connected to the pipe "
-				: "Falied to connect to the pipe ") + pipeName);
+		log((connected ? "Connected to the pipe " : "Falied to connect to the pipe ") + pipeName);
 		return connected;
 	}
 
@@ -56,12 +60,10 @@ public class TestPipe {
 				int len, bytesWritten;
 				while ((len = in.read(buf)) > 0) {
 					bytesWritten = Pipe.WriteFile(namedPipeHandle, buf, len);
-					log("Sent " + len + "/" + bytesWritten
-							+ " bytes to the pipe");
+					log("Sent " + len + "/" + bytesWritten 	+ " bytes to the pipe");
 					if (bytesWritten == -1) {
 						int errorNumber = Pipe.GetLastError();
-						log("Error Writing to pipe "
-								+ Pipe.FormatMessage(errorNumber));
+						log("Error Writing to pipe " + Pipe.FormatMessage(errorNumber));
 					}
 				}
 				in.close();
@@ -77,8 +79,8 @@ public class TestPipe {
 
 	public static void main(String[] args) {
 		String pipeName = "\\\\.\\pipe\\detest";
-		String fileName = "bla.txt";
-		fileName = "C:\\Users\\Rik\\Music\\Artists\\+44\\When Your Heart Stops Beating\\+44 - 155.mp3";
+		String fileName = "txt/bla.txt";
+		//fileName = "C:\\Users\\Rik\\Music\\Artists\\+44\\When Your Heart Stops Beating\\+44 - 155.mp3";
 		TestPipe testPipe = new TestPipe(pipeName, fileName);
 		testPipe.runPipe();
 	}

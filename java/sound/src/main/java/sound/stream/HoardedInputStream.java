@@ -1,4 +1,4 @@
-package sound;
+package sound.stream;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GreedyInputStream extends BufferedInputStream {
+public class HoardedInputStream extends BufferedInputStream {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected static final int SLEEP = 500; // in milliseconds
@@ -18,17 +18,17 @@ public class GreedyInputStream extends BufferedInputStream {
 	protected int minimumSize;
 	protected boolean hoard;
 
-	public GreedyInputStream(InputStream inputStream) {
+	public HoardedInputStream(InputStream inputStream) {
 		this(inputStream, BUFFER_SIZE, MINIMUM_SIZE);
 	}
 
-	public GreedyInputStream(InputStream inputStream, int bufferSize) {
+	public HoardedInputStream(InputStream inputStream, int bufferSize) {
 		super(inputStream, bufferSize);		
 		this.bufferSize = bufferSize;
 		hoard = true;
 	}
 	
-	public GreedyInputStream(InputStream inputStream, int bufferSize, int minimumSize) {
+	public HoardedInputStream(InputStream inputStream, int bufferSize, int minimumSize) {
 		this(inputStream, bufferSize);		
 		this.minimumSize = minimumSize;
 	}
@@ -63,7 +63,7 @@ public class GreedyInputStream extends BufferedInputStream {
 
 	public void clear() throws IOException {
 		this.buf = new byte[buf.length];
-		reset();		
+		reset();
 	}
 
 	public void drain() {

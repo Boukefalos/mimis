@@ -29,7 +29,7 @@ public class Tool {
 
 	static {
 		Tool tool = new Tool();
-		
+
 		targetMap = new HashMap<String, Device<TargetDataLine>>();
 		sourceMap = new HashMap<String, Device<SourceDataLine>>();
 		targetList = new ArrayList<String>();

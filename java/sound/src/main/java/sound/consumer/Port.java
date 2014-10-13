@@ -36,8 +36,12 @@ public class Port extends Worker implements Consumer {
 		this.device = device;
 	}
 
-    @SuppressWarnings("static-access")
 	public void start(Producer producer) {
+		start(producer, THREAD);
+	}
+
+    @SuppressWarnings("static-access")
+	public void start(Producer producer, boolean thread) {
 		this.producer = producer;
 		producerInputStream = producer.getInputStream();
 		
@@ -57,7 +61,7 @@ public class Port extends Worker implements Consumer {
 		processBuilder = new ProcessBuilder(command.split(" "));
 		processBuilder.environment().put("AUDIODEV", device);
 
-		start(true);
+		start(thread);
 	}
 
 	protected void activate() throws ActivateException {
@@ -113,17 +117,5 @@ public class Port extends Worker implements Consumer {
 			logger.error("", e);
 			exit();
 		}
-	}
-
-	@Override
-	public void start() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -1,4 +1,4 @@
-package sound;
+package sound.producer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +10,9 @@ import javax.sound.sampled.TargetDataLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sound.Format;
+import sound.Producer;
+import sound.stream.HoardedInputStream;
 import sound.util.Tool;
 
 public class Target implements Producer, Format.Standard {
@@ -19,6 +22,7 @@ public class Target implements Producer, Format.Standard {
 
 	protected TargetDataLine line;
 	protected InputStream targetInputStream;
+	protected HoardedInputStream hoardedInputStream;
 
 	protected AudioFormat audioFormat;
 

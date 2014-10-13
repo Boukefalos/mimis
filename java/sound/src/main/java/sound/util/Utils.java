@@ -15,11 +15,8 @@ public class Utils {
 
 	public static void play(InputStream inputStream) {
 		try {
-			Thread.sleep(5000);
 			new Player(new BufferedInputStream(inputStream)).play();
 		} catch (JavaLayerException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}

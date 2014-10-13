@@ -2,7 +2,8 @@ dependencies {
 	compile project(':base')
 	
 	compile 'commons-io:commons-io:2.+'
-	compile 'commons-cli:commons-cli:1.+'
+	compile 'commons-cli:commons-cli:1.+'	
+	compile 'commons-pool:commons-pool:1.+'
 	compile 'org.slf4j:slf4j-api:1.+'
 	compile 'org.slf4j:slf4j-log4j12:1.7.5'
 	compile 'org.ostermiller:utils:1.+'

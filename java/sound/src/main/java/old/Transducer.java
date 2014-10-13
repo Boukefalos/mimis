@@ -1,6 +1,9 @@
-package sound;
+package old;
 
 import java.io.InputStream;
+
+import sound.Consumer;
+import sound.Producer;
 
 public class Transducer implements Consumer, Producer {
 	public int rate;

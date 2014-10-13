@@ -22,7 +22,7 @@ public class Source implements Consumer {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected static final int BUFFER_SIZE = 1024 * 4;	// in bytes
-	protected static final int PLAY_FRAMES = 10;		// count
+	protected static final int FRAMES = 10;				// count
 
 	protected String name;
 	protected Producer producer;
@@ -147,9 +147,9 @@ public class Source implements Consumer {
 			try {
 				if (player == null) {
 					player = new Player(producerInputStream);
-					sleep(500);
+					sleep(SLEEP);
 				}
-				player.play(PLAY_FRAMES);
+				player.play(FRAMES);
 			} catch (JavaLayerException e) {
 				logger.error("", e);
 			}
