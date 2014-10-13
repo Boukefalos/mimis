@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="jar" name="Build file for Project Shoutcast">
+	<!-- All -->
+	<target name="all" depends="javadoc, jar, launch4j"></target>
+	
+	<!-- Javadoc -->
+	<target name="javadoc">
+		<javadoc access="private" author="true" classpath="" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="mimis.exception.macro,mimis.device.network,wiiusej,mimis.application.itunes,mimis.exception.util,mimis.device.javainput,wiiusej.wiiusejevents,wiiusej.wiiusejevents.utils,mimis.util.swing,mimis.exception.worker,mimis.application.lirc,mimis.application.cmd.windows.winamp,wiiusej.values,mimis.exception.event,mimis.device.lirc.remote,mimis.device.panel,mimis.exception.device,mimis.exception.button,mimis.application.robot,mimis.application.lirc.ipod,mimis.exception.task.action,mimis.exception.application,wiiusej.wiiusejevents.wiiuseapievents,mimis.application.cmd.windows.gomplayer,mimis.application.mpc,org.wiigee.logic,mimis.device.lirc,mimis.sequence,mimis.manager,org.wiigee.util,mimis.event,mimis.application.cmd.windows.wmp,mimis.value,mimis.device.javainput.extreme3d,mimis.event.router,mimis.application.cmd,mimis.worker,org.wiigee.event,mimis.device.wiimote,mimis.device.wiimote.gesture.event,wiiusej.wiiusejevents.physicalevents,mimis.util.multiplexer,mimis,org.wiigee.control,mimis.exception.device.javainput,mimis.util,mimis.application.cmd.windows,com.dt.iTunesController,org.wiigee.device,mimis.application.vlc,mimis.device.wiimote.gesture,mimis.device.jintellitype,mimis.event.feedback,mimis.device,org.wiigee.filter,mimis.exception.application.windows,mimis.application,mimis.sequence.state,mimis.device.javainput.rumblepad,com.melloware.jintellitype,mimis.exception.event.router,mimis.exception.task,mimis.exception" source="1.6" sourcepath="src" splitindex="true" use="true" version="true" />
+	</target>
+
+	<!-- Jar -->
+	<target name="jar">
+		<property name="jar.dir" value="." />
+		<jar destfile="${jar.dir}/stream.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="udp.StreamClient" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<fileset dir="bin" />
+			<!--zipfileset excludes="META-INF/*.SF" src="lib/commons-logging-1.1.1.jar" /-->
+		</jar>
+		<!--copy todir="${jar.dir}">
+			<fileset dir=".">
+				<include name="*.dll" />
+				<include name="*.exe" />
+			</fileset>
+		</copy-->
+	</target>
+
+	<!-- Launch4j -->
+	<target name="launch4j" depends="jar">
+		<property name="launch4j.dir" location="C:\Program Files (x86)\Launch4j" />
+		<path id="launch4j">
+			<pathelement location="${launch4j.dir}/launch4j.jar" />
+			<pathelement location="${launch4j.dir}/lib/xstream.jar" />
+		</path>
+		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask">
+			<classpath refid="launch4j" />
+		</taskdef>
+		<launch4j configFile="launch4j.xml" />
+		<delete file="launch4j.log" />
+	</target>
+</project>

@@ -2,4 +2,8 @@ bin
 .gradle
 .settings
 build
+<<<<<<< HEAD
+/cpp/pipe/Release/src
+=======
 src
+>>>>>>> 1b005c69f5ba5b443ef5addc6aad13236196f3dc
