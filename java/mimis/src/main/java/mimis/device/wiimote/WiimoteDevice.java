@@ -1,5 +1,6 @@
 package mimis.device.wiimote;
 
+import mimis.Component;
 import mimis.device.Device;
 import mimis.device.wiimote.gesture.GestureDevice;
 import mimis.device.wiimote.motion.MotionDevice;
@@ -23,7 +24,6 @@ import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
 import base.worker.Worker;
 
 public class WiimoteDevice extends Component implements Device, GestureListener {

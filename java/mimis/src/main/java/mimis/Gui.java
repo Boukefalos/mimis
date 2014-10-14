@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import base.exception.worker.ActivateException;
-import base.worker.Component;
 import mimis.input.Feedback;
 import mimis.input.Input;
 import mimis.manager.ButtonManager;

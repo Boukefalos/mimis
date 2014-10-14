@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
 import base.worker.Worker;
+import mimis.Component;
 import mimis.device.lirc.LircButton;
 import mimis.device.lirc.remote.PhiliphsRCLE011Button;
 import mimis.device.wiimote.WiimoteDevice;

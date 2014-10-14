@@ -2,7 +2,7 @@ package mimis.device.panel;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
+import mimis.Component;
 import mimis.device.Device;
 import mimis.input.state.Press;
 import mimis.input.state.Release;

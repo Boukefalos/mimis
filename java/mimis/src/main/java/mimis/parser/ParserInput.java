@@ -1,6 +1,6 @@
 package mimis.parser;
 
-import base.worker.Component;
+import mimis.Component;
 import mimis.input.Input;
 import mimis.state.TaskMap;
 import mimis.value.Action;

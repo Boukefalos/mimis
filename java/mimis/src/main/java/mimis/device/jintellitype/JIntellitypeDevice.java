@@ -2,6 +2,7 @@ package mimis.device.jintellitype;
 
 import java.util.ArrayList;
 
+import mimis.Component;
 import mimis.device.Device;
 import mimis.exception.button.UnknownButtonException;
 import mimis.input.state.Press;
@@ -9,7 +10,6 @@ import mimis.input.state.Release;
 import mimis.value.Action;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
 
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.IntellitypeListener;

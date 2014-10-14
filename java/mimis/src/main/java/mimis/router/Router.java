@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import base.worker.Component;
+import mimis.Component;
 import mimis.Main;
 import mimis.application.Application;
 import mimis.device.Device;

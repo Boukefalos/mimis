@@ -5,7 +5,7 @@ import java.util.Map;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
+import mimis.Component;
 import mimis.application.Application;
 import mimis.util.Native;
 import mimis.value.Registry;

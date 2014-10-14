@@ -1,10 +1,10 @@
-package mimis.worker;
+package base.worker;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
 
 public class IntervalWorker extends Worker {
     protected static final boolean THREAD = true;

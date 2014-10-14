@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import base.exception.worker.ActivateException;
-import base.worker.Component;
+import mimis.Component;
 import mimis.input.Input;
 import mimis.input.Task;
 import mimis.input.state.State;

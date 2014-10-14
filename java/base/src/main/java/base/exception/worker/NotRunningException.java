@@ -1,6 +1,6 @@
-package mimis.exception.worker;
+package base.exception.worker;
 
-import mimis.exception.WorkerException;
+import base.exception.WorkerException;
 
 public class NotRunningException extends WorkerException {
     protected static final long serialVersionUID = 1L;

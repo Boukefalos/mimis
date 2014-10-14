@@ -2,7 +2,7 @@ package mimis.device.javainput;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
+import mimis.Component;
 import mimis.device.Device;
 import mimis.exception.ButtonException;
 import mimis.exception.button.UnknownButtonException;

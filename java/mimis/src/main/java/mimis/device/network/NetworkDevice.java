@@ -11,8 +11,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
 import base.worker.Worker;
+import mimis.Component;
 import mimis.device.Device;
 import mimis.input.Feedback;
 import mimis.input.Input;

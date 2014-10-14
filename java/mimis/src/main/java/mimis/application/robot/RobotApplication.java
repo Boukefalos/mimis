@@ -4,7 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 
 import base.exception.worker.ActivateException;
-import base.worker.Component;
+import mimis.Component;
 import mimis.value.Key;
 
 public class RobotApplication extends Component {

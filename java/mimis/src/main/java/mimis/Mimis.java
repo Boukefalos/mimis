@@ -2,7 +2,6 @@ package mimis;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Component;
 import mimis.input.Feedback;
 import mimis.input.Task;
 import mimis.manager.Manager;

@@ -5,10 +5,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JToggleButton;
 
+import mimis.Component;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import base.worker.Component;
 import base.worker.Worker;
 
 public class WorkerButton extends JToggleButton implements MouseListener {

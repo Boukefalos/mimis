@@ -1,4 +1,4 @@
-package mimis.worker;
+package base.worker;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

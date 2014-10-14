@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
-import base.worker.Component;
 import base.worker.Worker;
+import mimis.Component;
 import mimis.input.Task;
 import mimis.router.Router;
 import mimis.util.ArrayCycle;

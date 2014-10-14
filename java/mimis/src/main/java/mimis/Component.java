@@ -1,5 +1,6 @@
-package base.worker;
+package mimis;
 
+import base.worker.Listener;
 import mimis.input.Button;
 import mimis.input.Feedback;
 import mimis.input.Input;

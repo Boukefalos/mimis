@@ -1,10 +1,10 @@
-package mimis.worker;
-
-import mimis.exception.worker.ActivateException;
-import mimis.exception.worker.DeactivateException;
+package base.worker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
 
 public abstract class Worker implements Runnable {
     protected Logger logger = LoggerFactory.getLogger(getClass());
