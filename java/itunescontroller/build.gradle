@@ -1,3 +1,0 @@
-dependencies {
-	compile 'net.sf.jacob-project:jacob:1.+'
-}

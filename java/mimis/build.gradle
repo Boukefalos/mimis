@@ -4,16 +4,20 @@ repositories {
 	maven {
 		//url 'C:/Users/Rik/Git/github/wiigee/.maven/'
 		url 'https://github.com/Boukefalos/wiigee/raw/mvn-repo/'
+
+	}
+	maven {
+		url 'https://github.com/Boukefalos/iTunesController/raw/mvn-repo/'
 	}
 	mavenCentral()
 }
 
 dependencies {
 	compile project(':base')
-	compile project(':itunescontroller')
 	compile project(':wiiusej')
 
 	compile 'org.wiigee:wiigee:1.5.6'
+	compile 'com.dt:iTunesController:0.3'
 
 	compile files('lib/jxinput.jar')
 	compile fileTree(dir: 'libs', include: '*.jar')
