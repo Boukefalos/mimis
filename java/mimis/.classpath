@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry exported="true" kind="src" path="/java.base"/>
 	<classpathentry exported="true" kind="src" path="/java.itunescontroller"/>
-	<classpathentry exported="true" kind="src" path="/java.wiigee"/>
 	<classpathentry exported="true" kind="src" path="/java.wiiusej"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
