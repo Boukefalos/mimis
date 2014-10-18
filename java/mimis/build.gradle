@@ -1,12 +1,21 @@
 def mainClass = 'mimis.Main'
 
+repositories {
+	maven {
+		//url 'C:/Users/Rik/Git/github/wiigee/.maven/'
+		url 'https://github.com/Boukefalos/wiigee/raw/mvn-repo/'
+	}
+	mavenCentral()
+}
+
 dependencies {
 	compile project(':base')
 	compile project(':itunescontroller')
 	compile project(':wiiusej')
-	compile project(':wiigee')
 
-	//compile files('lib/jxinput.jar')
+	compile 'org.wiigee:wiigee:1.5.6'
+
+	compile files('lib/jxinput.jar')
 	compile fileTree(dir: 'libs', include: '*.jar')
 
 	compile 'commons-collections:commons-collections:3.+'
