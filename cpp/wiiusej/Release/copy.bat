@@ -1,1 +1,0 @@
-copy wiiusej.dll  ..\..\..\java\wiiusej\wiiusej.dll
