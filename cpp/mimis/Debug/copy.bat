@@ -1,1 +1,0 @@
-copy mimis.dll ..\..\..\java\mimis\mimis.dll
