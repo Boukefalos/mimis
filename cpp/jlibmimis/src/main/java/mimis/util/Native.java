@@ -5,7 +5,7 @@ import mimis.value.Windows;
 
 public class Native {
     static {
-    	net.rubygrapefruit.platform.Native.load("com.github.boukefalos.mimis", "mimis");
+    	com.github.boukefalos.jlibloader.Native.load("com.github.boukefalos", "jlibmimis");
     }
 
     public native static int getHandle(String window);

@@ -5,23 +5,15 @@ apply plugin: 'eclipse'
 
 repositories {
 	maven {
-		url 'http://localhost/mvn/'
-		//url 'C:/Users/Rik/Git/github/mimis/cpp/mimis/.maven/'
-	}
-	maven {
 		url 'https://github.com/Boukefalos/jlibloader/raw/mvn-repo/'
 	}
 }
 
 dependencies {
-	compile 'net.rubygrapefruit:platform:0.1'
-	//compile 'org.wiigee:wiigee:1.5.6'
-	//compile 'com.github.boukefalos.mimis:mimis:0.1'
-	//compile 'com.github.boukefalos.mimis:mimis-windows-i386:0.1'
-	//compile 'com.github.boukefalos.mimis:mimis-windows-amd64:0.1'
+	compile 'com.github.boukefalos:jlibloader:0.1'
 }
 
-group = 'com.github.boukefalos.mimis'
+group = 'com.github.boukefalos'
 project.archivesBaseName = 'jlibmimis'
 version = '0.1'
 
@@ -146,4 +138,8 @@ mainPom.withXml { provider ->
 		dep.appendNode('artifactId', "${project.archivesBaseName}-${platform}")
 		dep.appendNode('version', project.version)
 	}
+	def dep = deps.appendNode('dependency')
+	dep.appendNode('groupId', 'net.rubygrapefruit')
+	dep.appendNode('artifactId', 'platform')
+	dep.appendNode('version', '0.1')
 }
