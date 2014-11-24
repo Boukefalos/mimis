@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-  <groupId>com.github.boukefalos.mimis</groupId>
+  <groupId>com.github.boukefalos</groupId>
   <artifactId>jlibmimis</artifactId>
   <version>0.1</version>
   <versioning>
     <versions>
       <version>0.1</version>
     </versions>
-    <lastUpdated>20141109220730</lastUpdated>
+    <lastUpdated>20141124135938</lastUpdated>
   </versioning>
 </metadata>
