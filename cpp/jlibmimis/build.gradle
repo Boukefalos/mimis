@@ -139,7 +139,7 @@ mainPom.withXml { provider ->
 		dep.appendNode('version', project.version)
 	}
 	def dep = deps.appendNode('dependency')
-	dep.appendNode('groupId', 'net.rubygrapefruit')
-	dep.appendNode('artifactId', 'platform')
+	dep.appendNode('groupId', 'com.github.boukefalos')
+	dep.appendNode('artifactId', 'jlibloader')
 	dep.appendNode('version', '0.1')
 }
