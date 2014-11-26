@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.github.boukefalos:jlibloader:0.1'
+	compile 'com.github.boukefalos:jlibloader:0.2'
 }
 
 group = 'com.github.boukefalos'
@@ -120,7 +120,8 @@ binaries.withType(SharedLibraryBinary) { binary ->
         jniPom.scopeMappings.mappings.clear()
     }
     def builderTask = binary.tasks.builder
-    nativeJar.into(project.group.replace('.', '/') + '/' + variantName) { from builderTask.outputFile }
+	def libraryDirectory = project.group.replace('.', '/') + "/${project.archivesBaseName}/${variantName}" 
+	nativeJar.into(libraryDirectory) { from builderTask.outputFile }
     nativeJar.dependsOn builderTask
 }
 
@@ -141,5 +142,5 @@ mainPom.withXml { provider ->
 	def dep = deps.appendNode('dependency')
 	dep.appendNode('groupId', 'com.github.boukefalos')
 	dep.appendNode('artifactId', 'jlibloader')
-	dep.appendNode('version', '0.1')
+	dep.appendNode('version', '0.2')
 }
