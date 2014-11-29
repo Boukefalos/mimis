@@ -1,5 +1,5 @@
 apply plugin: 'java'
-apply plugin: 'cpp'
+apply plugin: 'c'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 
@@ -56,7 +56,7 @@ model {
 def jniHeadersDir = file("$buildDir/headers")
 
 task jniHeaders(dependsOn: compileJava) {
-	def outputFile = file("$jniHeadersDir/mimis.h")
+	def outputFile = file("$jniHeadersDir/pipe.h")
 	inputs.files sourceSets.main.output
 	outputs.file outputFile
 	exec {
@@ -64,7 +64,7 @@ task jniHeaders(dependsOn: compileJava) {
 		args '-o', outputFile
 		args '-classpath', sourceSets.main.output.classesDir
 		args '-classpath', file("$buildDir/../bin")
-		args 'mimis.util.Native'
+		args 'pipe.Pipe'
 	}
 }
 
@@ -74,11 +74,11 @@ libraries {
 	}
 	all {
 		binaries.all {
-			cppCompiler.args '-I' + jniHeadersDir
-			cppCompiler.args "-I${org.gradle.internal.jvm.Jvm.current().javaHome}/include"
-			cppCompiler.args "-I${org.gradle.internal.jvm.Jvm.current().javaHome}/include/win32"
+			cCompiler.args '-I' + jniHeadersDir
+			cCompiler.args "-I${org.gradle.internal.jvm.Jvm.current().javaHome}/include"
+			cCompiler.args "-I${org.gradle.internal.jvm.Jvm.current().javaHome}/include/win32"
 			linker.args '-Wl,--kill-at', '-static-libgcc', '-static-libstdc++'
-			tasks.withType(CppCompile) { task ->
+			tasks.withType(CCompile) { task ->
 				task.dependsOn jniHeaders
 			}
 		}
