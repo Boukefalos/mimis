@@ -144,3 +144,7 @@ mainPom.withXml { provider ->
 	dep.appendNode('artifactId', 'jlibloader')
 	dep.appendNode('version', '0.2')
 }
+
+jar {
+	from sourceSets.main.allSource
+}
