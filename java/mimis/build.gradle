@@ -26,6 +26,9 @@ repositories {
 		url 'https://github.com/Boukefalos/jlibwiiuse/raw/mvn-repo/'
 	}
 	maven {
+		url 'https://github.com/Boukefalos/jlibwiigee/raw/mvn-repo/'
+	}
+	maven {
 		url 'https://github.com/Boukefalos/libwiiuse/raw/mvn-repo/'
 	}
 	maven {
