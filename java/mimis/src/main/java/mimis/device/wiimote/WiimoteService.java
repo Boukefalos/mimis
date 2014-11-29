@@ -16,8 +16,6 @@ import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import wiiusej.wiiusejevents.utils.WiimoteListener;
-import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardInsertedEvent;
-import wiiusej.wiiusejevents.wiiuseapievents.BalanceBoardRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.DisconnectionEvent;
@@ -112,11 +110,11 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     public void onClassicControllerInsertedEvent(ClassicControllerInsertedEvent event) {}
     public void onClassicControllerRemovedEvent(ClassicControllerRemovedEvent event) {}
 
-    public void onBalanceBoardInsertedEvent(BalanceBoardInsertedEvent e) {
+    /*public void onBalanceBoardInsertedEvent(BalanceBoardInsertedEvent e) {
         logger.debug("", e);        
     }
 
     public void onBalanceBoardRemovedEvent(BalanceBoardRemovedEvent e) {
         
-    }
+    }*/
 }

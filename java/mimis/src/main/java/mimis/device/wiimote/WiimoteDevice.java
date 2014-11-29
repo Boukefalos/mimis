@@ -177,7 +177,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     public void feedback(Feedback feedback) {
         if (wiimote != null && active()) {
             logger.debug("Wiimote rumble feedback");
-            wiimote.rumble(RUMBLE);
+            //wiimote.rumble(RUMBLE);
         }
     }
 
