@@ -19,8 +19,8 @@ public class Test {
 		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 48000f, 16, 2, 4, 48000f, true);
 		try {
 			//Producer p1 = new Target("Line-In (Creative SB X-Fi)");
-			Producer p2 = new Target("Line 1 (Virtual Audio Cable)", audioFormat);
-			p2.start();
+			//Producer p2 = new Target("Line 1 (Virtual Audio Cable)", audioFormat);
+			//p2.start();
 			Producer p3 = new Stream("http://ics2gss.omroep.nl:80/3fm-bb-mp3");
 			Producer p4 = new Stream("http://sc7.mystreamserver.com:8004");
 
@@ -32,7 +32,7 @@ public class Test {
 
 			//Utils.write(p3.getInputStream(), new File("stream.out"));
 			//Utils.play(p3.getInputStream());
-			c3.start(p3);
+			c4.start(p3);
 
 			//while (true) {
 				//Thread.sleep(300000);

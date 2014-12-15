@@ -1,4 +1,4 @@
-package mimis.util;
+package util;
 
 public class BufferedSound {
     private byte[][] soundData;

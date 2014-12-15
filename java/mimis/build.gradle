@@ -6,40 +6,6 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '2.2'
 }
 
-repositories {
-	maven {
-		url 'https://github.com/Boukefalos/mimis/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/wiigee/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/jlibcom/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/jlibitunes/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/jlibloader/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/jlibwiiuse/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/jlibwiigee/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/libwiiuse/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/jlibintellitype/raw/mvn-repo/'
-	}
-	maven {
-		url 'https://github.com/Boukefalos/jlibxinput/raw/mvn-repo/'
-	}
-	mavenCentral()
-}
-
 dependencies {
 	compile project(':base')
 
