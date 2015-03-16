@@ -1,9 +1,7 @@
-subprojects {
-	version = '0.1'
-
+allprojects  {
     apply plugin: 'java'
-    apply plugin: 'eclipse'
-	apply plugin: 'maven'
+
+	version = '0.1'
 
     repositories {
         maven {
@@ -37,5 +35,14 @@ subprojects {
             url 'https://github.com/Boukefalos/jlibxinput/raw/mvn-repo/'
         }
         mavenCentral()
+    }
+}
+
+buildscript {
+    repositories {
+		jcenter()
+    }
+    dependencies {
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
     }
 }
