@@ -1,4 +1,4 @@
-package base.worker.pooled;
+package base.worker.pool;
 
 import java.util.concurrent.BlockingQueue;
 

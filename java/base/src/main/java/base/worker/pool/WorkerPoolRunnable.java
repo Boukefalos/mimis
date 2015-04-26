@@ -1,4 +1,4 @@
-package base.worker.pooled;
+package base.worker.pool;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -34,7 +34,7 @@ public class WorkerPoolRunnable implements Runnable {
 				} catch (InterruptedException e) {}			
 			} else {
 				Worker worker = workerCycle.next();
-				worker.work();
+				worker.runWork();
 			}
 		}
 	}

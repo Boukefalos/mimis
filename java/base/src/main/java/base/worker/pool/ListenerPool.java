@@ -1,9 +1,9 @@
-package base.worker.pooled;
+package base.worker.pool;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class ListenerPool<E> {
@@ -13,7 +13,7 @@ public class ListenerPool<E> {
 
 	public ListenerPool(int poolSize) {
 		this.poolSize = poolSize;
-		queue = new SynchronousQueue<Wrapper<E>>();
+		queue = new LinkedBlockingQueue<Wrapper<E>>();
 		executorService = Executors.newFixedThreadPool(poolSize);
 	}
 

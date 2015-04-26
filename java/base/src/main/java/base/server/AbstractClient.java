@@ -4,9 +4,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
-public abstract class AbstractClient extends Worker {
+public abstract class AbstractClient extends ThreadWorker {
     protected Socket socket;
     protected InputStream inputStream;
     protected OutputStream outputStream;

@@ -5,62 +5,89 @@ import org.slf4j.LoggerFactory;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
+import base.work.Work;
 
-public abstract class Worker implements Runnable {
+public abstract class Worker {
+	public enum Type {
+		DIRECT, THREAD, POOLED
+	}
+
+    protected static final int SLEEP = 100;
+    
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected static final boolean THREAD = true;
-    protected static final int SLEEP = 100;
-
-    protected boolean thread = true;
     protected boolean run = false;
     protected boolean active = false;
     protected boolean activate = false;
     protected boolean deactivate = false;
 
-    public Worker(boolean thread) {
-    	this.thread = thread;
+    protected Work work;
+
+	public Worker(Work work) {
+		this.work = work;
+	}
+
+	public abstract void start();
+
+	public abstract void stop();
+
+    public boolean active() {
+        return active;
     }
 
-    public Worker() {
-    	this(THREAD);
-    }
-
-    public synchronized void start(boolean thread) {
-        if (!active) {
-            activate = true;
+    public void run() {
+        while (run || deactivate) {
+    		runActivate();
+    		runDeactivate();
+    		runWork();
         }
-        if (!run) {
-            run = true;
-            if (thread) {
-                logger.debug("Start thread");
-                new Thread(this, getClass().getName()).start();
-            } else {
-                logger.debug("Run directly");
-                run();
+    }
+
+    public void runActivate() {
+    	if (activate && !active) {
+            try {
+            	work.activate();            	
+            } catch (ActivateException e) {
+                logger.error("", e);
+            } finally {
+                activate = false;
+                active = true;
             }
-        } else {
-            notifyAll();
+        }
+    }
+    
+    public void runDeactivate() {
+    	if (deactivate && active) {
+            try {
+               work.deactivate();
+            } catch (DeactivateException e) {
+                logger.error("", e);
+            } finally {
+                deactivate = false;
+                active = false;
+            }
         }
     }
 
-    public synchronized void start() {
-        start(thread);
-    }
-
-    public synchronized void stop() {
+    public void runWork() {
         if (active) {
-            deactivate = true;
+        	work.work();
+        } else if (run) {
+            try {
+                synchronized (this) {
+                    wait();
+                }
+            } catch (InterruptedException e) {
+                logger.info("", e);
+            }
         }
-        notifyAll();
     }
 
-    public void exit() {
-        stop();
-        run = false;
+    protected void sleep() {
+        sleep(SLEEP);
     }
 
-    protected void sleep(int time) {
+    public void sleep(int time) {
         try {
             if (time > 0) {
                 Thread.sleep(time);
@@ -69,55 +96,4 @@ public abstract class Worker implements Runnable {
             logger.info("", e);
         }
     }
-
-    protected void sleep() {
-        sleep(SLEEP);
-    }
-
-    public boolean active() {
-        return active;
-    }
-
-    protected void activate() throws ActivateException {
-        active = true;
-    }
-
-    protected void deactivate() throws DeactivateException {
-        active = false;
-    }
-
-    public void run() {
-        while (run || deactivate) {
-            if (activate && !active) {
-                try {
-                    activate();
-                } catch (ActivateException e) {
-                    logger.error("", e);
-                } finally {
-                    activate = false;
-                }
-            } else if (deactivate && active) {
-                try {
-                   deactivate();
-                } catch (DeactivateException e) {
-                    logger.error("", e);
-                } finally {
-                    deactivate = false;
-                }
-            }
-            if (active) {
-                work();
-            } else if (run) {
-                try {
-                    synchronized (this) {
-                        wait();
-                    }
-                } catch (InterruptedException e) {
-                    logger.info("", e);
-                }
-            }
-        }
-    }
-
-    protected abstract void work();
 }

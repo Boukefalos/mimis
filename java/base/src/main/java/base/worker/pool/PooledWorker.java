@@ -1,12 +1,17 @@
-package base.worker.pooled;
+package base.worker.pool;
 
 import java.util.concurrent.BlockingQueue;
 
+import base.work.Work;
 import base.worker.Worker;
 
-public abstract class PooledWorker extends Worker {
+public class PooledWorker extends Worker {
 	protected BlockingQueue<Worker> activateQueue;
 	protected BlockingQueue<Worker> deactivateQueue;
+
+	public PooledWorker(Work work) {
+		super(work);
+	}
 
 	public void setActivateQueue(BlockingQueue<Worker> activateQueue) {
 		this.activateQueue = activateQueue;
