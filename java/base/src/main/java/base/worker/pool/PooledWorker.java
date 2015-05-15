@@ -42,4 +42,8 @@ public class PooledWorker extends Worker {
 		activateQueue.remove(this);
 		deactivateQueue.add(this);
 	}
+
+	public void exit() {
+		stop();		
+	}
 }

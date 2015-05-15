@@ -32,7 +32,7 @@ public abstract class Listen<E> extends Work {
 	}
 
 	protected Listen(Worker worker) {
-		this.work = worker;
+		this.worker = worker;
         queue = new ConcurrentLinkedQueue<E>();
 	}
 

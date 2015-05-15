@@ -1,5 +1,8 @@
 package base.work;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.worker.DirectWorker;
@@ -10,8 +13,10 @@ import base.worker.pool.WorkerPool;
 
 public abstract class Work {
 	protected static final Worker.Type WORKER_TYPE = Worker.Type.THREAD;
+	
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected Worker work;
+	protected Worker worker;
 
 	protected Work() {
 		this(WORKER_TYPE);
@@ -20,34 +25,43 @@ public abstract class Work {
 	protected Work(Worker.Type workerType) {
 		switch (workerType) {
 			case DIRECT:
-				work = new DirectWorker(this);
+				worker = new DirectWorker(this);
 				break;
 			default:
 			case THREAD:
-				work = new ThreadWorker(this);
+				worker = new ThreadWorker(this);
 				break;
 		}
 	}
 
 	protected Work(Worker worker) {
-		this.work = worker;
+		this.worker = worker;
 	}
 
 	protected Work(WorkerPool workerPool) {
-		work = new PooledWorker(this);
-		workerPool.add((PooledWorker) work);		
+		worker = new PooledWorker(this);
+		workerPool.add((PooledWorker) worker);		
 	}
 
 	protected void sleep(int time) {
-		work.sleep(time);
+		worker.sleep(time);
 	}
 
 	public void start() {
-		work.start();
+		worker.start();
 	}
 
 	public void stop() {
-		work.stop();
+		logger.debug("Stop work");
+		worker.stop();
+	}
+
+	public boolean active() {
+		return worker.active();
+	}
+
+	public void exit() {
+		worker.exit();		
 	}
 
 	public void activate() throws ActivateException {}

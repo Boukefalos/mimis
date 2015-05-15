@@ -12,8 +12,8 @@ public abstract class Worker {
 		DIRECT, THREAD, POOLED
 	}
 
-    protected static final int SLEEP = 100;
-    
+    public static final int SLEEP = 100;
+
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected boolean run = false;
@@ -26,10 +26,6 @@ public abstract class Worker {
 	public Worker(Work work) {
 		this.work = work;
 	}
-
-	public abstract void start();
-
-	public abstract void stop();
 
     public boolean active() {
         return active;
@@ -96,4 +92,13 @@ public abstract class Worker {
             logger.info("", e);
         }
     }
+
+	public abstract void start();
+
+	public void stop() {
+		logger.debug("Stop worker");
+		activate = false;
+	}
+
+    abstract public void exit();
 }

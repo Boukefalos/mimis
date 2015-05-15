@@ -14,11 +14,11 @@ public abstract class IntervalWork extends Work {
 	protected IntervalWork(Worker.Type workerType) {
 		switch (workerType) {
 			case DIRECT:
-				work = new DirectIntervalWorker(this);
+				worker = new DirectIntervalWorker(this);
 				break;
 			default:
 			case THREAD:
-				work = new ThreadIntervalWorker(this);
+				worker = new ThreadIntervalWorker(this);
 				break;
 		}
 	}
@@ -26,11 +26,11 @@ public abstract class IntervalWork extends Work {
 	protected IntervalWork(Worker.Type workerType, int interval) {
 		switch (workerType) {
 			case DIRECT:
-				work = new DirectIntervalWorker(this, interval);
+				worker = new DirectIntervalWorker(this, interval);
 				break;
 			default:
 			case THREAD:
-				work = new ThreadIntervalWorker(this, interval);
+				worker = new ThreadIntervalWorker(this, interval);
 				break;
 		}
 	}

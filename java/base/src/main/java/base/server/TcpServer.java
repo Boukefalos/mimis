@@ -7,9 +7,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
-import base.worker.Worker;
+import base.work.Work;
 
-public class TcpServer extends Worker {
+public class TcpServer extends Work {
 	protected int port;
 	protected Socket socket;
 	protected Constructor<?> clientConstructor;
@@ -26,7 +26,7 @@ public class TcpServer extends Worker {
 		clientList = new ArrayList<Client>();
 	}
 
-	protected void activate() throws ActivateException {
+	public void activate() throws ActivateException {
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {
