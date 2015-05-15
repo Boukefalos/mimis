@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import sound.util.Tool;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
 public class Source implements Consumer {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -27,7 +27,7 @@ public class Source implements Consumer {
 	protected String name;
 	protected Producer producer;
 	protected InputStream producerInputStream;
-	protected Worker worker;
+	protected ThreadWorker worker;
 
 	public Source(String name) throws LineUnavailableException {
 		this.name = name;		
@@ -67,7 +67,7 @@ public class Source implements Consumer {
 		}
 	}
 
-	protected class DefaultWorker extends Worker {
+	protected class DefaultWorker extends ThreadWorker {
 		protected Format.Standard format;
 		protected SourceDataLine line;
 
@@ -120,7 +120,7 @@ public class Source implements Consumer {
 		}
 	}
 
-	protected class Mp3Worker extends Worker {
+	protected class Mp3Worker extends ThreadWorker {
 		protected Format.Mp3 format;
 		protected Player player;
 

@@ -16,9 +16,9 @@ import sound.util.SoxBuilder.File.Type;
 import sound.util.SoxBuilder.Option;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
-public class Port extends Worker implements Consumer {
+public class Port extends ThreadWorker implements Consumer {
 	protected static final int BUFFER_SIZE = 1024 * 4; // in bytes
 
 	protected String device;

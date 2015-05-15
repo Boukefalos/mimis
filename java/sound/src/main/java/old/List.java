@@ -8,14 +8,15 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import sound.consumer.Shoutcast;
 import base.exception.worker.ActivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
 import com.Ostermiller.util.BufferOverflowException;
 import com.Ostermiller.util.CircularByteBuffer;
 import com.Ostermiller.util.CircularObjectBuffer;
 
-public class List extends Worker {
+public class List extends ThreadWorker {
 	public static final int STEP = 80;        // milliseconds
 	public static final int RATE = 192;       // kbps
 	public static final int OVERLAP = 20000;  // milliseconds
@@ -184,10 +185,10 @@ public class List extends Worker {
 	public static void main(String[] args) {
 		int rate = 192;
 		List list = new List(new File("mp3"), rate);
-		/*Shoutcast shoutcast = new Shoutcast(null, rate, 9876);
+		Shoutcast shoutcast = new Shoutcast(rate, 9876);
 		shoutcast.start();
 		shoutcast.setInputStream(list.getInputStream());
-		shoutcast.setMetaBuffer(list.getMetaBuffer());*/
+		shoutcast.setMetaBuffer(list.getMetaBuffer());
 		while (true) {
 			try {
 				Thread.sleep(15000);

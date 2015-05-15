@@ -12,12 +12,12 @@ import sound.Producer;
 import sound.stream.HoardedInputStream;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
 import com.Ostermiller.util.CircularByteBuffer;
 import com.Ostermiller.util.CircularObjectBuffer;
 
-public class Stream extends Worker implements Producer, Format.Mp3 {
+public class Stream extends ThreadWorker implements Producer, Format.Mp3 {
 	public static final int STEP = 80; // in milliseconds
 
 	protected String http;

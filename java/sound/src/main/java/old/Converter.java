@@ -11,11 +11,11 @@ import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.BitstreamException;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
 import com.Ostermiller.util.CircularByteBuffer;
 
-public class Converter extends Worker {
+public class Converter extends ThreadWorker {
 	public static final String COMMAND = "lame --mp3input --cbr %s - - --quiet";
 	public static final int BYTES = 4096;     // bytes
 	public static final int BUFFER = 30000;   // milliseconds
@@ -156,7 +156,7 @@ public class Converter extends Worker {
 		this.inputStream = inputStream;	
 	}
 
-	class BufferWorker extends Worker {
+	class BufferWorker extends ThreadWorker {
 		protected void work() {
 			byte[] bytes = new byte[BYTES];
 			int read = 0;

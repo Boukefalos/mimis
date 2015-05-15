@@ -1,18 +1,12 @@
 package test;
 
-import java.io.File;
-
 import javax.sound.sampled.AudioFormat;
 
 import sound.Consumer;
 import sound.Producer;
 import sound.Source;
-import sound.consumer.Player;
 import sound.consumer.Port;
-import sound.consumer.Shoutcast;
-import sound.consumer.Writer;
 import sound.producer.Stream;
-import sound.producer.Target;
 
 public class Test {
 	public static void main(String[] args) {
@@ -26,13 +20,13 @@ public class Test {
 
 			Consumer c1 = new Source("Java Sound Audio Engine");
 			Consumer c2 = new Port("Speakers (Creative SB X-Fi)");
-			Consumer c3 = new Shoutcast();
-			Consumer c4 = new Player();
-			Consumer c5 = new Writer(new File("stream.out"));
+			//Consumer c3 = new Shoutcast();
+			//Consumer c4 = new Player();
+			//Consumer c5 = new Writer(new File("stream.out"));
 
 			//Utils.write(p3.getInputStream(), new File("stream.out"));
 			//Utils.play(p3.getInputStream());
-			c4.start(p3);
+			c1.start(p3);
 
 			//while (true) {
 				//Thread.sleep(300000);
