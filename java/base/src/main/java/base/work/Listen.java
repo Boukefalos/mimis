@@ -1,5 +1,8 @@
 package base.work;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -57,5 +60,15 @@ public abstract class Listen<E> extends Work {
         }		
 	}
 
-	public void input(E element) {}
+	public void input(Object object) {
+		MethodType methodType = MethodType.methodType(void.class, object.getClass());
+		MethodHandles.Lookup lookup = MethodHandles.lookup();
+		MethodHandle methodHandle;
+		try {
+			methodHandle = lookup.findVirtual(getClass(), "input", methodType);
+			methodHandle.invoke(this, object);
+		} catch (Throwable e) {
+			logger.error("", e);
+		}
+	}
 }
