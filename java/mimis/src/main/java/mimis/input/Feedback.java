@@ -16,7 +16,6 @@
  */
 package mimis.input;
 
-
 public class Feedback implements Input {
     protected static final long serialVersionUID = 1L;
 

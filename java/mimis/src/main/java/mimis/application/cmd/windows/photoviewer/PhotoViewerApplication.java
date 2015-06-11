@@ -17,7 +17,7 @@
 package mimis.application.cmd.windows.photoviewer;
 
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 import mimis.value.Key;
@@ -109,7 +109,7 @@ public class PhotoViewerApplication extends WindowsApplication {
         }
     }
 
-    protected class ZoomWorker extends Worker {
+    protected class ZoomWorker extends ThreadWorker {
         protected int zoomDirection;
 
         public void start(int zoomDirection) {

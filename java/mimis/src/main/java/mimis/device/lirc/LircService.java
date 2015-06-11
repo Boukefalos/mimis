@@ -18,50 +18,43 @@ package mimis.device.lirc;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
-import base.worker.Worker;
 import mimis.exception.button.UnknownButtonException;
 import mimis.util.Native;
 import mimis.value.Registry;
+import base.exception.worker.ActivateException;
+import base.server.socket.TcpClient;
 
-public class LircService extends Worker {
-    public static final String IP = "localhost";
+public class LircService extends TcpClient {
+    public static final String IP = "atom";
     public static final int PORT = 8765;
 
     protected ArrayList<LircButtonListener> lircButtonListenerList;
-    protected String ip;
-    protected int port;
-    protected Socket socket;
-    protected InputStream inputStream;
-    protected OutputStream outputStream;
+
+    // Pluggable reader and writer?
+    // Receive strings via callback?
     protected BufferedReader bufferedReader;
     protected PrintWriter printWriter;
     protected HashMap<String, LircButton[]> buttonMap;
     protected String send;
 
-    public LircService() {
-        this(IP, PORT);
-        buttonMap = new HashMap<String, LircButton[]>();
-        send = Native.getValue(Registry.CURRENT_USER, "Software\\LIRC", "password");
+    public static void main(String[] args) {
+    	LircService lircService = new LircService();
+    	lircService.start(false);
     }
 
-    public LircService(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
+    public LircService() {
+        super(IP, PORT);
+        buttonMap = new HashMap<String, LircButton[]>();
+        send = Native.getValue(Registry.CURRENT_USER, "Software\\LIRC", "password");
         lircButtonListenerList = new ArrayList<LircButtonListener>();
     }
 
@@ -77,44 +70,11 @@ public class LircService extends Worker {
         lircButtonListenerList.remove(lircButtonListener);
     }
 
+
     public void activate() throws ActivateException {
-        logger.trace("Activate LircService");
-        try {
-            socket = new Socket(ip, port);
-            socket.setSoTimeout(SLEEP);
-
-            inputStream = socket.getInputStream();
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-            outputStream = socket.getOutputStream();
-            printWriter = new PrintWriter(outputStream);
-        } catch (UnknownHostException e) {
-            logger.error("", e);
-            throw new ActivateException();
-        } catch (IOException e) {
-            logger.error("", e);
-            throw new ActivateException();
-        }
-        super.activate();
-    }
-
-    public synchronized boolean active() {
-        if (active && !socket.isConnected()) {
-            active = false;
-        }
-        return active;
-    }
-
-    public void deactivate() throws DeactivateException {
-        logger.trace("Deactivate LircService");
-        super.deactivate();
-        try {
-            inputStream.close();
-            outputStream.close();
-            socket.close();
-        } catch (IOException e) {
-            logger.error("", e);
-        }
+    	super.activate();
+        bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        printWriter = new PrintWriter(outputStream);
     }
 
     public void work() {

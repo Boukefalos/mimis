@@ -18,7 +18,7 @@ package mimis.application.cmd.windows.gomplayer;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 import mimis.value.Amount;
@@ -101,7 +101,7 @@ public class GomPlayerApplication extends WindowsApplication {
         }
     }
 
-    protected class VolumeWorker extends Worker {
+    protected class VolumeWorker extends ThreadWorker {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign) throws ActivateException {
@@ -115,7 +115,7 @@ public class GomPlayerApplication extends WindowsApplication {
         }
     };
 
-    protected class SeekWorker extends Worker {
+    protected class SeekWorker extends ThreadWorker {
         protected Amount amount;
         protected int seekDirection;
 

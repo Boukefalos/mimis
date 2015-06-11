@@ -17,7 +17,7 @@
 package mimis.application.cmd.windows.winamp;
 
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 import mimis.value.Command;
@@ -167,7 +167,7 @@ public class WinampApplication extends WindowsApplication {
         return user(0, IPC_GETOUTPUTTIME) / 1000;
     }
 
-    protected class VolumeWorker extends Worker {
+    protected class VolumeWorker extends ThreadWorker {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign) {
@@ -181,7 +181,7 @@ public class WinampApplication extends WindowsApplication {
         }
     };
 
-    protected class SeekWorker extends Worker {
+    protected class SeekWorker extends ThreadWorker {
         protected int seekDirection;
 
         public void start(int seekDirection) {

@@ -18,7 +18,7 @@ package mimis.application.lirc.ipod;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.application.lirc.LircApplication;
 import mimis.device.lirc.remote.WC02IPOButton;
 import mimis.value.Action;
@@ -85,7 +85,7 @@ public class iPodApplication extends LircApplication {
         }
     }
 
-    protected class VolumeWorker extends Worker {
+    protected class VolumeWorker extends ThreadWorker {
         protected int volumeChangeRate;
 
         public void activate(int volumeChangeRate) throws ActivateException {

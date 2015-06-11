@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.Component;
 import mimis.input.Task;
 import mimis.router.Router;
@@ -41,13 +41,13 @@ import mimis.value.Target;
 public class CurrentButtonManager extends ButtonManager implements ActionListener {
     protected Router router;
     protected ArrayCycle<Component> componentCycle;
-    protected Map<JRadioButton, Worker> radioButtonMap;
+    protected Map<JRadioButton, ThreadWorker> radioButtonMap;
 
-    public CurrentButtonManager(Router router, ArrayCycle<Component> componentCycle, String title, Worker... workerArray) {
+    public CurrentButtonManager(Router router, ArrayCycle<Component> componentCycle, String title, ThreadWorker... workerArray) {
         super(title, workerArray);
         this.componentCycle = componentCycle;
         this.router = router;
-        radioButtonMap = new HashMap<JRadioButton, Worker>();
+        radioButtonMap = new HashMap<JRadioButton, ThreadWorker>();
     }
 
     public JPanel createPanel() {
@@ -89,7 +89,7 @@ public class CurrentButtonManager extends ButtonManager implements ActionListene
     public void actionPerformed(ActionEvent event) {
         JRadioButton radioButton = (JRadioButton) event.getSource();
         if (radioButtonMap.containsKey(radioButton)) {
-            Worker worker = radioButtonMap.get(radioButton);
+            ThreadWorker worker = radioButtonMap.get(radioButton);
             if (componentCycle.contains(worker)) {
                 while (!componentCycle.current().equals(worker)) {
                     componentCycle.next();
@@ -100,9 +100,9 @@ public class CurrentButtonManager extends ButtonManager implements ActionListene
     }
     
     public void currentChanged() {
-        Worker worker = componentCycle.current();
+        ThreadWorker worker = componentCycle.current();
         if (radioButtonMap.containsValue(worker)) {
-            for (Entry<JRadioButton, Worker> entry  : radioButtonMap.entrySet()) {
+            for (Entry<JRadioButton, ThreadWorker> entry  : radioButtonMap.entrySet()) {
                 if (entry.getValue().equals(worker)) {
                     JRadioButton radioButton = (JRadioButton) entry.getKey();
                     radioButton.setSelected(true);

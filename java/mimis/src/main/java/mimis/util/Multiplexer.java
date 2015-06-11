@@ -16,11 +16,11 @@
  */
 package mimis.util;
 
-import base.worker.Worker;
 import mimis.util.multiplexer.SignalListener;
 import mimis.value.Signal;
+import base.work.Work;
 
-public class Multiplexer<T> extends Worker {
+public class Multiplexer<T> extends Work {
     public static final int TIMEOUT = 150;
 
     protected int threshold;
@@ -37,12 +37,12 @@ public class Multiplexer<T> extends Worker {
     }
 
     public synchronized void add(T object) {
-        if (this.type == null) {
+        if (type == null) {
             signalListener.add(Signal.BEGIN, object);
-            this.type = object;
+            type = object;
             end = true;
             start();
-        } else if (this.type.equals(object)) {
+        } else if (type.equals(object)) {
             end = false;
             notifyAll();
         } else {
@@ -54,7 +54,7 @@ public class Multiplexer<T> extends Worker {
         }
     }
 
-    protected void work() {
+    public void work() {
         try {
             synchronized (this) {
                 wait(TIMEOUT);

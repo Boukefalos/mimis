@@ -21,10 +21,10 @@ import java.util.Scanner;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.exception.device.DeviceNotFoundException;
 
-public class WiimoteDiscovery extends Worker {
+public class WiimoteDiscovery extends ThreadWorker {
     protected static final String WIISCAN = "wiiscan";
     protected static final int TIMEOUT = 1000;
     protected WiimoteDevice wiimoteDevice;

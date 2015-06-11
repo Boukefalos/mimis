@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.Component;
 import mimis.device.Device;
 import mimis.input.Feedback;
@@ -83,7 +83,7 @@ public class NetworkDevice extends Component implements Device {
         }
     }
 
-    protected class Server extends Worker {
+    protected class Server extends ThreadWorker {
         protected ServerSocket serverSocket;
         protected int port;
         
@@ -138,7 +138,7 @@ public class NetworkDevice extends Component implements Device {
         }
     }
 
-    protected class Client extends Worker {
+    protected class Client extends ThreadWorker {
         protected Socket socket;
         protected InputStream inputStream;
         protected OutputStream outputStream;

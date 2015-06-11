@@ -16,7 +16,7 @@
  */
 package mimis.application.mpc;
 
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 
@@ -88,7 +88,7 @@ public class MPCApplication extends WindowsApplication {
         return TITLE;
     }
 
-    protected class VolumeWorker extends Worker {
+    protected class VolumeWorker extends ThreadWorker {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign)  {
@@ -102,7 +102,7 @@ public class MPCApplication extends WindowsApplication {
         }
     };
 
-    protected class SeekWorker extends Worker {
+    protected class SeekWorker extends ThreadWorker {
         protected int seekDirection;
 
         public void start(int seekDirection) {

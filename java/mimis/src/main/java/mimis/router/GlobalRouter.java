@@ -23,7 +23,7 @@ import java.net.Socket;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.input.Feedback;
 import mimis.input.Task;
 
@@ -60,7 +60,7 @@ public class GlobalRouter extends Router {
         }
     }
 
-    class Client extends Worker {
+    class Client extends ThreadWorker {
         protected Socket socket;
         protected ObjectInputStream objectInputStream;
         protected ObjectOutputStream objectOutputStream;

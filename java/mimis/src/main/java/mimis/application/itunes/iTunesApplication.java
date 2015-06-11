@@ -21,7 +21,7 @@ import mimis.application.Application;
 import mimis.value.Action;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
 import com.dt.iTunesController.ITTrack;
@@ -177,7 +177,7 @@ public class iTunesApplication extends Component implements Application, iTunesE
     public void onAboutToPromptUserToQuitEvent() {}
     public void onSoundVolumeChangedEvent(int newVolume) {}    
 
-    protected class VolumeWorker extends Worker {
+    protected class VolumeWorker extends ThreadWorker {
         protected int volumeChangeRate;
 
         public void start(int volumeChangeRate) {

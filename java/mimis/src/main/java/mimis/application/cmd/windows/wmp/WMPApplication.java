@@ -16,7 +16,7 @@
  */
 package mimis.application.cmd.windows.wmp;
 
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 
@@ -86,7 +86,7 @@ public class WMPApplication extends WindowsApplication {
         }
     }
 
-    protected class VolumeWorker extends Worker {
+    protected class VolumeWorker extends ThreadWorker {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign) {

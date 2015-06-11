@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.application.cmd.CMDApplication;
 import mimis.util.Native;
 import mimis.value.Action;
@@ -171,7 +171,7 @@ public class VLCApplication extends CMDApplication {
         return TITLE;
     }
     
-    protected class VolumeWorker extends Worker {
+    protected class VolumeWorker extends ThreadWorker {
         protected String volumeChangeSign;
 
         public void activate(String volumeChangeSign) throws ActivateException {
@@ -186,7 +186,7 @@ public class VLCApplication extends CMDApplication {
         }
     };
 
-    protected class SeekWorker extends Worker {
+    protected class SeekWorker extends ThreadWorker {
         protected Amount amount;
         protected String seekDirection;
 

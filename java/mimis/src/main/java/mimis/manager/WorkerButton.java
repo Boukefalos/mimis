@@ -26,15 +26,15 @@ import mimis.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
 public class WorkerButton extends JToggleButton implements MouseListener {
     protected static final long serialVersionUID = 1L;
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected Worker worker;
+    protected ThreadWorker worker;
 
-    public WorkerButton(Worker worker) {
+    public WorkerButton(ThreadWorker worker) {
         this.worker = worker;
         setFocusable(false);
         addMouseListener(this);

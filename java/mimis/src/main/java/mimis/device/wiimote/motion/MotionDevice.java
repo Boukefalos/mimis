@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.Component;
 import mimis.device.lirc.LircButton;
 import mimis.device.lirc.remote.PhiliphsRCLE011Button;
@@ -151,7 +151,7 @@ public class MotionDevice extends Component {
         }
     }
 
-    class ReplayWorker extends Worker {
+    class ReplayWorker extends ThreadWorker {
         protected ObjectInputStream objectInputStream;
         protected int count, i, time;
 

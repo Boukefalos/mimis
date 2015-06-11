@@ -19,7 +19,7 @@ package mimis.device.javainput;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 import mimis.exception.ButtonException;
 import de.hardcode.jxinput.Button;
 import de.hardcode.jxinput.Directional;
@@ -33,7 +33,7 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEventListener;
 import de.hardcode.jxinput.event.JXInputEventManager;
 
-public class JavaInputListener extends Worker implements Runnable, JXInputAxisEventListener, JXInputButtonEventListener, JXInputDirectionalEventListener {
+public class JavaInputListener extends ThreadWorker implements Runnable, JXInputAxisEventListener, JXInputButtonEventListener, JXInputDirectionalEventListener {
     protected JavaInputDevice javaInputDevice;
     protected JXInputDevice jxinputDevice;
     protected Queue<JXInputAxisEvent> axisEventQueue;

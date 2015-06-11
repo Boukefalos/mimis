@@ -20,37 +20,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import base.exception.worker.DeactivateException;
-import base.worker.IntervalWorker;
-import base.worker.Worker;
+import base.worker.ThreadIntervalWorker;
+import base.worker.ThreadWorker;
 
-public class Manager extends IntervalWorker {
+public class Manager extends ThreadIntervalWorker {
     protected static final int INTERVAL = 1000;
 
-    protected ArrayList<Worker> workerList;
+    protected ArrayList<ThreadWorker> workerList;
 
-    public Manager(Worker... workerArray) {
-        workerList = new ArrayList<Worker>();
+    public Manager(ThreadWorker... workerArray) {
+        workerList = new ArrayList<ThreadWorker>();
         add(workerArray);
     }
 
-    public void add(Worker... workerArray) {
+    public void add(ThreadWorker... workerArray) {
         workerList.addAll(Arrays.asList(workerArray));
     }
 
-    public void remove(Worker... workerArray) {
+    public void remove(ThreadWorker... workerArray) {
         workerList.removeAll(Arrays.asList(workerArray));
     }
 
     protected void deactivate() throws DeactivateException {
         super.deactivate();
-        for (Worker worker : workerList) {
+        for (ThreadWorker worker : workerList) {
             worker.stop();
         }
     }
 
     public void exit() {
         super.exit();
-        for (Worker worker : workerList) {
+        for (ThreadWorker worker : workerList) {
             worker.exit();
         }
     }
@@ -60,7 +60,7 @@ public class Manager extends IntervalWorker {
     }
 
     protected void work() {
-        for (Worker worker : workerList) {
+        for (ThreadWorker worker : workerList) {
             worker.active();
         }
     }

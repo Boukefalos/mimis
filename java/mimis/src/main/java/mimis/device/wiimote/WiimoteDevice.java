@@ -40,7 +40,7 @@ import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Worker;
+import base.worker.ThreadWorker;
 
 public class WiimoteDevice extends Component implements Device, GestureListener {
     protected static final String TITLE = "Wiimote";
@@ -243,7 +243,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
         }
     }
 
-    class LedWorker extends Worker {
+    class LedWorker extends ThreadWorker {
         protected ArrayCycle<Integer> ledCycle;
 
         public LedWorker() {
