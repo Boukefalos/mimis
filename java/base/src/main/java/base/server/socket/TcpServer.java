@@ -1,4 +1,4 @@
-package base.server;
+package base.server.socket;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -7,14 +7,17 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
+import base.receiver.Receiver;
+import base.sender.Sender;
 import base.work.Work;
 
-public class TcpServer extends Work {
+public class TcpServer extends Work implements Sender {
 	protected int port;
 	protected Socket socket;
 	protected Constructor<?> clientConstructor;
 	protected ArrayList<Client> clientList;
 	protected ServerSocket serverSocket;
+    protected ArrayList<Receiver> receiverList = new ArrayList<Receiver>();
 
 	public TcpServer(int port, Class<?> clientClass) {
 		this.port = port;
@@ -63,6 +66,22 @@ public class TcpServer extends Work {
 	
 		public void work() {
 		}
+		
+		//public send(byte[] )
 	}
 
+	public void addReceiver(Receiver receiver) {
+		receiverList.add(receiver);
+	}
+
+	public void removeReceiver(Receiver receiver) {
+		receiverList.remove(receiver);
+	}
+
+	public void send(byte[] buffer) throws IOException {
+		for (Client client : clientList) {
+			// Should be dealt with in clients own thread
+			client.send(buffer);
+		}		
+	}
 }

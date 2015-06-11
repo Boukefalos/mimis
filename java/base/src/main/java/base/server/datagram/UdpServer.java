@@ -1,12 +1,14 @@
-package base.server;
+package base.server.datagram;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
+import base.receiver.Receiver;
 import base.work.Work;
 
 public abstract class UdpServer extends Work {
@@ -15,6 +17,7 @@ public abstract class UdpServer extends Work {
 	protected int port;
 	protected int bufferSize;
 	protected DatagramSocket diagramSocket;
+    protected ArrayList<Receiver> receiverList = new ArrayList<Receiver>();
 
 	public UdpServer(int port) {
 		this(port, BUFFER_SIZE);
@@ -50,8 +53,16 @@ public abstract class UdpServer extends Work {
 			stop();
 			return;
 		}
-		receive(buffer);		
+		for (Receiver receiver : receiverList) {
+			receiver.receive(buffer);
+		}	
+	}
+	
+	public void addReceiver(Receiver receiver) {
+		receiverList.add(receiver);
 	}
 
-	abstract protected void receive(byte[] buffer);
+	public void removeReceiver(Receiver receiver) {
+		receiverList.remove(receiver);
+	}
 }

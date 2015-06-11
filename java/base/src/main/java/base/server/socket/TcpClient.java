@@ -1,23 +1,32 @@
-package base.server;
+package base.server.socket;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
+import base.receiver.Receiver;
 
 public abstract class TcpClient extends AbstractClient {
     protected static final int BUFFER = 2048;
 	protected String host;
     protected int port;
+	protected int bufferSize;
+    protected ArrayList<Receiver> receiverList = new ArrayList<Receiver>();
 
     public TcpClient(String host, int port) {
+    	this(host, port, BUFFER);
+    }
+
+    public TcpClient(String host, int port, int bufferSize) {
     	super(null);
         this.host = host;
         this.port = port;
+        this.bufferSize = bufferSize;
     }
 
     public void activate() throws ActivateException {
@@ -25,7 +34,7 @@ public abstract class TcpClient extends AbstractClient {
             socket = new Socket(host, port);
             inputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
-            send("Incoming client!".getBytes());
+            //send("Incoming client!".getBytes());
         } catch (UnknownHostException e) {
             logger.error("", e);
             throw new ActivateException();
@@ -52,10 +61,12 @@ public abstract class TcpClient extends AbstractClient {
     }
 
     public final void work() {
-    	byte[] buffer = new byte[BUFFER];
+    	byte[] buffer = new byte[bufferSize];
     	try {
 			while (inputStream.read(buffer) > 0) {
-				receive(buffer);
+				for (Receiver receiver : receiverList) {
+					receiver.receive(buffer);
+				}
 			}
 		} catch (IOException e) {
 			stop();
@@ -66,6 +77,12 @@ public abstract class TcpClient extends AbstractClient {
     	System.out.println("Client writing: " + Charset.defaultCharset().decode(ByteBuffer.wrap(buffer)).toString());
     	outputStream.write(buffer);
     }
+    
+	public void register(Receiver receiver) {
+		receiverList.add(receiver);
+	}
 
-    public abstract void receive(byte[] buffer);
+	public void remove(Receiver receiver) {
+		receiverList.remove(receiver);
+	}
 }
