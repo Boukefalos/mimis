@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
-import base.server.TcpServer;
+import base.server.socket.TcpServer;
 
 import com.Ostermiller.util.CircularObjectBuffer;
 
