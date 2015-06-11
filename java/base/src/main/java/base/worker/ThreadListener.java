@@ -16,7 +16,7 @@ public class ThreadListener<E> extends ThreadWorker implements Listener<E> {
 	}
 
 	public void add(E element) {
-		System.out.println("ok! " + element);
-		listen.queue.add(element);		
+		listen.queue.add(element);
+		listen.notify();
 	}
 }

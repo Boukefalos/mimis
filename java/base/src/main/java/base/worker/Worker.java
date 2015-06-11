@@ -42,12 +42,12 @@ public abstract class Worker {
     public void runActivate() {
     	if (activate && !active) {
             try {
-            	work.activate();            	
+            	work.activate();
+                active = true;
             } catch (ActivateException e) {
                 logger.error("", e);
             } finally {
                 activate = false;
-                active = true;
             }
         }
     }
