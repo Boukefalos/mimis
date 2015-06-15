@@ -11,12 +11,14 @@ import java.util.Iterator;
 import java.util.Set;
 
 import base.exception.worker.ActivateException;
-import base.receiver.Receiver;
+import base.exception.worker.DeactivateException;
 import base.sender.Sender;
+import base.work.Listen;
 import base.work.Work;
 import base.worker.Worker;
 
-public class TcpClient extends Work implements Sender {
+public abstract class TcpClient extends Work implements Sender {
+	protected static final String HOST = "localhost";
 	protected static final int BUFFER_SIZE = 1024;
 
 	protected String host;
@@ -24,7 +26,11 @@ public class TcpClient extends Work implements Sender {
 	protected int bufferSize;
 	protected SocketChannel socketChannel;
 	protected Selector selector;
-    protected ArrayList<Receiver> receiverList = new ArrayList<Receiver>();
+    protected ArrayList<Listen<byte[]>> listenList = new ArrayList<Listen<byte[]>>();
+
+    public TcpClient(int port) {
+    	this(HOST, port);
+    }
 
 	public TcpClient(String host, int port) {
 		this(host, port, BUFFER_SIZE);
@@ -37,6 +43,7 @@ public class TcpClient extends Work implements Sender {
 	}
 
 	public void activate() throws ActivateException {
+		System.out.println("Client: Activate!");
 		try {
 			InetSocketAddress hostAddress = new InetSocketAddress(host, port);
 			socketChannel = SocketChannel.open(hostAddress);
@@ -46,6 +53,9 @@ public class TcpClient extends Work implements Sender {
 			}
 			selector = Selector.open();
 			socketChannel.register(selector, SelectionKey.OP_READ);
+			synchronized (host) {
+				host.notifyAll();
+			}
 		} catch (Exception e) {
 			logger.error("", e);
 			throw new ActivateException();
@@ -53,29 +63,45 @@ public class TcpClient extends Work implements Sender {
 		super.activate();
 	}
 
+	public void deactivate() throws DeactivateException {
+		System.out.println("Client: Deactivate!");
+		try {
+			selector.close();
+			socketChannel.close();
+		} catch (IOException e) {
+			throw new DeactivateException();
+		}
+	}
+
+	public void exit() {
+		super.exit();
+		if (selector != null) {
+			selector.wakeup();
+		}
+	}
+
 	public final void work() {
 		try {
-			//System.out.println("Client: Waiting for select...");	
-			//System.out.println("Client: Number of selected keys: " + selector.select());
-			selector.select();
+			System.out.println("Client: Waiting for select... ");	
+			System.out.println("Client: Number of selected keys: " + selector.select());
+			//selector.select();
 			Set<SelectionKey> selectionKeySet = selector.selectedKeys();
-			Iterator<SelectionKey> selectionKeyIterator = selectionKeySet.iterator();	
+			Iterator<SelectionKey> selectionKeyIterator = selectionKeySet.iterator();
+
 			while (selectionKeyIterator.hasNext()) {	
-				SelectionKey selectionKey = selectionKeyIterator.next();	
+				SelectionKey selectionKey = selectionKeyIterator.next();
 				if (selectionKey.isReadable()) {
 					ByteBuffer byteBuffer = ByteBuffer.allocate(bufferSize);
 					socketChannel.read(byteBuffer);
 					byte[] buffer = byteBuffer.array();
-					for (Receiver receiver : receiverList) {
-						receiver.receive(buffer);
-					}
+					input(buffer);
 				} else if (selectionKey.isWritable()) {
 					byte[] buffer;
 					buffer = (byte[]) selectionKey.attachment();
-					System.out.println("poll() " + new String(buffer).trim());
 					ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
 					socketChannel.write(byteBuffer);
-					selectionKey.cancel();
+					//selectionKey.cancel();
+					socketChannel.register(selector, SelectionKey.OP_READ);
 				}
 				selectionKeyIterator.remove();
 			}
@@ -84,20 +110,29 @@ public class TcpClient extends Work implements Sender {
 		}
 	}
 
+	protected abstract void input(byte[] buffer);
+
 	public void send(byte[] buffer) throws IOException {
+		if (selector == null) {
+			try {
+				synchronized (host) {
+					host.wait();
+				}
+			} catch (InterruptedException e) {}
+		}
 		selector.wakeup();
-		socketChannel.register(selector, SelectionKey.OP_WRITE, buffer);
+		socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE, buffer);
 	}
 
 	public void close() throws IOException {
 		socketChannel.close();		
 	}
 
-	public void register(Receiver receiver) {
-		receiverList.add(receiver);
+	/*public void register(Listen<byte[]> listen) {
+		listenList.add(listen);
 	}
 
-	public void remove(Receiver receiver) {
-		receiverList.remove(receiver);
-	}
+	public void remove(Listen<byte[]> listen) {
+		listenList.remove(listen);
+	}*/
 }

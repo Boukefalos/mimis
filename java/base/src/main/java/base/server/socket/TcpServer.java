@@ -7,26 +7,29 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
-import base.receiver.Receiver;
 import base.sender.Sender;
 import base.work.Work;
 
 public class TcpServer extends Work implements Sender {
+	protected static final Class<?> CLIENT_CLASS = TcpServerClient.class;
+
 	protected int port;
-	protected Socket socket;
-	protected Constructor<?> clientConstructor;
-	protected ArrayList<Client> clientList;
 	protected ServerSocket serverSocket;
-    protected ArrayList<Receiver> receiverList = new ArrayList<Receiver>();
+	protected Constructor<?> clientConstructor;
+	protected ArrayList<TcpServerClient> clientList;
+
+    public TcpServer(int port) {
+    	this(port, CLIENT_CLASS);
+    }
 
 	public TcpServer(int port, Class<?> clientClass) {
 		this.port = port;
 		try {
-			clientConstructor = Class.forName(clientClass.getName()).getConstructor(Socket.class);
+			clientConstructor = Class.forName(clientClass.getName()).getConstructor(TcpServer.class, Socket.class);
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
 			logger.error("Failed to initialise client constructor");
 		}
-		clientList = new ArrayList<Client>();
+		clientList = new ArrayList<TcpServerClient>();
 	}
 
 	public void activate() throws ActivateException {
@@ -39,49 +42,36 @@ public class TcpServer extends Work implements Sender {
 		super.activate();
 	}
 
-	public void work() {
+	public void exit() {
+		super.exit();
 		try {
-			socket = serverSocket.accept();
+			serverSocket.close();
 		} catch (IOException e) {
 			logger.error("", e);
-			return;
 		}
+	}
+
+	public void work() {
 		try {
-			Client client = (Client) clientConstructor.newInstance(socket);
+			Socket socket = serverSocket.accept();
+			TcpServerClient client = (TcpServerClient) clientConstructor.newInstance(this, socket);
 			clientList.add(client);
 			client.start();
+			System.out.println("Accepted new connection from client: " + socket);
+		} catch (IOException e) {
+			stop();
 		} catch (Exception e) {
 			logger.error("", e);
 		}
 	}
 
-	public static abstract class Client extends AbstractClient {
-	
-		public Client(Socket socket) {
-			super(socket);
-		}
-
-		public void setSocket(Socket socket) {			
-		}
-	
-		public void work() {
-		}
-		
-		//public send(byte[] )
-	}
-
-	public void addReceiver(Receiver receiver) {
-		receiverList.add(receiver);
-	}
-
-	public void removeReceiver(Receiver receiver) {
-		receiverList.remove(receiver);
-	}
-
 	public void send(byte[] buffer) throws IOException {
-		for (Client client : clientList) {
+		logger.debug("Number of clients = " + clientList.size());
+		for (TcpServerClient client : clientList) {
 			// Should be dealt with in clients own thread
 			client.send(buffer);
 		}		
 	}
+
+	public void input(TcpServerClient client, byte[] buffer) {}
 }

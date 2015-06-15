@@ -5,35 +5,66 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-public class UdpMulticastServer implements Runnable {
-	private MulticastSocket socket;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.sender.Sender;
+import base.work.Listen;
 
-	public void run() {
+public class UdpMulticastServer extends Listen<byte[]> implements Sender {
+    protected static final int BUFFER_SIZE = 2048;
+
+	protected String host;
+	protected int port;
+	protected MulticastSocket socket;
+
+	public UdpMulticastServer(String host, int port) {
+		this.host = host;
+		this.port = port;
+	}
+
+	public void activate() throws ActivateException {
 		try {
-			socket = new MulticastSocket(4445);
+			socket = new MulticastSocket(); // optional, add port and receive as well!!
+			// pass socket directly to Server to establish bidirectional
+			// couple together capabilities
+			// listen to datagrams and deal with writing using nio?
+			new XX(socket).start();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ActivateException();
 		}
-		while (true) {
-	        try {
-	            byte[] buf = new byte[256];
-                String dString = String.valueOf(Math.random());
-	            buf = dString.getBytes();
+		super.activate();
+	}
 
-	            InetAddress group = InetAddress.getByName("239.255.255.255");
-	            DatagramPacket packet;
-	            packet = new DatagramPacket(buf, buf.length, group, 4446);
-	            socket.send(packet);
+	public void deactivate() throws DeactivateException {
+		super.deactivate();
+		socket.close();
+	}
 
-	            try {
-	                Thread.sleep(1000);
-	            }
-	            catch (InterruptedException e) { }
-	        }
-	        catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    //socket.close();
+	public boolean active() {
+		return socket != null;
+		/* Should handle connection state
+		if (socket == null) {
+			return false;
+		} else {
+			return socket.isConnected() && !socket.isClosed();
+		}*/
+	}
+
+	public void input(byte[] buffer) {
+		if (socket == null) {
+			return;
+		}
+        try {
+            InetAddress group = InetAddress.getByName(host);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, port);
+            socket.send(packet);
+        }
+        catch (IOException e) {
+            logger.error("", e);
+        }
+	}
+
+	public void send(byte[] buffer) throws IOException {
+		add(buffer);		
 	}
 }
