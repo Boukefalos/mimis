@@ -11,11 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UdpSender implements Sender {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+	protected static final String HOST = "localhost";
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected DatagramSocket datagramSocket;
 	protected InetAddress inetAddress;
 	protected int port;
+
+	public UdpSender(int port) throws UnknownHostException {
+		this(HOST, port);
+	}
 
 	public UdpSender(String host, int port) throws UnknownHostException{
 		inetAddress = InetAddress.getByName(host);

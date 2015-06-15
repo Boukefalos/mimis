@@ -5,10 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
-import base.work.Listen;
 import base.work.Work;
 
 public abstract class UdpServer extends Work {
@@ -17,7 +15,6 @@ public abstract class UdpServer extends Work {
 	protected int port;
 	protected int bufferSize;
 	protected DatagramSocket diagramSocket;
-    protected ArrayList<Listen<byte[]>> listenList = new ArrayList<Listen<byte[]>>();
 
 	public UdpServer(int port) {
 		this(port, BUFFER_SIZE);
@@ -53,19 +50,8 @@ public abstract class UdpServer extends Work {
 			stop();
 			return;
 		}
-		listen(buffer);
-		/*for (Listen<byte[]> listen : listenList) {
-			listen.add(buffer);
-		}*/	
+		input(buffer);
 	}
 
-	protected abstract void listen(byte[] buffer);
-
-	/*public void register(Listen<byte[]> listen) {
-		listenList.add(listen);
-	}
-
-	public void remove(Listen<Object> listen) {
-		listenList.remove(listen);
-	}*/
+	protected abstract void input(byte[] buffer);
 }
