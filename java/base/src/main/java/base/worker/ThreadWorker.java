@@ -40,9 +40,6 @@ public class ThreadWorker extends Worker implements Runnable {
 
     public synchronized void stop() {
     	super.stop();
-        if (active) {
-            deactivate = true;
-        }
         notifyAll();
     }
 

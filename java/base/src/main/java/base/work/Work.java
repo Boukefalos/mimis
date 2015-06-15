@@ -12,8 +12,8 @@ import base.worker.pool.PooledWorker;
 import base.worker.pool.WorkerPool;
 
 public abstract class Work {
-	protected static final Worker.Type WORKER_TYPE = Worker.Type.THREAD;
-	
+	protected static final Worker.Type WORKER_TYPE = Worker.Type.BACKGROUND;
+
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected Worker worker;
@@ -24,11 +24,10 @@ public abstract class Work {
 
 	protected Work(Worker.Type workerType) {
 		switch (workerType) {
-			case DIRECT:
+			case FOREGROUND:
 				worker = new DirectWorker(this);
 				break;
 			default:
-			case THREAD:
 				worker = new ThreadWorker(this);
 				break;
 		}
@@ -48,6 +47,7 @@ public abstract class Work {
 	}
 
 	public void start() {
+		logger.debug("Start work");
 		worker.start();
 	}
 
@@ -61,7 +61,7 @@ public abstract class Work {
 	}
 
 	public void exit() {
-		worker.exit();		
+		worker.exit();
 	}
 
 	public void activate() throws ActivateException {}

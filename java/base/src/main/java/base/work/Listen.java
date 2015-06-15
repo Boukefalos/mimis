@@ -6,15 +6,19 @@ import java.lang.invoke.MethodType;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import base.worker.DirectListener;
-import base.worker.ThreadListener;
+import base.exception.worker.ActivateException;
+import base.worker.ForegroundListener;
+import base.worker.BackgroundListener;
 import base.worker.Worker;
 import base.worker.pool.Listener;
 import base.worker.pool.ListenerPool;
 import base.worker.pool.PooledListener;
 
-public abstract class Listen<E> extends Work {
+public abstract class Listen<E> extends Work implements Listener<E> {
+	protected static final Worker.Type WORKER_TYPE = Worker.Type.DIRECT;
+
     protected Listener<E> listener;
+    protected Worker.Type workerType;
     public Queue<E> queue;
 
     public Listen() {
@@ -22,13 +26,15 @@ public abstract class Listen<E> extends Work {
     }
 
 	protected Listen(Worker.Type workerType) {
+		this.workerType = workerType;
 		switch (workerType) {
 			case DIRECT:
-				listener = new DirectListener<E>(this);
+				return;
+			case FOREGROUND:
+				listener = new ForegroundListener<E>(this);
 				break;
 			default:
-			case THREAD:
-				listener = new ThreadListener<E>(this);
+				listener = new BackgroundListener<E>(this);
 				break;
 		}
         queue = new ConcurrentLinkedQueue<E>();
@@ -46,10 +52,27 @@ public abstract class Listen<E> extends Work {
 	}
 
     public synchronized void add(E element) {
-    	listener.add(element);
+    	if (workerType.equals(Worker.Type.DIRECT)) {
+    		input(element);
+    	} else {
+    		listener.add(element);
+    	}
+    }
+
+    public void start() {
+    	if (workerType.equals(Worker.Type.DIRECT)) {
+    		try {
+				activate();
+			} catch (ActivateException e) {
+				logger.error("Failed to start directly", e);
+			}
+    	} else {
+    		super.start();
+    	}
     }
 
 	public void work() {
+		System.err.println(this.getClass().getName());
         while (!queue.isEmpty()) {
             input(queue.poll());
         }
@@ -61,12 +84,15 @@ public abstract class Listen<E> extends Work {
 	}
 
 	public void input(Object object) {
+		// This lookup should be cached
 		MethodType methodType = MethodType.methodType(void.class, object.getClass());
 		MethodHandles.Lookup lookup = MethodHandles.lookup();
 		MethodHandle methodHandle;
 		try {
 			methodHandle = lookup.findVirtual(getClass(), "input", methodType);
 			methodHandle.invoke(this, object);
+		} catch (Exception e) {
+			logger.error("", e);
 		} catch (Throwable e) {
 			logger.error("", e);
 		}

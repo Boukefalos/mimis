@@ -9,7 +9,7 @@ import base.work.Work;
 
 public abstract class Worker {
 	public enum Type {
-		DIRECT, THREAD, POOLED
+		DIRECT, FOREGROUND, BACKGROUND, POOLED
 	}
 
     public static final int SLEEP = 100;
@@ -28,10 +28,10 @@ public abstract class Worker {
 	}
 
     public boolean active() {
-        return active;
+        return deactivate || active;
     }
 
-    public void run() {
+    public final void run() {
         while (run || deactivate) {
     		runActivate();
     		runDeactivate();
@@ -51,7 +51,7 @@ public abstract class Worker {
             }
         }
     }
-    
+
     public void runDeactivate() {
     	if (deactivate && active) {
             try {
@@ -96,8 +96,10 @@ public abstract class Worker {
 	public abstract void start();
 
 	public void stop() {
-		logger.debug("Stop worker");
-		activate = false;
+        if (active && !activate) {
+            deactivate = true;
+        }
+        activate = false;
 	}
 
     abstract public void exit();
