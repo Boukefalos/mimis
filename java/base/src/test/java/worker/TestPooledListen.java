@@ -20,16 +20,16 @@ public class TestPooledListen {
 
     public static void main(String[] args) {
     	ListenerPool<Integer> listenerPool = new ListenerPool<Integer>(5);	
-    	List<DummyListen> listenList = new ArrayList<DummyListen>();
+    	List<DummyListen<Integer>> listenList = new ArrayList<DummyListen<Integer>>();
     	for (int i = 0; i < 20; ++i) {
-    		DummyListen listen = new DummyListen(listenerPool, i + 1);
+    		DummyListen<Integer> listen = new DummyListen<Integer>(listenerPool, i + 1);
     		listenList.add(listen);
     	}
     	listenerPool.start();
 
     	System.out.println("Starting to give out elements!");
     	for (int i = 0; i < 100; ++i) {
-	    	DummyListen randomListen = listenList.get((new Random()).nextInt(listenList.size()));
+	    	DummyListen<Integer> randomListen = listenList.get((new Random()).nextInt(listenList.size()));
 	    	randomListen.add(i);
     	}
 

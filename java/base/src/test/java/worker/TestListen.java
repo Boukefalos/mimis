@@ -4,7 +4,7 @@ import worker.dummy.DummyListen;
 
 public class TestListen {
 	public static void main(String[] args) {
-		DummyListen listen = new DummyListen(0);
+		DummyListen<Integer> listen = new DummyListen<Integer>(0);
 		listen.start();
 		for (int i = 0; i < 10; ++i) {
 			listen.add(i);
