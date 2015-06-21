@@ -46,11 +46,11 @@ public class AbstractLoader<E> {
 		return properties;
 	}
 
-	protected void addSender(Properties properties) throws LoaderException {
+	protected void addSender(String protocol, String implementation, String host, int port) throws LoaderException {
 		Class<?> senderClass = null;
-		switch (properties.getProperty("protocol")) {
+		switch (protocol) {
 			case "tcp":
-				switch (properties.getOrDefault("tcp.implementation", "socket").toString()) {
+				switch (implementation) {
 					case "channel":
 						senderClass = base.server.channel.TcpClient.class; 
 						break;
@@ -67,15 +67,15 @@ public class AbstractLoader<E> {
 			throw new LoaderException("Failed to determine <Sender>");
 		}
 		pico.addComponent(senderClass, senderClass, new Parameter[]{
-			new ConstantParameter(properties.getProperty("remote.host")),
-			new ConstantParameter(Integer.valueOf(properties.getProperty("remote.port")))});
+			new ConstantParameter(host),
+			new ConstantParameter(port)});
 	}
 
-    protected void addForwarder(Properties properties) throws LoaderException {
+    protected void addForwarder(String protocol, String implementation, int port) throws LoaderException {
 		Class<?> forwarderClass = null;
-		switch (properties.getProperty("server.protocol", "tcp")) {
+		switch (protocol) {
 				case "tcp":
-					switch (properties.getOrDefault("tcp.implementation", "socket").toString()) {
+					switch (implementation) {
 					case "channel":
 						forwarderClass = TcpServerChannelForwarder.class;
 						break;
@@ -91,6 +91,6 @@ public class AbstractLoader<E> {
 			throw new LoaderException("Failed to determine <Forwarder>");
 		}
 		pico.addComponent(forwarderClass, forwarderClass, new Parameter[]{
-			new ConstantParameter(Integer.valueOf(properties.getProperty("server.port")))});		
+			new ConstantParameter(port)});
 	}
 }
