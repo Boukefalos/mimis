@@ -32,7 +32,6 @@ public class TcpServerClient extends AbstractTcpClient {
     }
 
 	public void input(byte[] buffer) {
-System.out.println(1234);
 		server.input(this, buffer);		
 	}
 }

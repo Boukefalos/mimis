@@ -10,7 +10,7 @@ import org.junit.Test;
 import base.sender.UdpSender;
 import base.server.datagram.UdpServer;
 
-public class TestUdpCommunication {
+public class TestUdpUnicastCommunication {
 	protected TestUdpServer server;
 	protected UdpSender sender;
 

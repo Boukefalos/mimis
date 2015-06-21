@@ -8,7 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	TestTcpSocketCommunication.class,
 	TestTcpChannelCommunication.class,
-	TestUdpCommunication.class
+	TestUdpUnicastCommunication.class,
+	TestUdpMulticastCommunication.class
 })
 
 public class AllTests {}

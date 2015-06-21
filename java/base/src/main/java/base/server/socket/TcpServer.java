@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
 import base.sender.Sender;
 import base.work.Work;
 
@@ -39,13 +40,19 @@ public class TcpServer extends Work implements Sender {
 			logger.error("", e);
 			throw new ActivateException();
 		}
-		super.activate();
+	}
+
+	public void deactivate() throws DeactivateException {
+		for (TcpServerClient client : clientList) {
+			client.stop();
+		}
 	}
 
 	public void exit() {
 		super.exit();
 		try {
 			serverSocket.close();
+			// Should check if clients exit as well
 		} catch (IOException e) {
 			logger.error("", e);
 		}

@@ -16,6 +16,7 @@ import java.util.Set;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.sender.Sender;
+import base.server.channel.TcpServerClient;
 import base.work.Work;
 
 public class TcpServer extends Work implements Sender {
@@ -50,7 +51,6 @@ public class TcpServer extends Work implements Sender {
 	}
 
 	public void activate() throws ActivateException {
-
 		System.out.println("Server: Activate!");	
 		try {
 			// Get selector
@@ -81,11 +81,15 @@ public class TcpServer extends Work implements Sender {
 			serverSocket.close();
 		} catch (IOException e) {
 			throw new DeactivateException();
+		} finally {
+			for (TcpServerClient client : clientList) {
+				client.stop();
+			}
 		}
 	}
 
-	public void exit() {
-		super.exit();
+	public void stop() {
+		super.stop();
 		if (selector != null) {
 			selector.wakeup();
 		}

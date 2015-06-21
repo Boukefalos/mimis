@@ -24,7 +24,7 @@ public class ThreadWorker extends Worker implements Runnable {
             run = true;
             if (thread) {
                 logger.debug("Start thread");
-                new Thread(this, getClass().getName()).start();
+                new Thread(this, work.getClass().getName()).start();
             } else {
                 logger.debug("Run directly");
                 run();
@@ -38,13 +38,8 @@ public class ThreadWorker extends Worker implements Runnable {
         start(thread);
     }
 
-    public synchronized void stop() {
-    	super.stop();
-        notifyAll();
-    }
-
     public void exit() {
+        work.stop();
         run = false;
-        stop();
     }
 }

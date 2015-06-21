@@ -9,15 +9,23 @@ import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.sender.Sender;
 import base.work.Listen;
+import base.worker.Worker;
 
 public class UdpMulticastServer extends Listen<byte[]> implements Sender {
+	protected static final String HOST = "239.255.255.255";
     protected static final int BUFFER_SIZE = 2048;
 
 	protected String host;
 	protected int port;
 	protected MulticastSocket socket;
+	//private XX x;
+
+	public UdpMulticastServer(int port) {
+		this(HOST, port);
+	}
 
 	public UdpMulticastServer(String host, int port) {
+		super(Worker.Type.BACKGROUND);
 		this.host = host;
 		this.port = port;
 	}
@@ -28,7 +36,8 @@ public class UdpMulticastServer extends Listen<byte[]> implements Sender {
 			// pass socket directly to Server to establish bidirectional
 			// couple together capabilities
 			// listen to datagrams and deal with writing using nio?
-			new XX(socket).start();
+			//x = new XX(socket);
+			//x.start();
 		} catch (IOException e) {
 			throw new ActivateException();
 		}
@@ -36,18 +45,10 @@ public class UdpMulticastServer extends Listen<byte[]> implements Sender {
 	}
 
 	public void deactivate() throws DeactivateException {
-		super.deactivate();
-		socket.close();
-	}
+		System.err.println("lets work the magic");
 
-	public boolean active() {
-		return socket != null;
-		/* Should handle connection state
-		if (socket == null) {
-			return false;
-		} else {
-			return socket.isConnected() && !socket.isClosed();
-		}*/
+		socket.close();
+		super.deactivate();
 	}
 
 	public void input(byte[] buffer) {

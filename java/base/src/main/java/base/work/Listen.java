@@ -71,16 +71,25 @@ public abstract class Listen<E> extends Work implements Listener<E> {
     	}
     }
 
+    public void stop() {
+    	super.stop();
+    	synchronized (this) {
+    		notifyAll();
+    	}
+    }
+
 	public void work() {
-		System.err.println(this.getClass().getName());
         while (!queue.isEmpty()) {
+        	logger.debug("Listen: work() > input");
             input(queue.poll());
         }
         synchronized (this) {
-            try {
+        	logger.debug("Listen: work() > wait");
+        	try {            	
                 wait();                
             } catch (InterruptedException e) {}
-        }		
+        	logger.debug("Listen: work() > notified");
+        }
 	}
 
 	public void input(Object object) {

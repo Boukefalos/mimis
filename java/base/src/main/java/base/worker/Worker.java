@@ -14,7 +14,7 @@ public abstract class Worker {
 
     public static final int SLEEP = 100;
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger logger;
 
     protected boolean run = false;
     protected boolean active = false;
@@ -25,22 +25,31 @@ public abstract class Worker {
 
 	public Worker(Work work) {
 		this.work = work;
+		 logger = LoggerFactory.getLogger(work.getClass());
 	}
 
     public boolean active() {
+    	logger.debug("Worker: active()");
+    	System.out.println(activate + " " + deactivate + " " + active + ": " + (deactivate || active));
         return deactivate || active;
     }
 
     public final void run() {
+    	logger.debug("Worker: run()");
         while (run || deactivate) {
+        	System.err.println("xxx");
     		runActivate();
+    		System.err.println("act");
     		runDeactivate();
+    		System.err.println("deact");
     		runWork();
+    		System.err.println("---" + getClass().getName() + run + "  " + deactivate);
         }
     }
 
-    public void runActivate() {
+    public void runActivate() {    	
     	if (activate && !active) {
+    		logger.debug("Worker: runActivate()");
             try {
             	work.activate();
                 active = true;
@@ -54,6 +63,7 @@ public abstract class Worker {
 
     public void runDeactivate() {
     	if (deactivate && active) {
+    		logger.debug("Worker: runDeactivate()");
             try {
                work.deactivate();
             } catch (DeactivateException e) {
@@ -67,9 +77,11 @@ public abstract class Worker {
 
     public void runWork() {
         if (active) {
+        	logger.debug("Worker: runWork() > work");
         	work.work();
         } else if (run) {
             try {
+            	logger.debug("Worker: runWork() > wait");
                 synchronized (this) {
                     wait();
                 }
@@ -96,10 +108,13 @@ public abstract class Worker {
 	public abstract void start();
 
 	public void stop() {
+		logger.debug("Worker: stop()");
+		logger.debug("Worker: stop() " + active + " " + activate);
         if (active && !activate) {
             deactivate = true;
         }
         activate = false;
+        logger.debug("Worker: stop() " + deactivate);
 	}
 
     abstract public void exit();

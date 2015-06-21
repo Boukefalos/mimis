@@ -47,20 +47,22 @@ public abstract class Work {
 	}
 
 	public void start() {
-		logger.debug("Start work");
+		logger.debug("Work: start()");
 		worker.start();
 	}
 
 	public void stop() {
-		logger.debug("Stop work");
+		logger.debug("Work: stop()");
 		worker.stop();
 	}
 
 	public boolean active() {
+		logger.debug("Work: active()");
 		return worker.active();
 	}
 
 	public void exit() {
+		logger.debug("Work: exit()");
 		worker.exit();
 	}
 
