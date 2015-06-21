@@ -6,6 +6,7 @@ import sound.Consumer;
 import sound.Producer;
 import sound.Source;
 import sound.consumer.Port;
+import sound.consumer.Shoutcast;
 import sound.producer.Stream;
 
 public class Test {
@@ -20,13 +21,13 @@ public class Test {
 
 			Consumer c1 = new Source("Java Sound Audio Engine");
 			Consumer c2 = new Port("Speakers (Creative SB X-Fi)");
-			//Consumer c3 = new Shoutcast();
+			Consumer c3 = new Shoutcast();
 			//Consumer c4 = new Player();
 			//Consumer c5 = new Writer(new File("stream.out"));
 
 			//Utils.write(p3.getInputStream(), new File("stream.out"));
 			//Utils.play(p3.getInputStream());
-			c1.start(p3);
+			c3.start(p4);
 
 			//while (true) {
 				//Thread.sleep(300000);

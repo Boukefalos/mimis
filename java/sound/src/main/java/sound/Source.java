@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import sound.util.Tool;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
+import base.work.Work;
 
 public class Source implements Consumer {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -27,47 +27,47 @@ public class Source implements Consumer {
 	protected String name;
 	protected Producer producer;
 	protected InputStream producerInputStream;
-	protected ThreadWorker worker;
+	protected Work work;
 
 	public Source(String name) throws LineUnavailableException {
 		this.name = name;		
 	}
 
 	public void start() {
-		if (worker != null) {
-			worker.start(true);
+		if (work != null) {
+			work.start();
 		}
 	}
 
 	public void start(Producer producer) {
 		this.producer = producer;
 		producerInputStream = producer.getInputStream();
-		if (worker != null) {
-			worker.exit();
+		if (work != null) {
+			work.exit();
 		}
 		if (producer instanceof Format.Standard) {
 			logger.debug("Format.Standard");
-			worker = new DefaultWorker((Format.Standard) producer);
+			work = new DefaultWorker((Format.Standard) producer);
 		} else if (producer instanceof Format.Mp3) {
 			logger.debug("Format.Mp3");
-			worker = new Mp3Worker((Format.Mp3) producer);
+			work = new Mp3Worker((Format.Mp3) producer);
 		}
 		start();
 	}
 
 	public void stop() {
-		if (worker != null) {
-			worker.stop();
+		if (work != null) {
+			work.stop();
 		}
 	}
 
 	public void exit() {
-		if (worker != null) {
-			worker.exit();
+		if (work != null) {
+			work.exit();
 		}
 	}
 
-	protected class DefaultWorker extends ThreadWorker {
+	protected class DefaultWorker extends Work {
 		protected Format.Standard format;
 		protected SourceDataLine line;
 
@@ -104,7 +104,7 @@ public class Source implements Consumer {
 			line.close();
 		}
 
-		protected void work() {
+		public void work() {
 			try {			
 				byte[] buffer = new byte[BUFFER_SIZE];
 		        int read = producerInputStream.read(buffer, 0, buffer.length);
@@ -120,7 +120,7 @@ public class Source implements Consumer {
 		}
 	}
 
-	protected class Mp3Worker extends ThreadWorker {
+	protected class Mp3Worker extends Work {
 		protected Format.Mp3 format;
 		protected Player player;
 
@@ -143,11 +143,11 @@ public class Source implements Consumer {
 			player.close();
 		}
 
-		protected void work() {
+		public void work() {
 			try {
 				if (player == null) {
 					player = new Player(producerInputStream);
-					sleep(SLEEP);
+					sleep(100);
 				}
 				player.play(FRAMES);
 			} catch (JavaLayerException e) {

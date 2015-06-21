@@ -12,12 +12,12 @@ import sound.Producer;
 import sound.stream.HoardedInputStream;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
+import base.work.Work;
 
 import com.Ostermiller.util.CircularByteBuffer;
 import com.Ostermiller.util.CircularObjectBuffer;
 
-public class Stream extends ThreadWorker implements Producer, Format.Mp3 {
+public class Stream extends Work implements Producer, Format.Mp3 {
 	public static final int STEP = 80; // in milliseconds
 
 	protected String http;
@@ -34,6 +34,7 @@ public class Stream extends ThreadWorker implements Producer, Format.Mp3 {
 	protected String metaData;
 
 	public Stream(String http) {
+		super();
 		this.http = http;
 		meta = -1;
 		rate = -1;
@@ -64,7 +65,7 @@ public class Stream extends ThreadWorker implements Producer, Format.Mp3 {
 		}
 	}
 
-	protected void activate() throws ActivateException {
+	public void activate() throws ActivateException {
 		try {
 			/* Initialize connection */
 			URL url = new URL(http);
@@ -122,7 +123,7 @@ public class Stream extends ThreadWorker implements Producer, Format.Mp3 {
 		}
 	}
 
-	protected void work() {
+	public void work() {
 		int left = chunk;
 
 		/* Handle media at appropriate times *

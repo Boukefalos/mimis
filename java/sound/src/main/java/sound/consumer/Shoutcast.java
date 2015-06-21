@@ -19,12 +19,12 @@ import sound.data.Data;
 import sound.util.Buffer;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.Listener;
-import base.worker.Worker;
+import base.work.Listen;
+import base.work.Work;
 
 import com.Ostermiller.util.CircularObjectBuffer;
 
-public class Shoutcast extends Worker implements Consumer {
+public class Shoutcast extends Work implements Consumer {
 	public static final int PORT = 9876;
 	public static final int RATE = 192; // in kbps
 	public static final int META = 8192; // in bytes
@@ -83,7 +83,7 @@ public class Shoutcast extends Worker implements Consumer {
 	}
 
 	public boolean active() {
-		return active = server.active();
+		return server.active();
 	}
 
 	public void deactivate() throws DeactivateException {
@@ -127,7 +127,7 @@ public class Shoutcast extends Worker implements Consumer {
 		metaData = meta;
 	}
 
-	protected class Client extends Listener<Data> {
+	protected class Client extends Listen<Data> {
 		protected Socket socket;
 		protected InputStream inputStream;
 		protected OutputStream outputStream;
@@ -236,7 +236,7 @@ public class Shoutcast extends Worker implements Consumer {
 		}
 	}
 
-	protected class Server extends Worker {
+	protected class Server extends Work {
 		protected int port;
 		protected ServerSocket serverSocket;
 
@@ -245,7 +245,7 @@ public class Shoutcast extends Worker implements Consumer {
 		}
 
 		public boolean active() {
-			return active = serverSocket.isClosed() ? false : true;
+			return serverSocket.isClosed() ? false : true;
 		}
 
 		public void activate() throws ActivateException {
@@ -253,7 +253,7 @@ public class Shoutcast extends Worker implements Consumer {
 				serverSocket = new ServerSocket(port);
 				logger.debug("Server listening at port " + port);
 			} catch (IOException e) {
-				logger.error(e.getMessage());
+				logger.error("", e);
 				throw new ActivateException();
 			}
 			super.activate();
@@ -285,12 +285,12 @@ public class Shoutcast extends Worker implements Consumer {
 	}
 
 	public void start(Producer producer) {
-		start(producer, THREAD);
-	}
-
-	public void start(Producer producer, boolean thread) {
 		producerInputStream = producer.getInputStream();
 		producer.start();
-		start(thread);
+		super.start();
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		producerInputStream = inputStream;		
 	}
 }

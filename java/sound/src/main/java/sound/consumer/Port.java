@@ -16,9 +16,9 @@ import sound.util.SoxBuilder.File.Type;
 import sound.util.SoxBuilder.Option;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
+import base.work.Work;
 
-public class Port extends ThreadWorker implements Consumer {
+public class Port extends Work implements Consumer {
 	protected static final int BUFFER_SIZE = 1024 * 4; // in bytes
 
 	protected String device;
@@ -37,7 +37,7 @@ public class Port extends ThreadWorker implements Consumer {
 	}
 
 	public void start(Producer producer) {
-		start(producer, THREAD);
+		start(producer);
 	}
 
     @SuppressWarnings("static-access")
@@ -61,10 +61,10 @@ public class Port extends ThreadWorker implements Consumer {
 		processBuilder = new ProcessBuilder(command.split(" "));
 		processBuilder.environment().put("AUDIODEV", device);
 
-		start(thread);
+		start();
 	}
 
-	protected void activate() throws ActivateException {
+	public void activate() throws ActivateException {
     	producer.start();
     	if (process == null) {
 			try {
@@ -78,7 +78,7 @@ public class Port extends ThreadWorker implements Consumer {
         super.activate();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
     	super.deactivate();
     	try {
 			processOutputStream.flush();
@@ -104,7 +104,7 @@ public class Port extends ThreadWorker implements Consumer {
 		}
     }
 
-	protected void work() {
+	public void work() {
 		try {			
 			byte[] buffer = new byte[BUFFER_SIZE];
 	        int read = producerInputStream.read(buffer, 0, buffer.length);

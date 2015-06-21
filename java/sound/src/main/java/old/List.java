@@ -8,15 +8,15 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import sound.consumer._Shoutcast;
+import sound.consumer.Shoutcast;
 import base.exception.worker.ActivateException;
-import base.worker.ThreadWorker;
+import base.work.Work;
 
 import com.Ostermiller.util.BufferOverflowException;
 import com.Ostermiller.util.CircularByteBuffer;
 import com.Ostermiller.util.CircularObjectBuffer;
 
-public class List extends ThreadWorker {
+public class List extends Work {
 	public static final int STEP = 80;        // milliseconds
 	public static final int RATE = 192;       // kbps
 	public static final int OVERLAP = 20000;  // milliseconds
@@ -59,13 +59,14 @@ public class List extends ThreadWorker {
 		}
 	}
 
-	protected synchronized void activate() throws ActivateException {
+	public synchronized void activate() throws ActivateException {
 		try {
 			Scanner scanner = new Scanner(file);
 			ArrayList<String> fileList = new ArrayList<String>();
 			while (scanner.hasNextLine()) {
 				fileList.add(scanner.nextLine());
 			}
+			scanner.close();
 			if (fileList.size() > 0) {
 				fileArray = fileList.toArray(new String[0]);
 
@@ -84,7 +85,7 @@ public class List extends ThreadWorker {
 		throw new ActivateException();		
 	}
 
-	protected synchronized void work() {
+	public synchronized void work() {
 		try {
 			int left = chunk;
 			while (left > 0) {
@@ -182,13 +183,14 @@ public class List extends ThreadWorker {
 		return circularStringBuffer;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		int rate = 192;
-		List list = new List(new File("mp3"), rate);
-		_Shoutcast shoutcast = new _Shoutcast(rate, 9876);
-		shoutcast.start();
+		List list = new List(new File(List.class.getClassLoader().getResource("txt/mp3").toURI()), rate);
+		Shoutcast shoutcast = new Shoutcast(rate, 9876);
+		
 		shoutcast.setInputStream(list.getInputStream());
 		shoutcast.setMetaBuffer(list.getMetaBuffer());
+		shoutcast.start();
 		while (true) {
 			try {
 				Thread.sleep(15000);

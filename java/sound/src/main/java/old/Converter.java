@@ -6,16 +6,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import sound.util.Utils;
 import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.BitstreamException;
+import sound.util.Utils;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
+import base.work.Work;
 
 import com.Ostermiller.util.CircularByteBuffer;
 
-public class Converter extends ThreadWorker {
+public class Converter extends Work {
 	public static final String COMMAND = "lame --mp3input --cbr %s - - --quiet";
 	public static final int BYTES = 4096;     // bytes
 	public static final int BUFFER = 30000;   // milliseconds
@@ -37,6 +37,7 @@ public class Converter extends ThreadWorker {
 	}
 
 	public Converter(InputStream inputStream, int targetRate) {
+		super();
 		this.sourceInputStream = inputStream;
 		this.targetRate = targetRate;
 		bufferWorker = new BufferWorker();
@@ -87,7 +88,7 @@ public class Converter extends ThreadWorker {
 		notifyAll();
 	}
 
-	protected void deactivate() throws DeactivateException {
+	public void deactivate() throws DeactivateException {
 		super.deactivate();
 		try {
 			sourceInputStream.close();
@@ -103,7 +104,7 @@ public class Converter extends ThreadWorker {
 		}
 	}
 
-	protected void work() {
+	public void work() {
 		if (!convert) {
 			try {
 				synchronized (this) {
@@ -118,7 +119,8 @@ public class Converter extends ThreadWorker {
 		int read = 0;
 		try {
 			logger.debug("Writing input to process");
-			while ((read = sourceInputStream.read(bytes)) > 0 && !deactivate) {
+			// Should be interrupted by stop()/exit()
+			while ((read = sourceInputStream.read(bytes)) > 0) {
 				/* Limit buffer size */
 				while (inputStream.available() > buffer) {
 	  				int progress = (int) ((1 - (inputStream.available() - buffer) / (float) buffer) * 100);
@@ -140,9 +142,7 @@ public class Converter extends ThreadWorker {
 
 	public synchronized InputStream getInputStream() {
 		if (!active()) {
-			if (!activate) {
-				start();
-			}
+			start();
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -156,8 +156,8 @@ public class Converter extends ThreadWorker {
 		this.inputStream = inputStream;	
 	}
 
-	class BufferWorker extends ThreadWorker {
-		protected void work() {
+	class BufferWorker extends Work {
+		public void work() {
 			byte[] bytes = new byte[BYTES];
 			int read = 0;
 			try {
