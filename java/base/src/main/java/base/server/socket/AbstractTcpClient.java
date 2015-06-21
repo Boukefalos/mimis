@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
 import base.exception.worker.DeactivateException;
 import base.sender.Sender;
@@ -69,7 +67,6 @@ public abstract class AbstractTcpClient extends Work implements Sender {
 				}
 			} catch (InterruptedException e) {}
 		}
-    	System.out.println("Client writing: " + Charset.defaultCharset().decode(ByteBuffer.wrap(buffer)).toString());
     	outputStream.write(buffer);
 	}
 }

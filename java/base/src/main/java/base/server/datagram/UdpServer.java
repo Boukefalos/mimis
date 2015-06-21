@@ -8,7 +8,7 @@ import java.net.SocketException;
 import base.exception.worker.ActivateException;
 import base.work.Work;
 
-public abstract class UdpServer extends Work {
+public class UdpServer extends Work {
 	protected static final int BUFFER_SIZE = 1024;
 	protected static final int TIMEOUT = 1000;
 
@@ -60,5 +60,5 @@ public abstract class UdpServer extends Work {
 		input(buffer);
 	}
 
-	protected abstract void input(byte[] buffer);
+	protected void input(byte[] buffer) {}
 }

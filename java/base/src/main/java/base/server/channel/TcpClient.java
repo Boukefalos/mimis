@@ -17,7 +17,7 @@ import base.work.Listen;
 import base.work.Work;
 import base.worker.Worker;
 
-public abstract class TcpClient extends Work implements Sender {
+public class TcpClient extends Work implements Sender {
 	protected static final String HOST = "localhost";
 	protected static final int BUFFER_SIZE = 1024;
 
@@ -109,7 +109,7 @@ public abstract class TcpClient extends Work implements Sender {
 		}
 	}
 
-	protected abstract void input(byte[] buffer);
+	protected void input(byte[] buffer) {}
 
 	public void send(byte[] buffer) throws IOException {
 		if (selector == null) {

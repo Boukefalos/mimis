@@ -52,7 +52,9 @@ public class TcpServer extends Work implements Sender {
 		super.exit();
 		try {
 			serverSocket.close();
-			// Should check if clients exit as well
+			for (TcpServerClient client : clientList) {
+				client.exit();
+			}
 		} catch (IOException e) {
 			logger.error("", e);
 		}
@@ -75,7 +77,7 @@ public class TcpServer extends Work implements Sender {
 	public void send(byte[] buffer) throws IOException {
 		logger.debug("Number of clients = " + clientList.size());
 		for (TcpServerClient client : clientList) {
-			// Should be dealt with in clients own thread
+			// Should be dealt with in clients own thread?
 			client.send(buffer);
 		}		
 	}

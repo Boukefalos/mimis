@@ -30,19 +30,7 @@ public class UdpSender implements Sender {
 	}
 
 	protected boolean setup() {
-		if (datagramSocket == null) {
-			try {
-				datagramSocket = new DatagramSocket();
-			} catch (SocketException e) {
-				logger.error("Failed to create socket", e);
-				return false;
-			}
-			Runtime.getRuntime().addShutdownHook(new Thread() {	
-				public void run() {
-					datagramSocket.close();
-				}
-			});
-		}
+		
 		return true;
 	}
 
@@ -54,5 +42,25 @@ public class UdpSender implements Sender {
 		} catch (IOException e) {
 			logger.error("Failed to send buffer", e);
 		}		
+	}
+
+	public void start() {
+		if (datagramSocket == null) {
+			try {
+				datagramSocket = new DatagramSocket();
+			} catch (SocketException e) {
+				logger.error("Failed to create socket", e);
+			}
+		}
+	}
+
+	public void stop() {
+		if (datagramSocket != null) {
+			datagramSocket.close();		
+		}
+	}
+
+	public void exit() {
+		stop();
 	}
 }

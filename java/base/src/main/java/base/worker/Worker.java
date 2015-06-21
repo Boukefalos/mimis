@@ -25,7 +25,7 @@ public abstract class Worker {
 
 	public Worker(Work work) {
 		this.work = work;
-		 logger = LoggerFactory.getLogger(work.getClass());
+		logger = LoggerFactory.getLogger(work.getClass());
 	}
 
     public boolean active() {

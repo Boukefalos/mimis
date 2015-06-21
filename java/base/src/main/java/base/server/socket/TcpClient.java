@@ -5,8 +5,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import base.exception.worker.ActivateException;
+import base.sender.Sender;
 
-public abstract class TcpClient extends AbstractTcpClient {
+public class TcpClient extends AbstractTcpClient implements Sender {
 	protected static final String HOST = "localhost";
 
 	protected String host;
@@ -43,4 +44,6 @@ public abstract class TcpClient extends AbstractTcpClient {
         }
         super.activate();
     }
+
+	protected void input(byte[] buffer) {}
 }
