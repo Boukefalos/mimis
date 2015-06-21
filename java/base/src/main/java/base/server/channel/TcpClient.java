@@ -82,10 +82,8 @@ public abstract class TcpClient extends Work implements Sender {
 
 	public final void work() {
 		try {
-			System.out.println("Client: Waiting for select... ");	
-			System.out.println("Client: Number of selected keys: " + selector.select());
-			System.out.println("wakker");
-			//selector.select();
+			logger.debug("Client: Waiting for select... ");	
+			logger.debug("Client: Number of selected keys: " + selector.select());
 			Set<SelectionKey> selectionKeySet = selector.selectedKeys();
 			Iterator<SelectionKey> selectionKeyIterator = selectionKeySet.iterator();
 

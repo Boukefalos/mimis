@@ -45,8 +45,6 @@ public class UdpMulticastServer extends Listen<byte[]> implements Sender {
 	}
 
 	public void deactivate() throws DeactivateException {
-		System.err.println("lets work the magic");
-
 		socket.close();
 		super.deactivate();
 	}

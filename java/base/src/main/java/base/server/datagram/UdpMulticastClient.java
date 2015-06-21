@@ -54,7 +54,6 @@ public abstract class UdpMulticastClient extends Work {
 	}
 
 	public void stop() {
-		System.out.println("client close socket");
 		socket.close();
 		super.stop();
 	}

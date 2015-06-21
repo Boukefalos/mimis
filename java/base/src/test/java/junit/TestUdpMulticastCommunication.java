@@ -41,7 +41,6 @@ public class TestUdpMulticastCommunication {
 		synchronized (client) {
 			client.wait(2000);
 		}
-		System.err.println("after wait");
 		byte[] buffer = client.buffer;
 		assertNotNull("Received input", buffer);
 		assertEquals("Message intact", message, new String(buffer).trim());
@@ -56,7 +55,6 @@ public class TestUdpMulticastCommunication {
 
 		protected void input(byte[] buffer) {
 			this.buffer = buffer;
-			System.err.println("binnen");
 			synchronized (this) {
 				notifyAll();
 			}			

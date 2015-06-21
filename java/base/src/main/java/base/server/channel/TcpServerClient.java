@@ -34,12 +34,9 @@ public class TcpServerClient extends Listen<byte[]> implements Sender {
 	public void readable() throws IOException {
 		int read;		
 		while (( read = socketChannel.read(byteBuffer)) > 0) {
-			//byteBuffer.flip();
+			byteBuffer.flip();
 			byte[] buffer = byteBuffer.array();
 			input(buffer);
-			System.out.println("readable() " + new String(buffer).trim());
-			byteBuffer.clear();
-			byteBuffer.put(new byte[bufferSize]);
 			byteBuffer.clear();
 		}
 		if (read < 0) {

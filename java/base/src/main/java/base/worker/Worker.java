@@ -30,20 +30,15 @@ public abstract class Worker {
 
     public boolean active() {
     	logger.debug("Worker: active()");
-    	System.out.println(activate + " " + deactivate + " " + active + ": " + (deactivate || active));
         return deactivate || active;
     }
 
     public final void run() {
     	logger.debug("Worker: run()");
         while (run || deactivate) {
-        	System.err.println("xxx");
     		runActivate();
-    		System.err.println("act");
     		runDeactivate();
-    		System.err.println("deact");
     		runWork();
-    		System.err.println("---" + getClass().getName() + run + "  " + deactivate);
         }
     }
 
@@ -109,12 +104,10 @@ public abstract class Worker {
 
 	public void stop() {
 		logger.debug("Worker: stop()");
-		logger.debug("Worker: stop() " + active + " " + activate);
         if (active && !activate) {
             deactivate = true;
         }
         activate = false;
-        logger.debug("Worker: stop() " + deactivate);
 	}
 
     abstract public void exit();
