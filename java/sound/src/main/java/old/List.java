@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import sound.consumer.Shoutcast;
+import sound.consumer._Shoutcast;
 import base.exception.worker.ActivateException;
 import base.worker.ThreadWorker;
 
@@ -185,7 +185,7 @@ public class List extends ThreadWorker {
 	public static void main(String[] args) {
 		int rate = 192;
 		List list = new List(new File("mp3"), rate);
-		Shoutcast shoutcast = new Shoutcast(rate, 9876);
+		_Shoutcast shoutcast = new _Shoutcast(rate, 9876);
 		shoutcast.start();
 		shoutcast.setInputStream(list.getInputStream());
 		shoutcast.setMetaBuffer(list.getMetaBuffer());
