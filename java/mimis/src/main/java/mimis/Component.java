@@ -16,7 +16,6 @@
  */
 package mimis;
 
-import base.worker.Listener;
 import mimis.input.Button;
 import mimis.input.Feedback;
 import mimis.input.Input;
@@ -28,8 +27,10 @@ import mimis.parser.ParserInput;
 import mimis.router.Router;
 import mimis.state.TaskMap;
 import mimis.value.Action;
+import base.work.Listen;
+import base.worker.Worker.Type;
 
-public abstract class Component extends Listener<Input> {
+public abstract class Component extends Listen<Input> {
     protected static final String TITLE = "Component";
 
     protected String title;
@@ -39,11 +40,15 @@ public abstract class Component extends Listener<Input> {
         this(TITLE);
     }
 
+    public Component(Type type) {
+		super(type);
+	}
+
     public Component(String title) {
         this.title = title;
     }
 
-    public void setRouter(Router router) {
+	public void setRouter(Router router) {
         this.router = router;        
     }
 

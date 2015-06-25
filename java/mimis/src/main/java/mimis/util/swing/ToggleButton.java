@@ -18,8 +18,7 @@ package mimis.util.swing;
 
 import javax.swing.ImageIcon;
 
-import mimis.util.ArrayCycle;
-
+import base.util.ArrayCycle;
 
 public class ToggleButton extends CycleButton {
     protected static final long serialVersionUID = 1L;

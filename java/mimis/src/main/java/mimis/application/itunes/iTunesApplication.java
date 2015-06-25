@@ -21,7 +21,7 @@ import mimis.application.Application;
 import mimis.value.Action;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
+import base.work.Work;
 
 import com.dt.iTunesController.ITCOMDisabledReason;
 import com.dt.iTunesController.ITTrack;
@@ -38,7 +38,7 @@ public class iTunesApplication extends Component implements Application, iTunesE
     protected static final String PLAYLIST_DISLIKE = "Dislike";
 
     protected iTunes iTunes;
-    protected VolumeWorker volumeWorker;
+    protected VolumeWork volumeWork;
     protected boolean events;
 
     public iTunesApplication() {
@@ -48,10 +48,10 @@ public class iTunesApplication extends Component implements Application, iTunesE
     public iTunesApplication(boolean events) {
         super(TITLE);
         this.events = events;
-        volumeWorker = new VolumeWorker();
+        volumeWork = new VolumeWork();
     }
 
-    protected synchronized void activate() throws ActivateException {
+    public synchronized void activate() throws ActivateException {
         iTunes = new iTunes();
         iTunes.connect();
         if (events) {
@@ -63,19 +63,18 @@ public class iTunesApplication extends Component implements Application, iTunesE
     public synchronized boolean active() {
         try {
             iTunes.getMute();
-            active = true;
         } catch (Exception e) {
-            active = false;
+            stop();
         }
-        return active;
+        return super.active();
     }
 
-    protected synchronized void deactivate() throws DeactivateException  {
+    public synchronized void deactivate() throws DeactivateException  {
         if (events) {
             exit();
         } else {
             super.deactivate();
-            volumeWorker.stop();
+            volumeWork.stop();
             try {
                 iTunes.release();
             } catch (Exception e) {
@@ -89,13 +88,13 @@ public class iTunesApplication extends Component implements Application, iTunesE
         try {
             iTunes.quit();
         } catch (Exception e) {}
-        volumeWorker.exit();
+        volumeWork.exit();
         super.exit();
     }
 
     protected void begin(Action action) {
         logger.trace("iTunesApplication begin: " + action);
-        if (!active) return;
+        if (!active()) return;
         switch (action) {
             case FORWARD:
                 iTunes.fastForward();
@@ -104,17 +103,19 @@ public class iTunesApplication extends Component implements Application, iTunesE
                 iTunes.rewind();
                 break;
             case VOLUME_UP:
-                volumeWorker.start(VOLUME_CHANGE_RATE);
+                volumeWork.start(VOLUME_CHANGE_RATE);
                 break;
             case VOLUME_DOWN:
-                volumeWorker.start(-VOLUME_CHANGE_RATE);
+                volumeWork.start(-VOLUME_CHANGE_RATE);
                 break;
+			default:
+				break;
         }
     }
 
     protected void end(Action action) {
         logger.trace("iTunesApplication end: " + action);
-        if (!active) return;
+        if (!active()) return;
         switch (action) {
             case PLAY:
                 iTunes.playPause();
@@ -136,7 +137,7 @@ public class iTunesApplication extends Component implements Application, iTunesE
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                volumeWorker.stop();
+                volumeWork.stop();
                 break;
             case SHUFFLE:
                 iTunes.toggleShuffle();
@@ -150,6 +151,8 @@ public class iTunesApplication extends Component implements Application, iTunesE
             case DISLIKE:
                 iTunes.playlistAddCurrentTrack(PLAYLIST_DISLIKE);
                 break;
+			default:
+				break;
         }
     }
 
@@ -159,13 +162,13 @@ public class iTunesApplication extends Component implements Application, iTunesE
 
     public void onDatabaseChangedEvent(int[][] deletedObjectIDs, int[][] changedObjectIDs) {}
     public void onPlayerPlayEvent(ITTrack iTrack) {
-        if (active) {
+        if (active()) {
             logger.trace("iTunesEvent: play");
         }
     }
 
     public void onPlayerStopEvent(ITTrack iTrack) {
-        if (active) {
+        if (active()) {
             logger.trace("iTunesEvent: stop");
         }
     }
@@ -177,7 +180,7 @@ public class iTunesApplication extends Component implements Application, iTunesE
     public void onAboutToPromptUserToQuitEvent() {}
     public void onSoundVolumeChangedEvent(int newVolume) {}    
 
-    protected class VolumeWorker extends ThreadWorker {
+    protected class VolumeWork extends Work {
         protected int volumeChangeRate;
 
         public void start(int volumeChangeRate) {

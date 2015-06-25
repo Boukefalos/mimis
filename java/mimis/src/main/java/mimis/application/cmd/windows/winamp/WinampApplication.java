@@ -16,11 +16,11 @@
  */
 package mimis.application.cmd.windows.winamp;
 
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 import mimis.value.Command;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class WinampApplication extends WindowsApplication {
     protected final static String PROGRAM = "winamp.exe";
@@ -52,8 +52,8 @@ public class WinampApplication extends WindowsApplication {
     protected static final int VOLUME_SLEEP = 50;
     protected static final int SEEK_SLEEP = 100;
 
-    protected VolumeWorker volumeWorker;
-    protected SeekWorker seekWorker;
+    protected VolumeWork volumeWork;
+    protected SeekWork seekWork;
     protected double volume;
     protected boolean muted;
 
@@ -61,37 +61,39 @@ public class WinampApplication extends WindowsApplication {
         super(PROGRAM, TITLE, WINDOW);
         volume = getVolume();
         muted = volume == 0;
-        volumeWorker = new VolumeWorker();
-        seekWorker = new SeekWorker();
+        volumeWork = new VolumeWork();
+        seekWork = new SeekWork();
     }
 
     public void deactivate() throws DeactivateException {
         super.deactivate();
-        volumeWorker.stop();
-        seekWorker.stop();
+        volumeWork.stop();
+        seekWork.stop();
     }
 
     public void exit() {
         super.exit();
-        volumeWorker.exit();
-        seekWorker.exit();
+        volumeWork.exit();
+        seekWork.exit();
     }
 
     public void begin(Action action) {
         logger.trace("WinampApplication begin: " + action);
         switch (action) {
             case VOLUME_UP:
-                volumeWorker.start(1);
+                volumeWork.start(1);
                 break;
             case VOLUME_DOWN:
-                volumeWorker.start(-1);
+                volumeWork.start(-1);
                 break;
             case FORWARD:
-                seekWorker.start(1);
+                seekWork.start(1);
                 break;
             case REWIND:
-                seekWorker.start(-1);
+                seekWork.start(-1);
                 break;
+			default:
+				break;
         }
     }
 
@@ -117,7 +119,7 @@ public class WinampApplication extends WindowsApplication {
                 break;
             case FORWARD:
             case REWIND:
-                seekWorker.stop();
+                seekWork.stop();
                 break;
             case MUTE:
                 if (muted) {
@@ -130,7 +132,7 @@ public class WinampApplication extends WindowsApplication {
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                volumeWorker.stop();
+                volumeWork.stop();
                 break;
             case SHUFFLE:
                 command(WINAMP_FILE_SHUFFLE);
@@ -148,6 +150,8 @@ public class WinampApplication extends WindowsApplication {
                 system(Command.System.MAXIMIZE);
                 command(WINAMP_VISPLUGIN);
                 break;
+			default:
+				break;
         }
     }
 
@@ -167,7 +171,7 @@ public class WinampApplication extends WindowsApplication {
         return user(0, IPC_GETOUTPUTTIME) / 1000;
     }
 
-    protected class VolumeWorker extends ThreadWorker {
+    protected class VolumeWork extends Work {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign) {
@@ -181,7 +185,7 @@ public class WinampApplication extends WindowsApplication {
         }
     };
 
-    protected class SeekWorker extends ThreadWorker {
+    protected class SeekWork extends Work {
         protected int seekDirection;
 
         public void start(int seekDirection) {

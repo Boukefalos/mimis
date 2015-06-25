@@ -16,58 +16,60 @@
  */
 package mimis.application.lirc.ipod;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.application.lirc.LircApplication;
 import mimis.device.lirc.remote.WC02IPOButton;
 import mimis.value.Action;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class iPodApplication extends LircApplication {
     protected static final String TITLE = "iPod";
     protected static final int VOLUME_SLEEP = 100;
 
-    protected VolumeWorker volumeWorker;
+    protected VolumeWork volumeWork;
 
     public iPodApplication() {
         super(TITLE);
-        volumeWorker = new VolumeWorker();
+        volumeWork = new VolumeWork();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
-        volumeWorker.stop();
+        volumeWork.stop();
     }
 
     public void exit() {
         super.exit();
-        volumeWorker.exit();
+        volumeWork.exit();
     }
 
     protected void begin(Action action) {
         logger.trace("iPodApplication begin: " + action);
-        if (!active) return;
+        if (!active()) return;
         switch (action) {
             case VOLUME_UP:
                 try {
-                    volumeWorker.activate(1);
+                    volumeWork.activate(1);
                 } catch (ActivateException e) {
                     logger.error("", e);
                 }
                 break;
             case VOLUME_DOWN:
                 try {
-                    volumeWorker.activate(-1);
+                    volumeWork.activate(-1);
                 } catch (ActivateException e) {
                     logger.error("", e);
                 }
                 break;
+			default:
+				break;
         }
     }
 
     protected void end(Action action) {
         logger.trace("iPodApplication end: " + action);
-        if (!active) return;
+        if (!active()) return;
         switch (action) {
             case PLAY:
                 send(WC02IPOButton.PLAY);
@@ -80,12 +82,14 @@ public class iPodApplication extends LircApplication {
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                volumeWorker.stop();
+                volumeWork.stop();
                 break;
+			default:
+				break;
         }
     }
 
-    protected class VolumeWorker extends ThreadWorker {
+    protected class VolumeWork extends Work {
         protected int volumeChangeRate;
 
         public void activate(int volumeChangeRate) throws ActivateException {

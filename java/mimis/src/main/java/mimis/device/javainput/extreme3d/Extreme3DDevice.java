@@ -37,11 +37,11 @@ public class Extreme3DDevice extends JavaInputDevice {
         taskMapCycle = new Extreme3DTaskMapCycle();
     }
 
-    protected void activate() throws ActivateException {
-        super.activate();
+    public void activate() throws ActivateException {
         parser(Action.ADD, taskMapCycle.mimis);
         parser(Action.ADD, taskMapCycle.player);
         parser(Action.ADD, taskMapCycle.like);
+        super.activate();
     }
 
     protected Button getButton(JXInputButtonEvent event) throws UnknownButtonException {

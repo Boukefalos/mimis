@@ -82,7 +82,7 @@ public class Main extends Mimis {
         end(Action.CURRENT);
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
 
         logger.debug("Stop managers");
@@ -112,6 +112,6 @@ public class Main extends Mimis {
     }
 
     public static void main(String[] args) {
-        new Main().start(false);
+        new Main().start();
     }
 }

@@ -16,8 +16,6 @@
  */
 package mimis.device.lirc;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
 import mimis.application.cmd.CMDApplication;
 import mimis.device.Device;
 import mimis.device.lirc.remote.DenonRC176Button;
@@ -33,6 +31,8 @@ import mimis.util.Native;
 import mimis.util.multiplexer.SignalListener;
 import mimis.value.Action;
 import mimis.value.Signal;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
 
 public class LircDevice extends CMDApplication implements Device, LircButtonListener, SignalListener<Button> {
     protected final static String PROGRAM = "winlirc.exe";
@@ -53,7 +53,7 @@ public class LircDevice extends CMDApplication implements Device, LircButtonList
         taskMapCycle = new LircTaskMapCycle();
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         super.activate();
         lircService.start();
         parser(Action.ADD, taskMapCycle.denonRC176);
@@ -63,19 +63,19 @@ public class LircDevice extends CMDApplication implements Device, LircButtonList
 
     public boolean active() {
         if (detect) {
-            if (active && !lircService.active()) {
+            if (active() && !lircService.active()) {
                 stop();
-            } else if (!active) {
+            } else if (!active()) {
                 running = Native.isRunning(PROGRAM);
                 if (running) {
                     start();
                 }
             }
         }
-        return active;
+        return super.active();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         logger.debug("Deactivate LircDevice");
         super.deactivate();
         lircService.stop();
@@ -105,6 +105,8 @@ public class LircDevice extends CMDApplication implements Device, LircButtonList
             case END:
                 route(new Release(button));
                 break;
+			default:
+				break;
         }
 
         if (general) {

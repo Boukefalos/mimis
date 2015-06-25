@@ -25,20 +25,20 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
-import base.worker.ThreadWorker;
+import base.work.Work;
 
 public class ButtonManager extends Manager {
     protected static final String TITLE = "Workers";
     
     protected String title;
-    protected Map<ThreadWorker, WorkerButton> buttonMap;
+    protected Map<Work, WorkerButton> buttonMap;
 
-    public ButtonManager(ThreadWorker... workerArray) {
-        this(TITLE, workerArray);
+    public ButtonManager(Work... workArray) {
+        this(TITLE, workArray);
     }
 
-    public ButtonManager(String title, ThreadWorker... workerArray) {
-        super(workerArray);
+    public ButtonManager(String title, Work... workArray) {
+        super(workArray);
         this.title = title;
         createButtons();
     }
@@ -52,8 +52,8 @@ public class ButtonManager extends Manager {
     }
 
     protected void createButtons() {
-        buttonMap = new HashMap<ThreadWorker, WorkerButton>();
-        for (ThreadWorker worker : workerList) {
+        buttonMap = new HashMap<Work, WorkerButton>();
+        for (Work worker : workList) {
             WorkerButton button = new WorkerButton(worker);
             buttonMap.put(worker, button);
         }
@@ -84,8 +84,8 @@ public class ButtonManager extends Manager {
         return panel;
     }
 
-    protected void work() {
-        for (ThreadWorker worker : workerList) {
+    public void work() {
+        for (Work worker : workList) {
             buttonMap.get(worker).setPressed(worker.active());
         }
     }

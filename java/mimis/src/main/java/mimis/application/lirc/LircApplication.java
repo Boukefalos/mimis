@@ -39,10 +39,10 @@ public class LircApplication extends Component implements Application {
     }
 
     public boolean active() {
-        return active = lircService.active();
+        return lircService.active();
     }
 
-    protected void deactivate() throws DeactivateException  {
+    public void deactivate() throws DeactivateException  {
         super.deactivate();
         lircService.stop();
     }

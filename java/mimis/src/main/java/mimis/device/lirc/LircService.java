@@ -48,7 +48,7 @@ public class LircService extends TcpClient {
 
     public static void main(String[] args) {
     	LircService lircService = new LircService();
-    	lircService.start(false);
+    	lircService.start();
     }
 
     public LircService() {

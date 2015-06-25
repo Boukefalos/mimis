@@ -24,9 +24,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.Component;
 import mimis.device.lirc.LircButton;
 import mimis.device.lirc.remote.PhiliphsRCLE011Button;
@@ -37,6 +34,9 @@ import mimis.input.button.NumberButton;
 import mimis.input.state.State;
 import mimis.value.Action;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class MotionDevice extends Component {
     protected WiimoteDevice wiimoteDevice;
@@ -45,7 +45,7 @@ public class MotionDevice extends Component {
     protected boolean replay;
     protected Action action;
 
-    public ReplayWorker replayWorker;
+    public ReplayWork replayWork;
     public ArrayList<MotionData> motionList;
 
     public MotionDevice(WiimoteDevice wiimoteDevice) {
@@ -54,7 +54,7 @@ public class MotionDevice extends Component {
         start = -1;
         replay = false;
         action = Action.TRAIN;
-        replayWorker = new ReplayWorker();
+        replayWork = new ReplayWork();
         motionList = new ArrayList<MotionData>();
     }
 
@@ -64,13 +64,13 @@ public class MotionDevice extends Component {
     }
 
     public void deactivate() throws DeactivateException {
-        replayWorker.stop();
+        replayWork.stop();
         super.deactivate();
     }
 
     public void exit() {
         super.exit();
-        replayWorker.exit();
+        replayWork.exit();
     }
 
     public void release(Button button) {
@@ -93,6 +93,8 @@ public class MotionDevice extends Component {
                 case SCREEN_DOWN:
                     wiimoteDevice.begin(Action.LOAD);
                     break;
+				default:
+					break;
             }
         } else if (button instanceof NumberButton) {
             NumberButton numberButton = (NumberButton) button;
@@ -113,9 +115,9 @@ public class MotionDevice extends Component {
                         start = System.currentTimeMillis();
                         break;
                     case RED:
-                        if (replayWorker.active()) {
+                        if (replayWork.active()) {
                             logger.debug("Stop replaying motion");
-                            replayWorker.stop();
+                            replayWork.stop();
                         } else {
                             logger.debug("Writing motion to file #" + id);
                             try {                            
@@ -136,8 +138,10 @@ public class MotionDevice extends Component {
                     case YELLOW:
                         logger.debug("Replaying motion from file #" + id);
                         replay = true;
-                        replayWorker.start();
+                        replayWork.start();
                         break;
+					default:
+						break;
                 }
             }
         }
@@ -151,11 +155,11 @@ public class MotionDevice extends Component {
         }
     }
 
-    class ReplayWorker extends ThreadWorker {
+    class ReplayWork extends Work {
         protected ObjectInputStream objectInputStream;
         protected int count, i, time;
 
-        protected void activate() throws ActivateException {
+        public void activate() throws ActivateException {
             try {
                 FileInputStream fileInputStream = new FileInputStream(String.format("tmp/motion #%d.bin", id));
                 objectInputStream = new ObjectInputStream(fileInputStream);
@@ -173,7 +177,7 @@ public class MotionDevice extends Component {
             }
         }
 
-        protected void deactivate() throws DeactivateException {
+        public void deactivate() throws DeactivateException {
             logger.debug(String.format("Replay stopped (%d ms)", time));
             wiimoteDevice.end(action);
             replay = false;
@@ -184,7 +188,8 @@ public class MotionDevice extends Component {
             }
             super.deactivate();
         }
-        protected void work() {
+
+        public void work() {
             if (i++ < count) {                
                 try {
                     Object object = objectInputStream.readObject();
@@ -202,5 +207,4 @@ public class MotionDevice extends Component {
             stop();
         }        
     }
-
 }

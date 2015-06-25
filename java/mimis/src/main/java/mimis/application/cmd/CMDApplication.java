@@ -42,7 +42,7 @@ public abstract class CMDApplication extends Component implements Application {
         detect = true;
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         detect = true;
         if (!running) {
             String path = getPath();
@@ -64,15 +64,14 @@ public abstract class CMDApplication extends Component implements Application {
     public boolean active() {
         if (detect) {
             running = Native.isRunning(program);
-            if (!active && running) {
-                active = true;
+            if (!running) {
                 start();
             }
         }
-        return active;
+        return super.active();
     }
 
-    protected synchronized void deactivate() throws DeactivateException {
+    public synchronized void deactivate() throws DeactivateException {
         detect = false;
         super.deactivate();
         if (process != null) {

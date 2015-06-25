@@ -16,12 +16,12 @@
  */
 package mimis.application.cmd.windows.photoviewer;
 
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 import mimis.value.Key;
 import mimis.value.Type;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class PhotoViewerApplication extends WindowsApplication {
     protected final static String TITLE = "Photo Viewer";
@@ -30,33 +30,35 @@ public class PhotoViewerApplication extends WindowsApplication {
     protected static final int ZOOM_SLEEP = 100;
     protected static final int DELETE_SLEEP = 2000;
 
-    protected ZoomWorker zoomWorker;
+    protected ZoomWork zoomWork;
     protected boolean fullscreen;
 
     public PhotoViewerApplication() {
         super(TITLE, WINDOW);
-        zoomWorker = new ZoomWorker();
+        zoomWork = new ZoomWork();
         fullscreen = false;
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
-        zoomWorker.stop();
+        zoomWork.stop();
     }
 
     public void exit() {
         super.exit();
-        zoomWorker.exit();
+        zoomWork.exit();
     }
 
     public void begin(Action action) {
         switch (action) {
             case VOLUME_UP:
-                zoomWorker.start(1);    
+                zoomWork.start(1);    
                 break;
             case VOLUME_DOWN:
-                zoomWorker.start(-1);
+                zoomWork.start(-1);
                 break;
+			default:
+				break;
         }
     }
 
@@ -65,7 +67,7 @@ public class PhotoViewerApplication extends WindowsApplication {
         switch (action) {
             case VOLUME_UP:
             case VOLUME_DOWN:
-                zoomWorker.stop();
+                zoomWork.stop();
                 break;
             case NEXT:
                 key(Type.DOWN, Key.RIGHT);
@@ -106,10 +108,12 @@ public class PhotoViewerApplication extends WindowsApplication {
                     end(Action.FULLSCREEN);
                 }*/
                 break;
+			default:
+				break;
         }
     }
 
-    protected class ZoomWorker extends ThreadWorker {
+    protected class ZoomWork extends Work {
         protected int zoomDirection;
 
         public void start(int zoomDirection) {

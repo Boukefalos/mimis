@@ -25,9 +25,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.Component;
 import mimis.device.Device;
 import mimis.input.Feedback;
@@ -35,6 +32,9 @@ import mimis.input.Input;
 import mimis.input.Task;
 import mimis.value.Action;
 import mimis.value.Target;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class NetworkDevice extends Component implements Device {
     protected static final String TITLE = "Network";
@@ -53,7 +53,7 @@ public class NetworkDevice extends Component implements Device {
         this(PORT);
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         server.start();
         super.activate();
     }
@@ -64,10 +64,10 @@ public class NetworkDevice extends Component implements Device {
                 client.stop();
             }
         }
-        return active = server.active();
+        return server.active();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         server.stop();
     }
@@ -83,7 +83,7 @@ public class NetworkDevice extends Component implements Device {
         }
     }
 
-    protected class Server extends ThreadWorker {
+    protected class Server extends Work {
         protected ServerSocket serverSocket;
         protected int port;
         
@@ -91,7 +91,7 @@ public class NetworkDevice extends Component implements Device {
             this.port = port;
         }
 
-        protected void activate() throws ActivateException {
+        public void activate() throws ActivateException {
             try {
                 serverSocket = new ServerSocket(port);
             } catch (IOException e) {
@@ -101,10 +101,10 @@ public class NetworkDevice extends Component implements Device {
         }
 
         public synchronized boolean active() {
-            return active = serverSocket != null && !serverSocket.isClosed();
+            return serverSocket != null && !serverSocket.isClosed();
         }
     
-        protected synchronized void deactivate() throws DeactivateException {
+        public synchronized void deactivate() throws DeactivateException {
             super.deactivate();
             try {
                 route(new Feedback("[NetworkDevice] Closing server socket"));
@@ -138,7 +138,7 @@ public class NetworkDevice extends Component implements Device {
         }
     }
 
-    protected class Client extends ThreadWorker {
+    protected class Client extends Work {
         protected Socket socket;
         protected InputStream inputStream;
         protected OutputStream outputStream;
@@ -153,7 +153,7 @@ public class NetworkDevice extends Component implements Device {
         }
 
         public boolean active() {
-            return active = socket.isConnected();
+            return socket.isConnected();
         }
 
         public void work() {
@@ -176,7 +176,7 @@ public class NetworkDevice extends Component implements Device {
             }
         }
 
-        protected void deactivate() throws DeactivateException {
+        public void deactivate() throws DeactivateException {
             super.deactivate();
             send(new Task(Action.STOP, Target.SELF));
             clientList.remove(this);

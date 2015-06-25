@@ -19,12 +19,12 @@ package mimis.device.wiimote;
 import java.io.IOException;
 import java.util.Scanner;
 
+import mimis.exception.device.DeviceNotFoundException;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
-import mimis.exception.device.DeviceNotFoundException;
+import base.work.Work;
 
-public class WiimoteDiscovery extends ThreadWorker {
+public class WiimoteDiscovery extends Work {
     protected static final String WIISCAN = "wiiscan";
     protected static final int TIMEOUT = 1000;
     protected WiimoteDevice wiimoteDevice;
@@ -54,11 +54,14 @@ public class WiimoteDiscovery extends ThreadWorker {
                 String line = scanner.nextLine();
                 if (line.contains("error: BluetoothSetServiceState()")) {
                     disconnect = true;
+                    scanner.close();
                     return false;
                 } else if (line.contains("[OK]")) {
+                    scanner.close();
                     return true;
                 }
             }
+            scanner.close();
         } catch (IOException e) {
             logger.error("", e);
         } finally {
@@ -78,7 +81,7 @@ public class WiimoteDiscovery extends ThreadWorker {
         }
     }
 
-    protected void work() {
+    public void work() {
         if (disconnect) {
             disconnect();
             disconnect = false;

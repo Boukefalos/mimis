@@ -86,7 +86,7 @@ public abstract class Worker {
         }
     }
 
-    protected void sleep() {
+    public void sleep() {
         sleep(SLEEP);
     }
 

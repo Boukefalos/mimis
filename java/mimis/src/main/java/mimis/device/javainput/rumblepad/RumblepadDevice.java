@@ -37,7 +37,7 @@ public class RumblepadDevice extends JavaInputDevice {
         taskMapCycle = new RumblepadTaskMapCycle(); 
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         super.activate();
         parser(Action.ADD, taskMapCycle.mimis);
         parser(Action.ADD, taskMapCycle.player);

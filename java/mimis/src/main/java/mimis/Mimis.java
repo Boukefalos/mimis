@@ -16,16 +16,17 @@
  */
 package mimis;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
 import mimis.input.Feedback;
 import mimis.input.Task;
 import mimis.manager.Manager;
 import mimis.parser.Parser;
 import mimis.router.Router;
-import mimis.util.ArrayCycle;
 import mimis.value.Action;
 import mimis.value.Target;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.util.ArrayCycle;
+import base.worker.Worker;
 
 public abstract class Mimis extends Component {
     protected Component[] currentArray;
@@ -34,6 +35,7 @@ public abstract class Mimis extends Component {
     protected ArrayCycle<Component> componentCycle;
 
     public Mimis(Component... currentArray) {
+    	super(Worker.Type.FOREGROUND);
         this.currentArray = initialize(false, currentArray);        
         componentCycle = new ArrayCycle<Component>(currentArray);        
         router = new Router();
@@ -45,7 +47,7 @@ public abstract class Mimis extends Component {
         super.activate();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         manager.stop();
     }

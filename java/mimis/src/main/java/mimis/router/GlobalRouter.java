@@ -21,11 +21,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.input.Feedback;
 import mimis.input.Task;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class GlobalRouter extends Router {
     protected String ip;
@@ -37,7 +37,7 @@ public class GlobalRouter extends Router {
         this.port = port;
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         try {
             client = new Client(ip, port);
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class GlobalRouter extends Router {
         super.activate();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         client.stop();
     }
@@ -60,7 +60,7 @@ public class GlobalRouter extends Router {
         }
     }
 
-    class Client extends ThreadWorker {
+    class Client extends Work {
         protected Socket socket;
         protected ObjectInputStream objectInputStream;
         protected ObjectOutputStream objectOutputStream;
@@ -87,7 +87,7 @@ public class GlobalRouter extends Router {
             }
         }
 
-        protected void deactivate() throws DeactivateException {
+        public void deactivate() throws DeactivateException {
             super.deactivate();
             try {
                 objectInputStream.close();

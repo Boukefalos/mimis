@@ -18,7 +18,7 @@ package mimis.util.swing;
 
 import javax.swing.ImageIcon;
 
-import mimis.util.ArrayCycle;
+import base.util.ArrayCycle;
 
 
 public class CycleButton extends HoldButton {

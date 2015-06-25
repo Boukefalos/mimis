@@ -53,7 +53,7 @@ public class Gui extends Component {
         createFrame(buttonManagerArray);
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         listen(Feedback.class);
         super.activate();
     }

@@ -42,7 +42,7 @@ public abstract class WindowsApplication extends CMDApplication {
         handle = 0;
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         if (program != null) {
             super.activate();
         }
@@ -51,14 +51,13 @@ public abstract class WindowsApplication extends CMDApplication {
             sleep(START_SLEEP);
             handle = Native.getHandle(window);
         }
-        active = handle > 0;
-        if (!active) {
+        if (handle < 0) {
             throw new ActivateException();
         }
     }
 
     public boolean active() {
-        if (!active || program == null) {
+        if (!super.active() || program == null) {
             handle = Native.getHandle(window);
             if (handle > 0 && program == null) {
                 start();
@@ -67,13 +66,11 @@ public abstract class WindowsApplication extends CMDApplication {
         return program == null ? handle > 0 : super.active();
     }
 
-    protected void deactivate() throws DeactivateException {
-        if (process == null) {
-            active = false;
-        } else {
-            super.deactivate();
+    public void deactivate() throws DeactivateException {
+        if (process != null) {
+            close();
         }
-        close();
+        super.deactivate();
     }
 
     protected void close() {

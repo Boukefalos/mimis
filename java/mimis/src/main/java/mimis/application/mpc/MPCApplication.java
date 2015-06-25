@@ -16,9 +16,9 @@
  */
 package mimis.application.mpc;
 
-import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
+import base.work.Work;
 
 public class MPCApplication extends WindowsApplication {
     protected final static String PROGRAM = "mpc-hc.exe";
@@ -28,30 +28,32 @@ public class MPCApplication extends WindowsApplication {
     protected static final int VOLUME_SLEEP = 50;
     protected static final int SEEK_SLEEP = 50;
 
-    protected VolumeWorker volumeWorker;
-    protected SeekWorker seekWorker;
-    
+    protected VolumeWork volumeWork;
+    protected SeekWork seekWork;
+
     public MPCApplication() {
         super(PROGRAM, TITLE, WINDOW);
-        volumeWorker = new VolumeWorker();
-        seekWorker = new SeekWorker();
+        volumeWork = new VolumeWork();
+        seekWork = new SeekWork();
     }
 
     public void begin(Action action) {
         logger.trace("MPCApplication: " + action);
         switch (action) {
            case FORWARD:
-                seekWorker.start(1);
+                seekWork.start(1);
                 break;
             case REWIND:
-                seekWorker.start(-1);
+                seekWork.start(-1);
                 break;
             case VOLUME_UP:
-                volumeWorker.start(1);
+                volumeWork.start(1);
                 break;
             case VOLUME_DOWN:
-                volumeWorker.start(-1);
+                volumeWork.start(-1);
                 break;
+			default:
+				break;
         }
     }
     
@@ -69,18 +71,20 @@ public class MPCApplication extends WindowsApplication {
                 break;
             case FORWARD:
             case REWIND:
-                seekWorker.stop();
+                seekWork.stop();
                 break;
             case MUTE:
                 command(909);
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                volumeWorker.stop();
+                volumeWork.stop();
                 break;
             case FULLSCREEN:
                 command(830);
                 break;
+			default:
+				break;
         }
     }
 
@@ -88,7 +92,7 @@ public class MPCApplication extends WindowsApplication {
         return TITLE;
     }
 
-    protected class VolumeWorker extends ThreadWorker {
+    protected class VolumeWork extends Work {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign)  {
@@ -100,9 +104,9 @@ public class MPCApplication extends WindowsApplication {
             command(volumeChangeSign > 0 ? 907 : 908);
             sleep(VOLUME_SLEEP);
         }
-    };
+    }
 
-    protected class SeekWorker extends ThreadWorker {
+    protected class SeekWork extends Work {
         protected int seekDirection;
 
         public void start(int seekDirection) {

@@ -20,47 +20,47 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadIntervalWorker;
-import base.worker.ThreadWorker;
+import base.work.Work;
+import base.worker.IntervalWork;
 
-public class Manager extends ThreadIntervalWorker {
+public class Manager extends IntervalWork {
     protected static final int INTERVAL = 1000;
 
-    protected ArrayList<ThreadWorker> workerList;
+    protected ArrayList<Work> workList;
 
-    public Manager(ThreadWorker... workerArray) {
-        workerList = new ArrayList<ThreadWorker>();
-        add(workerArray);
+    public Manager(Work... workArray) {
+        workList = new ArrayList<Work>();
+        add(workArray);
     }
 
-    public void add(ThreadWorker... workerArray) {
-        workerList.addAll(Arrays.asList(workerArray));
+    public void add(Work... workArray) {
+        workList.addAll(Arrays.asList(workArray));
     }
 
-    public void remove(ThreadWorker... workerArray) {
-        workerList.removeAll(Arrays.asList(workerArray));
+    public void remove(Work... workArray) {
+        workList.removeAll(Arrays.asList(workArray));
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
-        for (ThreadWorker worker : workerList) {
+        for (Work worker : workList) {
             worker.stop();
         }
     }
 
     public void exit() {
         super.exit();
-        for (ThreadWorker worker : workerList) {
+        for (Work worker : workList) {
             worker.exit();
         }
     }
 
     public int count() {
-        return workerList.size();
+        return workList.size();
     }
 
-    protected void work() {
-        for (ThreadWorker worker : workerList) {
+    public void work() {
+        for (Work worker : workList) {
             worker.active();
         }
     }

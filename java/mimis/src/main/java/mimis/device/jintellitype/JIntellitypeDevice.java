@@ -46,7 +46,7 @@ public class JIntellitypeDevice extends Component implements Device, HotkeyListe
         taskMapCycle = new JIntellitypeTaskMapCycle();
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         super.activate();
         jit.addHotKeyListener(this);
         jit.addIntellitypeListener(this);
@@ -55,7 +55,7 @@ public class JIntellitypeDevice extends Component implements Device, HotkeyListe
     }
 
     public void onIntellitype(int command) {
-        if (active) {
+        if (active()) {
             try {
             CommandButton commandButton = CommandButton.create(command);
             route(new Press(commandButton));
@@ -67,14 +67,14 @@ public class JIntellitypeDevice extends Component implements Device, HotkeyListe
     }
 
     public void onHotKey(int id) {
-        if (active) {
+        if (active()) {
             Hotkey hotkey = hotkeyList.get(id);
             route(new Press(hotkey));
             route(new Release(hotkey));
         }
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         jit.removeHotKeyListener(this);
         jit.removeIntellitypeListener(this);

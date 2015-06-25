@@ -16,12 +16,12 @@
  */
 package mimis.application.cmd.windows.gomplayer;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
 import mimis.value.Amount;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class GomPlayerApplication extends WindowsApplication {
     protected final static String PROGRAM = "GOM.exe";
@@ -31,48 +31,50 @@ public class GomPlayerApplication extends WindowsApplication {
     protected static final int VOLUME_SLEEP = 100;
     protected static final int SEEK_SLEEP = 100;
 
-    protected VolumeWorker volumeWorker;
-    protected SeekWorker seekWorker;
+    protected VolumeWork volumeWork;
+    protected SeekWork seekWork;
 
     public GomPlayerApplication() {
         super(PROGRAM, TITLE, WINDOW);
-        volumeWorker = new VolumeWorker();
-        seekWorker = new SeekWorker();
+        volumeWork = new VolumeWork();
+        seekWork = new SeekWork();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
-        volumeWorker.stop();
-        seekWorker.stop();
+        volumeWork.stop();
+        seekWork.stop();
     }
 
     public void exit() {
         super.exit();
-        volumeWorker.exit();
-        seekWorker.exit();
+        volumeWork.exit();
+        seekWork.exit();
     }
 
     public void begin(Action action) {
         logger.trace("GomPlayerApplication begin: " + action);
         switch (action) {
             case VOLUME_UP:
-                volumeWorker.start();    
+                volumeWork.start();    
                 break;
             case VOLUME_DOWN:
-                volumeWorker.start();
+                volumeWork.start();
                 break;
             case FORWARD:
-                seekWorker.start(Amount.SMALL, 1);
+                seekWork.start(Amount.SMALL, 1);
                 break;
             case REWIND:
-                seekWorker.start(Amount.SMALL, -1);
+                seekWork.start(Amount.SMALL, -1);
                 break;
             case NEXT:
-                seekWorker.start(Amount.MEDIUM, 1);
+                seekWork.start(Amount.MEDIUM, 1);
                 break;
             case PREVIOUS:
-                seekWorker.start(Amount.MEDIUM, -1);
-                break;  
+                seekWork.start(Amount.MEDIUM, -1);
+                break;
+			default:
+				break;
         }
     }
 
@@ -89,19 +91,21 @@ public class GomPlayerApplication extends WindowsApplication {
             case REWIND:
             case NEXT:
             case PREVIOUS:
-                seekWorker.stop();
+                seekWork.stop();
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                volumeWorker.stop();
+                volumeWork.stop();
                 break;
             case FULLSCREEN:
                 command(0x8154);
                 break;
+			default:
+				break;
         }
     }
 
-    protected class VolumeWorker extends ThreadWorker {
+    protected class VolumeWork extends Work {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign) throws ActivateException {
@@ -115,7 +119,7 @@ public class GomPlayerApplication extends WindowsApplication {
         }
     };
 
-    protected class SeekWorker extends ThreadWorker {
+    protected class SeekWork extends Work {
         protected Amount amount;
         protected int seekDirection;
 

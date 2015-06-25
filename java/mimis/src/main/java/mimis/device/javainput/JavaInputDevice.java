@@ -44,20 +44,19 @@ public abstract class JavaInputDevice extends Component implements Device {
     protected JavaInputListener javaInputListener;
     protected Button previousDirectionalButton;
 
-    protected void activate() throws ActivateException {
-        super.activate();
+    public void activate() throws ActivateException {
         try {
             JXInputDevice jxinputDevice = getDevice(name);
             logger.debug(jxinputDevice.getName());
             javaInputListener = new JavaInputListener(this, jxinputDevice);
         } catch (DeviceNotFoundException e) {
-            active = false;
             throw new ActivateException();
         }
         javaInputListener.start();
+        super.activate();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         javaInputListener.stop();
     }

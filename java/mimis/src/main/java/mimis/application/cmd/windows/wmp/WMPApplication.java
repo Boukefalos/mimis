@@ -16,9 +16,9 @@
  */
 package mimis.application.cmd.windows.wmp;
 
-import base.worker.ThreadWorker;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.value.Action;
+import base.work.Work;
 
 public class WMPApplication extends WindowsApplication {
     protected final static String PROGRAM = "wmplayer.exe";
@@ -27,11 +27,11 @@ public class WMPApplication extends WindowsApplication {
 
     protected static final int VOLUME_SLEEP = 120;
 
-    protected VolumeWorker volumeWorker;
+    protected VolumeWork volumeWork;
     
     public WMPApplication() {
         super(PROGRAM, TITLE, WINDOW);
-        volumeWorker = new VolumeWorker();
+        volumeWork = new VolumeWork();
     }
 
     public void begin(Action action) {
@@ -56,17 +56,19 @@ public class WMPApplication extends WindowsApplication {
                 command(18817);
                 break;
             case VOLUME_UP:
-                volumeWorker.start(1);
+                volumeWork.start(1);
                 break;
             case VOLUME_DOWN:
-                volumeWorker.start(-1);
+                volumeWork.start(-1);
                 break;
             case SHUFFLE:
                 command(18842);
                 break;
             case REPEAT:
                 command(18843);
-                break;
+	                break;
+			default:
+				break;
         }
     }
 
@@ -81,12 +83,14 @@ public class WMPApplication extends WindowsApplication {
                 break;
             case VOLUME_UP:
             case VOLUME_DOWN:
-                volumeWorker.stop();
+                volumeWork.stop();
                 break;
+			default:
+				break;
         }
     }
 
-    protected class VolumeWorker extends ThreadWorker {
+    protected class VolumeWork extends Work {
         protected int volumeChangeSign;
 
         public void start(int volumeChangeSign) {

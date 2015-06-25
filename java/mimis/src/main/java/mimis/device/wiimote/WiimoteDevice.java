@@ -26,7 +26,6 @@ import mimis.input.Button;
 import mimis.input.Feedback;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
-import mimis.util.ArrayCycle;
 import mimis.value.Action;
 import mimis.value.Signal;
 
@@ -40,7 +39,8 @@ import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
+import base.util.ArrayCycle;
+import base.work.Work;
 
 public class WiimoteDevice extends Component implements Device, GestureListener {
     protected static final String TITLE = "Wiimote";
@@ -56,7 +56,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     protected GestureDevice gestureDevice;
     protected MotionDevice motionDevice;
     protected int gestureId;
-    protected LedWorker ledWorker;
+    protected LedWork ledWork;
     protected boolean disconnect;
 
     static {
@@ -71,11 +71,11 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
         gestureDevice.add(this);
         motionDevice = new MotionDevice(this);
         gestureId = 0;
-        ledWorker = new LedWorker();
+        ledWork = new LedWork();
     }
 
     /* Worker */
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
     	if (wiimote == null) {
             motionDevice.setRouter(router);
             motionDevice.start();
@@ -107,12 +107,12 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
                 }
             }
         }
-        return active;
+        return super.active();
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
-        ledWorker.stop();
+        ledWork.stop();
         motionDevice.stop();
         if (disconnect && wiimote != null) {
             wiimote.disconnect();
@@ -122,7 +122,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
 
     public void exit() {
         super.exit();
-        ledWorker.exit();
+        ledWork.exit();
         if (wiimote != null) {
             wiimote.disconnect();
             wiimote = null;
@@ -170,6 +170,8 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
                     gestureDevice.loadGesture("tmp/gesture #" + gestureId);
                 }
                 break;
+			default:
+				break;
         }
     }
 
@@ -187,6 +189,8 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
                 logger.debug("Gesture close release");
                 gestureDevice.close(Signal.END);
                 break;
+			default:
+				break;
         }
     }
 
@@ -202,12 +206,12 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
         wiimote = wiimoteService.getDevice(this);
         //wiimote.activateContinuous();
         //wiimote.activateMotionSensing();
-        ledWorker.start();
+        ledWork.start();
     }
 
     /* Listeners */
     public void onButtonsEvent(WiimoteButtonsEvent event) {
-    	if (!active) {
+    	if (!active()) {
     		return;
     	}
         int pressed = event.getButtonsJustPressed() - event.getButtonsHeld();
@@ -226,7 +230,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     }
 
     public void onMotionSensingEvent(MotionSensingEvent event) {
-    	if (!active) {
+    	if (!active()) {
     		return;
     	}
         gestureDevice.add(event.getGforce());
@@ -243,10 +247,10 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
         }
     }
 
-    class LedWorker extends ThreadWorker {
+    class LedWork extends Work {
         protected ArrayCycle<Integer> ledCycle;
 
-        public LedWorker() {
+        public LedWork() {
             ledCycle = new ArrayCycle<Integer>();
             ledCycle.add(1);
             ledCycle.add(3);
@@ -269,7 +273,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
             setLeds(1);
         }
 
-        protected void work() {
+        public void work() {
             setLeds(ledCycle.next());
             sleep(LED_SLEEP);
         }

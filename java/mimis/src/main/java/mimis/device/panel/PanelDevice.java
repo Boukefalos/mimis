@@ -34,17 +34,17 @@ public class PanelDevice extends Component implements Device {
         taskMapCycle = new PanelTaskMapCycle();
     }
 
-    protected void activate() throws ActivateException {
+    public void activate() throws ActivateException {
         panel = new Panel(this);
         parser(Action.ADD, taskMapCycle.player);
         super.activate();
     }
 
     public boolean active() {
-        return active = panel != null;
+        return panel != null;
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         panel.dispose();
         panel = null;

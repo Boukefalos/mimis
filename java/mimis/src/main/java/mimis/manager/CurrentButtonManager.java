@@ -29,25 +29,25 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
-import base.worker.ThreadWorker;
 import mimis.Component;
 import mimis.input.Task;
 import mimis.router.Router;
-import mimis.util.ArrayCycle;
 import mimis.value.Action;
 import mimis.value.Signal;
 import mimis.value.Target;
+import base.util.ArrayCycle;
+import base.work.Work;
 
 public class CurrentButtonManager extends ButtonManager implements ActionListener {
     protected Router router;
     protected ArrayCycle<Component> componentCycle;
-    protected Map<JRadioButton, ThreadWorker> radioButtonMap;
+    protected Map<JRadioButton, Work> radioButtonMap;
 
-    public CurrentButtonManager(Router router, ArrayCycle<Component> componentCycle, String title, ThreadWorker... workerArray) {
-        super(title, workerArray);
+    public CurrentButtonManager(Router router, ArrayCycle<Component> componentCycle, String title, Work... workArray) {
+        super(title, workArray);
         this.componentCycle = componentCycle;
         this.router = router;
-        radioButtonMap = new HashMap<JRadioButton, ThreadWorker>();
+        radioButtonMap = new HashMap<JRadioButton, Work>();
     }
 
     public JPanel createPanel() {
@@ -77,7 +77,7 @@ public class CurrentButtonManager extends ButtonManager implements ActionListene
             JRadioButton radioButton = new JRadioButton();
             buttonGroup.add(radioButton);
             radioButton.addActionListener(this);
-            radioButtonMap.put(radioButton,  button.worker);
+            radioButtonMap.put(radioButton,  button.work);
             gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
             gridBagConstraints.weightx = 0;
             gridBagLayout.setConstraints(radioButton, gridBagConstraints);            
@@ -89,7 +89,7 @@ public class CurrentButtonManager extends ButtonManager implements ActionListene
     public void actionPerformed(ActionEvent event) {
         JRadioButton radioButton = (JRadioButton) event.getSource();
         if (radioButtonMap.containsKey(radioButton)) {
-            ThreadWorker worker = radioButtonMap.get(radioButton);
+            Work worker = radioButtonMap.get(radioButton);
             if (componentCycle.contains(worker)) {
                 while (!componentCycle.current().equals(worker)) {
                     componentCycle.next();
@@ -100,9 +100,9 @@ public class CurrentButtonManager extends ButtonManager implements ActionListene
     }
     
     public void currentChanged() {
-        ThreadWorker worker = componentCycle.current();
+        Work worker = componentCycle.current();
         if (radioButtonMap.containsValue(worker)) {
-            for (Entry<JRadioButton, ThreadWorker> entry  : radioButtonMap.entrySet()) {
+            for (Entry<JRadioButton, Work> entry  : radioButtonMap.entrySet()) {
                 if (entry.getValue().equals(worker)) {
                     JRadioButton radioButton = (JRadioButton) entry.getKey();
                     radioButton.setSelected(true);

@@ -23,14 +23,14 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
-import base.worker.ThreadWorker;
 import mimis.application.cmd.CMDApplication;
 import mimis.util.Native;
 import mimis.value.Action;
 import mimis.value.Amount;
 import mimis.value.Registry;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import base.work.Work;
 
 public class VLCApplication extends CMDApplication {
     protected final static Registry REGISTRY = Registry.CLASSES_ROOT;
@@ -47,16 +47,16 @@ public class VLCApplication extends CMDApplication {
     protected static final int VOLUME_SLEEP = 100;
     protected static final int SEEK_SLEEP = 100;
     
-    protected VolumeWorker volumeWorker;
-    protected SeekWorker seekWorker;
+    protected VolumeWork volumeWorker;
+    protected SeekWork seekWorker;
     
     protected int volume = 255;
     protected boolean muted = false;
 
     public VLCApplication() {
         super(PROGRAM, TITLE);
-        volumeWorker = new VolumeWorker();
-        seekWorker = new SeekWorker();
+        volumeWorker = new VolumeWork();
+        seekWorker = new SeekWork();
     }
 
     public String getPath() {
@@ -79,7 +79,7 @@ public class VLCApplication extends CMDApplication {
         }
     }
 
-    protected void deactivate() throws DeactivateException {
+    public void deactivate() throws DeactivateException {
         super.deactivate();
         volumeWorker.stop();
         seekWorker.stop();
@@ -108,6 +108,8 @@ public class VLCApplication extends CMDApplication {
                 case REWIND:
                     seekWorker.start(Amount.SMALL, "-");
                     break;
+				default:
+					break;
             }
         } catch (ActivateException e) {
             logger.error("", e);
@@ -146,6 +148,8 @@ public class VLCApplication extends CMDApplication {
             case REPEAT:
                 command("command=pl_repeat");
                 break;
+			default:
+				break;
         }
     }
     
@@ -171,7 +175,7 @@ public class VLCApplication extends CMDApplication {
         return TITLE;
     }
     
-    protected class VolumeWorker extends ThreadWorker {
+    protected class VolumeWork extends Work {
         protected String volumeChangeSign;
 
         public void activate(String volumeChangeSign) throws ActivateException {
@@ -186,7 +190,7 @@ public class VLCApplication extends CMDApplication {
         }
     };
 
-    protected class SeekWorker extends ThreadWorker {
+    protected class SeekWork extends Work {
         protected Amount amount;
         protected String seekDirection;
 
