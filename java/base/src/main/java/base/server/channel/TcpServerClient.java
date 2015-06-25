@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import base.sender.Sender;
+import base.Sender;
 import base.work.Listen;
 
 public class TcpServerClient extends Listen<byte[]> implements Sender {

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 import base.Duplex;
 import base.Receiver;
-import base.server.channel.TcpClient;
-import base.server.channel.TcpServerClient;
+import base.server.datagram.UdpDuplexClient;
 
-public class TcpClientSocketForwarder extends TcpClient implements Duplex {
+public class UdpDuplexClientForwarder extends UdpDuplexClient implements Duplex {
 	protected ArrayList<Receiver> receiverList;
 
-	public TcpClientSocketForwarder(String host, int port) {
-		 super(host, port);
+	public UdpDuplexClientForwarder(String host, int port) {
+		 super(port);
 		 receiverList = new ArrayList<Receiver>();
 	 }
 
@@ -23,7 +22,7 @@ public class TcpClientSocketForwarder extends TcpClient implements Duplex {
 		receiverList.remove(receiver);
 	}
 
-	public void input(TcpServerClient client, byte[] buffer) {
+	public void input(byte[] buffer) {
 		for (Receiver receiver: receiverList) {
 			receiver.receive(buffer);
 		}

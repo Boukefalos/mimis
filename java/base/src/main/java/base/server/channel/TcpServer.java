@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import base.Sender;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.sender.Sender;
 import base.server.channel.TcpServerClient;
 import base.work.Work;
 

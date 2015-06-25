@@ -3,6 +3,7 @@ package base.work;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import base.Control;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.worker.DirectWorker;
@@ -11,7 +12,7 @@ import base.worker.Worker;
 import base.worker.pool.PooledWorker;
 import base.worker.pool.WorkerPool;
 
-public abstract class Work {
+public abstract class Work implements Control {
 	protected static final Worker.Type WORKER_TYPE = Worker.Type.BACKGROUND;
 
     protected Logger logger = LoggerFactory.getLogger(getClass());

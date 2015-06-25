@@ -2,15 +2,14 @@ package base.server.forwarder;
 
 import java.util.ArrayList;
 
-import base.receiver.Forwarder;
-import base.receiver.Receiver;
-import base.server.channel.TcpServer;
-import base.server.channel.TcpServerClient;
+import base.Duplex;
+import base.Receiver;
+import base.server.datagram.UdpDuplexServer;
 
-public class TcpServerChannelForwarder extends TcpServer implements Forwarder {
+public class UdpDuplexServerForwarder extends UdpDuplexServer implements Duplex {
 	protected ArrayList<Receiver> receiverList;
 
-	public TcpServerChannelForwarder(int port) {
+	public UdpDuplexServerForwarder(int port) {
 		 super(port);
 		 receiverList = new ArrayList<Receiver>();
 	 }
@@ -23,7 +22,7 @@ public class TcpServerChannelForwarder extends TcpServer implements Forwarder {
 		receiverList.remove(receiver);
 	}
 
-	public void input(TcpServerClient client, byte[] buffer) {
+	public void input(byte[] buffer) {
 		for (Receiver receiver: receiverList) {
 			receiver.receive(buffer);
 		}

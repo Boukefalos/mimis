@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import base.Sender;
 import base.exception.worker.DeactivateException;
-import base.sender.Sender;
 import base.work.Work;
 
 public abstract class AbstractTcpClient extends Work implements Sender {

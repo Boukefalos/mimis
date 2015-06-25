@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import base.sender.UdpSender;
+import base.server.datagram.UdpSender;
 import base.server.datagram.UdpServer;
 
 public class TestUdpUnicastCommunication {

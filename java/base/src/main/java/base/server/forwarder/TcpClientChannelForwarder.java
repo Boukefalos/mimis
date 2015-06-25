@@ -2,16 +2,16 @@ package base.server.forwarder;
 
 import java.util.ArrayList;
 
-import base.receiver.Forwarder;
-import base.receiver.Receiver;
+import base.Duplex;
+import base.Receiver;
 import base.server.socket.TcpClient;
 import base.server.socket.TcpServerClient;
 
-public class TcpClientChannelForwarder extends TcpClient implements Forwarder {
+public class TcpClientChannelForwarder extends TcpClient implements Duplex {
 	protected ArrayList<Receiver> receiverList;
 
-	public TcpClientChannelForwarder(int port) {
-		 super(port);
+	public TcpClientChannelForwarder(String host, int port) {
+		 super(host, port);
 		 receiverList = new ArrayList<Receiver>();
 	 }
 

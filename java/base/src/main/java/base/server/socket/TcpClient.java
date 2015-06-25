@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import base.Sender;
 import base.exception.worker.ActivateException;
-import base.sender.Sender;
 
 public class TcpClient extends AbstractTcpClient implements Sender {
 	protected static final String HOST = "localhost";

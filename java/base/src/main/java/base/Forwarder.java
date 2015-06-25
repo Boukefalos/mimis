@@ -1,6 +1,4 @@
-package base.receiver;
-
-import base.Control;
+package base;
 
 public interface Forwarder extends Control {
 	public void register(Receiver receiver);

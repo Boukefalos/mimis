@@ -1,17 +1,17 @@
-package base.server.forwarder;
+package base.server.receiver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import base.Control;
-import base.receiver.Forwarder;
-import base.receiver.Receiver;
+import base.Forwarder;
+import base.Receiver;
 
 public abstract class AbstractReceiver implements Receiver, Control {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected Forwarder forwarder;
-	
+
 	public AbstractReceiver(Forwarder forwarder) {
 		this.forwarder = forwarder;
 		forwarder.register(this);

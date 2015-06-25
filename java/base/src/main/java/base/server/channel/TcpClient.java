@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import base.Sender;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.sender.Sender;
 import base.work.Listen;
 import base.work.Work;
 import base.worker.Worker;

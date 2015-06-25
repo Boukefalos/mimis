@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import base.Duplex;
 import base.Receiver;
-import base.server.channel.TcpClient;
+import base.server.channel.TcpServer;
 import base.server.channel.TcpServerClient;
 
-public class TcpClientSocketForwarder extends TcpClient implements Duplex {
+public class TcpChannelServerForwarder extends TcpServer implements Duplex {
 	protected ArrayList<Receiver> receiverList;
 
-	public TcpClientSocketForwarder(String host, int port) {
-		 super(host, port);
+	public TcpChannelServerForwarder(int port) {
+		 super(port);
 		 receiverList = new ArrayList<Receiver>();
 	 }
 

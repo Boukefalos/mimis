@@ -10,14 +10,18 @@ import org.picocontainer.parameters.ConstantParameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import base.Duplex;
+import base.Forwarder;
+import base.Sender;
 import base.exception.LoaderException;
-import base.sender.UdpSender;
-import base.server.forwarder.TcpServerChannelForwarder;
-import base.server.forwarder.TcpServerSocketForwarder;
-import base.server.forwarder.UdpServerForwarder;
+import base.server.datagram.UdpSender;
+import base.server.forwarder.UdpDuplexClientForwarder;
+import base.server.forwarder.UdpDuplexServerForwarder;
 
-public class AbstractLoader<E> {
+public class AbstractLoader<T> {
 	protected static final String PROPERTIES_FILE = "loader.properties";
+	protected static final Properties SERVER = null;
+
 	protected Logger logger = LoggerFactory.getLogger(AbstractLoader.class);
     protected MutablePicoContainer pico;
     
@@ -31,8 +35,8 @@ public class AbstractLoader<E> {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static <E> E getLoader() throws LoaderException {
-    	return (E) new AbstractLoader(readProperties(PROPERTIES_FILE));
+	public static <T> T getLoader() throws LoaderException {
+    	return (T) new AbstractLoader(readProperties(PROPERTIES_FILE));
     }
 
 	public static Properties readProperties(String propertiesFile) throws LoaderException {
@@ -46,51 +50,97 @@ public class AbstractLoader<E> {
 		return properties;
 	}
 
-	protected void addSender(String protocol, String implementation, String host, int port) throws LoaderException {
-		Class<?> senderClass = null;
+	protected Class<?> getSenderClass(String protocol, String implementation) throws LoaderException {
+    	switch (protocol) {
+			case "tcp":
+				switch (implementation) {
+					case "channel":
+						return base.server.channel.TcpClient.class; 
+					default:
+					case "socket":
+						return base.server.socket.TcpClient.class; 
+					}
+				case "udp":
+					return UdpSender.class;
+		}
+		throw new LoaderException("Failed to determine <Sender>");
+	}
+
+	protected Class<?> getClientForwarderClass(String protocol, String implementation) throws LoaderException {
 		switch (protocol) {
 			case "tcp":
 				switch (implementation) {
 					case "channel":
-						senderClass = base.server.channel.TcpClient.class; 
-						break;
+						return base.server.forwarder.TcpClientChannelForwarder.class;
 					default:
 					case "socket":
-						senderClass = base.server.socket.TcpClient.class; 
+						return base.server.forwarder.TcpClientSocketForwarder.class;
 				}
-				break;
 			case "udp":
-				senderClass = UdpSender.class;
-				break;
+				return UdpDuplexClientForwarder.class;
 		}
-		if (senderClass == null) {
-			throw new LoaderException("Failed to determine <Sender>");
+		throw new LoaderException("Failed to determine <Forwarder>");
+	}
+
+	protected Class<?> getServerForwarderClass(String protocol, String implementation) throws LoaderException {
+		switch (protocol) {
+			case "tcp":
+				switch (implementation) {
+					case "channel":
+						return base.server.forwarder.TcpChannelServerForwarder.class;
+					default:
+					case "socket":
+						return base.server.forwarder.TcpSocketServerForwarder.class;
+				}
+			case "udp":
+				return UdpDuplexServerForwarder.class;
 		}
-		pico.addComponent(senderClass, senderClass, new Parameter[]{
+		throw new LoaderException("Failed to determine <Forwarder>");
+	}
+
+	protected void addClientSender(String protocol, String implementation, String host, int port) throws LoaderException {
+		Class<?> senderClass = getSenderClass(protocol, implementation);
+		logger.debug("Adding " + senderClass);
+		pico.addComponent(Sender.class, senderClass, new Parameter[]{
 			new ConstantParameter(host),
 			new ConstantParameter(port)});
 	}
 
-    protected void addForwarder(String protocol, String implementation, int port) throws LoaderException {
-		Class<?> forwarderClass = null;
-		switch (protocol) {
-				case "tcp":
-					switch (implementation) {
-					case "channel":
-						forwarderClass = TcpServerChannelForwarder.class;
-						break;
-					default:
-					case "socket":
-						forwarderClass = TcpServerSocketForwarder.class;
-				}
-				break;
-			case "udp":
-				forwarderClass = UdpServerForwarder.class;
-		}
-		if (forwarderClass == null) {
-			throw new LoaderException("Failed to determine <Forwarder>");
-		}
-		pico.addComponent(forwarderClass, forwarderClass, new Parameter[]{
+	protected void addServerSender(String protocol, String implementation, int port) throws LoaderException {
+		Class<?> senderClass = getSenderClass(protocol, implementation);
+		logger.debug("Adding " + senderClass);
+		pico.addComponent(Sender.class, senderClass, new Parameter[]{
 			new ConstantParameter(port)});
+	}
+
+	protected void addClientForwarder(String protocol, String implementation, String host, int port) throws LoaderException {
+		Class<?> forwarderClass = getClientForwarderClass(protocol, implementation);
+		logger.debug("Adding " + forwarderClass);
+		pico.addComponent(Forwarder.class, forwarderClass, new Parameter[]{
+			new ConstantParameter(host),
+			new ConstantParameter(port)});
+	}
+
+	protected void addClientDuplex(String protocol, String implementation, String host, int port) throws LoaderException {
+		Class<?> duplexClass = getClientForwarderClass(protocol, implementation);
+		logger.debug("Adding " + duplexClass);
+		pico.addComponent(Duplex.class, duplexClass, new Parameter[]{
+			new ConstantParameter(host),
+			new ConstantParameter(port)});
+		
+	}
+
+	protected void addServerForwarder(String protocol, String implementation, int port) throws LoaderException {
+		Class<?> forwarderClass = getServerForwarderClass(protocol, implementation);
+		logger.debug("Adding " + forwarderClass);
+		pico.addComponent(Forwarder.class, forwarderClass, new Parameter[]{
+			new ConstantParameter(port)});		
+	}
+
+	protected void addServerDuplex(String protocol, String implementation, int port) throws LoaderException {
+		Class<?> duplexClass = getServerForwarderClass(protocol, implementation);
+		logger.debug("Adding " + duplexClass);
+		pico.addComponent(Duplex.class, duplexClass, new Parameter[]{
+			new ConstantParameter(port)});		
 	}
 }

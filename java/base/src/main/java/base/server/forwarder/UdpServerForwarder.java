@@ -2,8 +2,8 @@ package base.server.forwarder;
 
 import java.util.ArrayList;
 
-import base.receiver.Forwarder;
-import base.receiver.Receiver;
+import base.Forwarder;
+import base.Receiver;
 import base.server.datagram.UdpServer;
 
 public class UdpServerForwarder extends UdpServer implements Forwarder {

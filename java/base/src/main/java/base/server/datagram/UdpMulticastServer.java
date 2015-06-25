@@ -5,9 +5,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import base.Sender;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.sender.Sender;
 import base.work.Listen;
 import base.worker.Worker;
 

@@ -6,9 +6,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import base.Sender;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
-import base.sender.Sender;
 import base.work.Work;
 
 public class TcpServer extends Work implements Sender {

@@ -1,4 +1,4 @@
-package base.sender;
+package base.server.datagram;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import base.Sender;
 
 public class UdpSender implements Sender {
 	protected static final String HOST = "localhost";
@@ -27,21 +29,6 @@ public class UdpSender implements Sender {
 		logger.debug(host);
 		logger.debug(String.valueOf(port));
 		this.port = port;
-	}
-
-	protected boolean setup() {
-		
-		return true;
-	}
-
-	public void send(byte[] buffer) {
-		try {
-			setup();
-			DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length, inetAddress, port);
-			datagramSocket.send(datagramPacket);
-		} catch (IOException e) {
-			logger.error("Failed to send buffer", e);
-		}		
 	}
 
 	public void start() {
@@ -63,4 +50,14 @@ public class UdpSender implements Sender {
 	public void exit() {
 		stop();
 	}
+
+	public void send(byte[] buffer) {
+		try {
+			DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length, inetAddress, port);
+			datagramSocket.send(datagramPacket);
+		} catch (IOException e) {
+			logger.error("Failed to send buffer", e);
+		}		
+	}
+
 }
