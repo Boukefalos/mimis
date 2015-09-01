@@ -8,7 +8,7 @@ public class ArrayCycle<E> extends CopyOnWriteArrayList<E> {
     protected int index = 0;
 
     @SuppressWarnings("unchecked")
-	public ArrayCycle(E... elementArray) {
+    public ArrayCycle(E... elementArray) {
         if (elementArray != null) {
             for (E element : elementArray) {
                 add(element);

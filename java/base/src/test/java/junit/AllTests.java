@@ -6,10 +6,10 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	TestTcpSocketCommunication.class,
-	TestTcpChannelCommunication.class,
-	TestUdpUnicastCommunication.class,
-	TestUdpMulticastCommunication.class
+    TestTcpSocketCommunication.class,
+    TestTcpChannelCommunication.class,
+    TestUdpUnicastCommunication.class,
+    TestUdpMulticastCommunication.class
 })
 
 public class AllTests {}

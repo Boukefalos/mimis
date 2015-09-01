@@ -35,7 +35,7 @@ public abstract class Mimis extends Component {
     protected ArrayCycle<Component> componentCycle;
 
     public Mimis(Component... currentArray) {
-    	super(Worker.Type.FOREGROUND);
+        super(Worker.Type.FOREGROUND);
         this.currentArray = initialize(false, currentArray);        
         componentCycle = new ArrayCycle<Component>(currentArray);        
         router = new Router();
@@ -91,8 +91,8 @@ public abstract class Mimis extends Component {
             case EXIT:
                 exit();
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 }

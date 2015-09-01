@@ -41,21 +41,21 @@ public class Main extends Mimis {
     }
 
     public static Component[] getApplications() {
-    	return  getComponents(mimis.application.Application.class);
+        return  getComponents(mimis.application.Application.class);
     }
 
     public static Component[] getDevices() {
-    	return getComponents(mimis.device.Device.class);
+        return getComponents(mimis.device.Device.class);
     }
 
     public static Component[] getComponents(Class<?> clazz) {
-    	ArrayList<Component> componentList = new ArrayList<Component>();
-    	for (Object object : ServiceLoader.load(clazz)) {
-    		if (object instanceof Component) {
-    			componentList.add((Component) object);
-    		}
-    	}
-    	return componentList.toArray(new Component[]{});
+        ArrayList<Component> componentList = new ArrayList<Component>();
+        for (Object object : ServiceLoader.load(clazz)) {
+            if (object instanceof Component) {
+                componentList.add((Component) object);
+            }
+        }
+        return componentList.toArray(new Component[]{});
     }
 
     public Main() {
@@ -106,8 +106,8 @@ public class Main extends Mimis {
             case PREVIOUS:
                 applicationManager.currentChanged();
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

@@ -73,8 +73,8 @@ public class GomPlayerApplication extends WindowsApplication {
             case PREVIOUS:
                 seekWork.start(Amount.MEDIUM, -1);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 
@@ -100,8 +100,8 @@ public class GomPlayerApplication extends WindowsApplication {
             case FULLSCREEN:
                 command(0x8154);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

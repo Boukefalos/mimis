@@ -41,14 +41,14 @@ public abstract class Component extends Listen<Input> {
     }
 
     public Component(Type type) {
-		super(type);
-	}
+        super(type);
+    }
 
     public Component(String title) {
         this.title = title;
     }
 
-	public void setRouter(Router router) {
+    public void setRouter(Router router) {
         this.router = router;        
     }
 

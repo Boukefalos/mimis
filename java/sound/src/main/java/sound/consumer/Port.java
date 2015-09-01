@@ -19,103 +19,103 @@ import base.exception.worker.DeactivateException;
 import base.work.Work;
 
 public class Port extends Work implements Consumer {
-	protected static final int BUFFER_SIZE = 1024 * 4; // in bytes
+    protected static final int BUFFER_SIZE = 1024 * 4; // in bytes
 
-	protected String device;
-	protected Producer producer;
-	protected Process process;
-	protected InputStream producerInputStream;
-	protected OutputStream processOutputStream;
-	protected ProcessBuilder processBuilder;
+    protected String device;
+    protected Producer producer;
+    protected Process process;
+    protected InputStream producerInputStream;
+    protected OutputStream processOutputStream;
+    protected ProcessBuilder processBuilder;
 
-	public Port() {
-		this("0");
-	}
+    public Port() {
+        this("0");
+    }
 
-	public Port(String device) {
-		this.device = device;
-	}
+    public Port(String device) {
+        this.device = device;
+    }
 
-	public void start(Producer producer) {
-		start(producer);
-	}
+    public void start(Producer producer) {
+        start(producer);
+    }
 
     @SuppressWarnings("static-access")
-	public void start(Producer producer, boolean thread) {
-		this.producer = producer;
-		producerInputStream = producer.getInputStream();
-		
-		String command = "";
-		if (producer instanceof Standard) {
-			AudioFormat audioFormat = ((Standard) producer).getAudioFormat();
-			SoxBuilder.addFile(File.setType(Type.STANDARD).setOptions(audioFormat));			
-		} else if (producer instanceof Format.Mp3) {
-			SoxBuilder.addFile(File.setType(Type.STANDARD).setOption(File.Format.MP3));
-		}
-		command = SoxBuilder
-			.setOption(Option.QUIET)
-			.addFile(File.setType(Type.DEVICE))
-			.build();
+    public void start(Producer producer, boolean thread) {
+        this.producer = producer;
+        producerInputStream = producer.getInputStream();
+        
+        String command = "";
+        if (producer instanceof Standard) {
+            AudioFormat audioFormat = ((Standard) producer).getAudioFormat();
+            SoxBuilder.addFile(File.setType(Type.STANDARD).setOptions(audioFormat));            
+        } else if (producer instanceof Format.Mp3) {
+            SoxBuilder.addFile(File.setType(Type.STANDARD).setOption(File.Format.MP3));
+        }
+        command = SoxBuilder
+            .setOption(Option.QUIET)
+            .addFile(File.setType(Type.DEVICE))
+            .build();
 
-		logger.debug(String.format("Build process (\"%s\")", command));
-		processBuilder = new ProcessBuilder(command.split(" "));
-		processBuilder.environment().put("AUDIODEV", device);
+        logger.debug(String.format("Build process (\"%s\")", command));
+        processBuilder = new ProcessBuilder(command.split(" "));
+        processBuilder.environment().put("AUDIODEV", device);
 
-		start();
-	}
+        start();
+    }
 
-	public void activate() throws ActivateException {
-    	producer.start();
-    	if (process == null) {
-			try {
-				process = processBuilder.start();
-			} catch (IOException e) {
-				logger.error("", e);
-				throw new ActivateException();
-			}
-			processOutputStream = process.getOutputStream();
-    	}
+    public void activate() throws ActivateException {
+        producer.start();
+        if (process == null) {
+            try {
+                process = processBuilder.start();
+            } catch (IOException e) {
+                logger.error("", e);
+                throw new ActivateException();
+            }
+            processOutputStream = process.getOutputStream();
+        }
         super.activate();
     }
 
     public void deactivate() throws DeactivateException {
-    	super.deactivate();
-    	try {
-			processOutputStream.flush();
-		} catch (IOException e) {
-			logger.error("", e);
-			throw new DeactivateException();
-		}
+        super.deactivate();
+        try {
+            processOutputStream.flush();
+        } catch (IOException e) {
+            logger.error("", e);
+            throw new DeactivateException();
+        }
     }
 
     public void exit() {
-    	try {
-			logger.debug("close process output stream");
-			processOutputStream.close();
+        try {
+            logger.debug("close process output stream");
+            processOutputStream.close();
 
-			logger.debug("wait for process to terminate");
-			process.waitFor();
-		} catch (IOException e) {
-			logger.error("", e);
-		} catch (InterruptedException e) {
-			logger.error("", e);
-		} finally {
-			process = null;
-		}
+            logger.debug("wait for process to terminate");
+            process.waitFor();
+        } catch (IOException e) {
+            logger.error("", e);
+        } catch (InterruptedException e) {
+            logger.error("", e);
+        } finally {
+            process = null;
+        }
     }
 
-	public void work() {
-		try {			
-			byte[] buffer = new byte[BUFFER_SIZE];
-	        int read = producerInputStream.read(buffer, 0, buffer.length);
-	        if (read > 0) {
-	        	processOutputStream.write(buffer, 0, read);
-	        } else {
-	        	exit();
-	        }
-		} catch (IOException e) {
-			logger.error("", e);
-			exit();
-		}
-	}
+    public void work() {
+        try {            
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int read = producerInputStream.read(buffer, 0, buffer.length);
+            if (read > 0) {
+                processOutputStream.write(buffer, 0, read);
+            } else {
+                exit();
+            }
+        } catch (IOException e) {
+            logger.error("", e);
+            exit();
+        }
+    }
 }

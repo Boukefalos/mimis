@@ -62,8 +62,8 @@ public class iPodApplication extends LircApplication {
                     logger.error("", e);
                 }
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 
@@ -84,8 +84,8 @@ public class iPodApplication extends LircApplication {
             case VOLUME_DOWN:
                 volumeWork.stop();
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

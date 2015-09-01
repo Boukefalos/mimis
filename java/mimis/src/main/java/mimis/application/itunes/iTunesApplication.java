@@ -108,8 +108,8 @@ public class iTunesApplication extends Component implements Application, iTunesE
             case VOLUME_DOWN:
                 volumeWork.start(-VOLUME_CHANGE_RATE);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 
@@ -151,8 +151,8 @@ public class iTunesApplication extends Component implements Application, iTunesE
             case DISLIKE:
                 iTunes.playlistAddCurrentTrack(PLAYLIST_DISLIKE);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

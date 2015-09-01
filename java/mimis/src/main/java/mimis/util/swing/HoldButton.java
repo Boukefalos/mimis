@@ -28,22 +28,22 @@ public class HoldButton extends JButton implements MouseListener {
 
     public HoldButton(HoldButtonListener holdButtonListener) {
         this.holdButtonListener = holdButtonListener;
-    	addMouseListener(this);
+        addMouseListener(this);
     }
 
     public void mousePressed(MouseEvent event) {
-    	if (event.getButton() == MouseEvent.BUTTON1) {
-    	    holdButtonListener.buttonPressed(this);
-    	}
+        if (event.getButton() == MouseEvent.BUTTON1) {
+            holdButtonListener.buttonPressed(this);
+        }
     }
 
     public void mouseReleased(MouseEvent event) {
-    	if (event.getButton() == MouseEvent.BUTTON1) {
-    	    holdButtonListener.buttonReleased(this);
-    	}
+        if (event.getButton() == MouseEvent.BUTTON1) {
+            holdButtonListener.buttonReleased(this);
+        }
     }
 
-	public void mouseClicked(MouseEvent event) {}
-	public void mouseEntered(MouseEvent event) {}
-	public void mouseExited(MouseEvent event) {}
+    public void mouseClicked(MouseEvent event) {}
+    public void mouseEntered(MouseEvent event) {}
+    public void mouseExited(MouseEvent event) {}
 }

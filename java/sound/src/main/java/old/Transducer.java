@@ -4,13 +4,13 @@ import sound.Consumer;
 import sound.Producer;
 
 public abstract class Transducer implements Consumer, Producer {
-	public int rate;
+    public int rate;
 
-	public Transducer(Producer producer) {
-		//setProducer(producer);
-	}
+    public Transducer(Producer producer) {
+        //setProducer(producer);
+    }
 
-	public int getRate() {
-		return rate;
-	}
+    public int getRate() {
+        return rate;
+    }
 }

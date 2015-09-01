@@ -5,7 +5,7 @@ import mimis.value.Windows;
 
 public class Native {
     static {
-    	com.github.boukefalos.jlibloader.Native.load("com.github.boukefalos", "jlibmimis");
+        com.github.boukefalos.jlibloader.Native.load("com.github.boukefalos", "jlibmimis");
     }
 
     public native static int getHandle(String window);

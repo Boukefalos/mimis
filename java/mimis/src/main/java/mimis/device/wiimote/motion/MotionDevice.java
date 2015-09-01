@@ -93,8 +93,8 @@ public class MotionDevice extends Component {
                 case SCREEN_DOWN:
                     wiimoteDevice.begin(Action.LOAD);
                     break;
-				default:
-					break;
+                default:
+                    break;
             }
         } else if (button instanceof NumberButton) {
             NumberButton numberButton = (NumberButton) button;
@@ -140,8 +140,8 @@ public class MotionDevice extends Component {
                         replay = true;
                         replayWork.start();
                         break;
-					default:
-						break;
+                    default:
+                        break;
                 }
             }
         }

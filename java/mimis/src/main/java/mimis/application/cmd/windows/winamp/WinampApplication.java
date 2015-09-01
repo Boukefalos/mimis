@@ -92,8 +92,8 @@ public class WinampApplication extends WindowsApplication {
             case REWIND:
                 seekWork.start(-1);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 
@@ -150,8 +150,8 @@ public class WinampApplication extends WindowsApplication {
                 system(Command.System.MAXIMIZE);
                 command(WINAMP_VISPLUGIN);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

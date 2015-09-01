@@ -108,8 +108,8 @@ public class VLCApplication extends CMDApplication {
                 case REWIND:
                     seekWorker.start(Amount.SMALL, "-");
                     break;
-				default:
-					break;
+                default:
+                    break;
             }
         } catch (ActivateException e) {
             logger.error("", e);
@@ -148,8 +148,8 @@ public class VLCApplication extends CMDApplication {
             case REPEAT:
                 command("command=pl_repeat");
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
     

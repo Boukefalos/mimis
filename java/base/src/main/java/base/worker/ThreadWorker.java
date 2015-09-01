@@ -8,15 +8,15 @@ public class ThreadWorker extends Worker implements Runnable {
     protected boolean thread = true;
 
     public ThreadWorker(Work work, boolean thread) {
-    	this(work);
-		this.thread = thread;
-	}
+        this(work);
+        this.thread = thread;
+    }
 
-	public ThreadWorker(Work work) {
-		super(work);
-	}
+    public ThreadWorker(Work work) {
+        super(work);
+    }
 
-	public synchronized void start(boolean thread) {
+    public synchronized void start(boolean thread) {
         if (!active) {
             activate = true;
         }
@@ -30,11 +30,11 @@ public class ThreadWorker extends Worker implements Runnable {
                 run();
             }
         } else {
-        	notifyAll();
+            notifyAll();
         }
     }
 
-	public synchronized void start() {
+    public synchronized void start() {
         start(thread);
     }
 

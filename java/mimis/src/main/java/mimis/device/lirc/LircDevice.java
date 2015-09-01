@@ -105,8 +105,8 @@ public class LircDevice extends CMDApplication implements Device, LircButtonList
             case END:
                 route(new Release(button));
                 break;
-			default:
-				break;
+            default:
+                break;
         }
 
         if (general) {

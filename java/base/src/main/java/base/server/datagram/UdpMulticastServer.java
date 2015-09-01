@@ -12,47 +12,39 @@ import base.work.Listen;
 import base.worker.Worker;
 
 public class UdpMulticastServer extends Listen<byte[]> implements Sender {
-	protected static final String HOST = "239.255.255.255";
+    protected static final String HOST = "239.255.255.255";
     protected static final int BUFFER_SIZE = 2048;
 
-	protected String host;
-	protected int port;
-	protected MulticastSocket socket;
-	//private XX x;
+    protected String host;
+    protected int port;
+    protected MulticastSocket socket;
 
-	public UdpMulticastServer(int port) {
-		this(HOST, port);
-	}
+    public UdpMulticastServer(int port) {
+        this(HOST, port);
+    }
 
-	public UdpMulticastServer(String host, int port) {
-		super(Worker.Type.BACKGROUND);
-		this.host = host;
-		this.port = port;
-	}
+    public UdpMulticastServer(String host, int port) {
+        super(Worker.Type.BACKGROUND);
+        this.host = host;
+        this.port = port;
+        System.out.println("Server send: " + host + " " + port);
+    }
 
-	public void activate() throws ActivateException {
-		try {
-			socket = new MulticastSocket(); // optional, add port and receive as well!!
-			// pass socket directly to Server to establish bidirectional
-			// couple together capabilities
-			// listen to datagrams and deal with writing using nio?
-			//x = new XX(socket);
-			//x.start();
-		} catch (IOException e) {
-			throw new ActivateException();
-		}
-		super.activate();
-	}
+    public void activate() throws ActivateException {
+        try {
+            socket = new MulticastSocket();
+        } catch (IOException e) {
+            throw new ActivateException();
+        }
+        super.activate();
+    }
 
-	public void deactivate() throws DeactivateException {
-		socket.close();
-		super.deactivate();
-	}
+    public void deactivate() throws DeactivateException {
+        socket.close();
+        super.deactivate();
+    }
 
-	public void input(byte[] buffer) {
-		if (socket == null) {
-			return;
-		}
+    public void input(byte[] buffer) {
         try {
             InetAddress group = InetAddress.getByName(host);
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, port);
@@ -60,10 +52,10 @@ public class UdpMulticastServer extends Listen<byte[]> implements Sender {
         }
         catch (IOException e) {
             logger.error("", e);
-        }
-	}
+        }    
+    }
 
-	public void send(byte[] buffer) throws IOException {
-		add(buffer);		
-	}
+    public void send(byte[] buffer) throws IOException {
+        add(buffer);
+    }
 }

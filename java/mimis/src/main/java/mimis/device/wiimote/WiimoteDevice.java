@@ -76,7 +76,7 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
 
     /* Worker */
     public void activate() throws ActivateException {
-    	if (wiimote == null) {
+        if (wiimote == null) {
             motionDevice.setRouter(router);
             motionDevice.start();
             parser(Action.ADD, taskMapCycle.player);
@@ -170,8 +170,8 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
                     gestureDevice.loadGesture("tmp/gesture #" + gestureId);
                 }
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 
@@ -189,8 +189,8 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
                 logger.debug("Gesture close release");
                 gestureDevice.close(Signal.END);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 
@@ -211,9 +211,9 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
 
     /* Listeners */
     public void onButtonsEvent(WiimoteButtonsEvent event) {
-    	if (!active()) {
-    		return;
-    	}
+        if (!active()) {
+            return;
+        }
         int pressed = event.getButtonsJustPressed() - event.getButtonsHeld();
         int released = event.getButtonsJustReleased();
         try {
@@ -230,9 +230,9 @@ public class WiimoteDevice extends Component implements Device, GestureListener 
     }
 
     public void onMotionSensingEvent(MotionSensingEvent event) {
-    	if (!active()) {
-    		return;
-    	}
+        if (!active()) {
+            return;
+        }
         gestureDevice.add(event.getGforce());
         motionDevice.add(event);
     }

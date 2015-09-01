@@ -7,24 +7,24 @@ import base.Receiver;
 import base.server.datagram.UdpServer;
 
 public class UdpServerForwarder extends UdpServer implements Forwarder {
-	protected ArrayList<Receiver> receiverList;
+    protected ArrayList<Receiver> receiverList;
 
-	public UdpServerForwarder(int port) {
-		 super(port);
-		 receiverList = new ArrayList<Receiver>();
-	 }
+    public UdpServerForwarder(int port) {
+         super(port);
+         receiverList = new ArrayList<Receiver>();
+     }
 
-	public void register(Receiver receiver) {
-		receiverList.add(receiver);
-	}
+    public void register(Receiver receiver) {
+        receiverList.add(receiver);
+    }
 
-	public void remove(Receiver receiver) {
-		receiverList.remove(receiver);
-	}
+    public void remove(Receiver receiver) {
+        receiverList.remove(receiver);
+    }
 
-	public void input(byte[] buffer) {
-		for (Receiver receiver: receiverList) {
-			receiver.receive(buffer);
-		}
-	}
+    public void input(byte[] buffer) {
+        for (Receiver receiver: receiverList) {
+            receiver.receive(buffer);
+        }
+    }
 }

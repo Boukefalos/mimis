@@ -47,7 +47,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(WiimoteService.class);
         for (Wiimote wm : WiiUseApiManager.getWiimotes(1, false)) {
-        	logger.debug("" + wm.getId());
+            logger.debug("" + wm.getId());
         }
     }
 
@@ -95,7 +95,7 @@ public class WiimoteService extends WiiUseApiManager implements WiimoteListener 
     }
 
     public void onButtonsEvent(WiimoteButtonsEvent event) {
-    	getWiimoteDevice(event).onButtonsEvent(event);
+        getWiimoteDevice(event).onButtonsEvent(event);
     }
 
     public void onMotionSensingEvent(MotionSensingEvent event) {

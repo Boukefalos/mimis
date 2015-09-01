@@ -52,8 +52,8 @@ public class MPCApplication extends WindowsApplication {
             case VOLUME_DOWN:
                 volumeWork.start(-1);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
     
@@ -83,8 +83,8 @@ public class MPCApplication extends WindowsApplication {
             case FULLSCREEN:
                 command(830);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

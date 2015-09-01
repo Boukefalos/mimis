@@ -47,8 +47,8 @@ public class LircService extends TcpClient {
     protected String send;
 
     public static void main(String[] args) {
-    	LircService lircService = new LircService();
-    	lircService.start();
+        LircService lircService = new LircService();
+        lircService.start();
     }
 
     public LircService() {
@@ -72,7 +72,7 @@ public class LircService extends TcpClient {
 
 
     public void activate() throws ActivateException {
-    	super.activate();
+        super.activate();
         bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         printWriter = new PrintWriter(outputStream);
     }

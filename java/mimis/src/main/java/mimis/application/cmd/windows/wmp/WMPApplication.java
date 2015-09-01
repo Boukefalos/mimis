@@ -66,9 +66,9 @@ public class WMPApplication extends WindowsApplication {
                 break;
             case REPEAT:
                 command(18843);
-	                break;
-			default:
-				break;
+                    break;
+            default:
+                break;
         }
     }
 
@@ -85,8 +85,8 @@ public class WMPApplication extends WindowsApplication {
             case VOLUME_DOWN:
                 volumeWork.stop();
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

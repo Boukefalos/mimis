@@ -8,9 +8,9 @@ import base.exception.worker.DeactivateException;
 import base.work.Work;
 
 public abstract class Worker {
-	public enum Type {
-		DIRECT, FOREGROUND, BACKGROUND, POOLED
-	}
+    public enum Type {
+        DIRECT, FOREGROUND, BACKGROUND, POOLED
+    }
 
     public static final int SLEEP = 100;
 
@@ -23,30 +23,30 @@ public abstract class Worker {
 
     protected Work work;
 
-	public Worker(Work work) {
-		this.work = work;
-		logger = LoggerFactory.getLogger(work.getClass());
-	}
+    public Worker(Work work) {
+        this.work = work;
+        logger = LoggerFactory.getLogger(work.getClass());
+    }
 
     public boolean active() {
-    	logger.debug("Worker: active()");
+        logger.debug("Worker: active()");
         return deactivate || active;
     }
 
     public final void run() {
-    	logger.debug("Worker: run()");
+        logger.debug("Worker: run()");
         while (run || deactivate) {
-    		runActivate();
-    		runDeactivate();
-    		runWork();
+            runActivate();
+            runDeactivate();
+            runWork();
         }
     }
 
-    public void runActivate() {    	
-    	if (activate && !active) {
-    		logger.debug("Worker: runActivate()");
+    public void runActivate() {        
+        if (activate && !active) {
+            logger.debug("Worker: runActivate()");
             try {
-            	work.activate();
+                work.activate();
                 active = true;
             } catch (ActivateException e) {
                 logger.error("", e);
@@ -57,8 +57,8 @@ public abstract class Worker {
     }
 
     public void runDeactivate() {
-    	if (deactivate && active) {
-    		logger.debug("Worker: runDeactivate()");
+        if (deactivate && active) {
+            logger.debug("Worker: runDeactivate()");
             try {
                work.deactivate();
             } catch (DeactivateException e) {
@@ -72,11 +72,11 @@ public abstract class Worker {
 
     public void runWork() {
         if (active) {
-        	logger.debug("Worker: runWork() > work");
-        	work.work();
+            logger.debug("Worker: runWork() > work");
+            work.work();
         } else if (run) {
             try {
-            	logger.debug("Worker: runWork() > wait");
+                logger.debug("Worker: runWork() > wait");
                 synchronized (this) {
                     wait();
                 }
@@ -100,15 +100,15 @@ public abstract class Worker {
         }
     }
 
-	public abstract void start();
+    public abstract void start();
 
-	public void stop() {
-		logger.debug("Worker: stop()");
+    public void stop() {
+        logger.debug("Worker: stop()");
         if (active && !activate) {
             deactivate = true;
         }
         activate = false;
-	}
+    }
 
     abstract public void exit();
 }

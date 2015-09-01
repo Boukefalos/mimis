@@ -57,8 +57,8 @@ public class PhotoViewerApplication extends WindowsApplication {
             case VOLUME_DOWN:
                 zoomWork.start(-1);
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 
@@ -108,8 +108,8 @@ public class PhotoViewerApplication extends WindowsApplication {
                     end(Action.FULLSCREEN);
                 }*/
                 break;
-			default:
-				break;
+            default:
+                break;
         }
     }
 

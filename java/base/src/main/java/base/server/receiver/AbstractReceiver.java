@@ -8,26 +8,26 @@ import base.Forwarder;
 import base.Receiver;
 
 public abstract class AbstractReceiver implements Receiver, Control {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected Forwarder forwarder;
+    protected Forwarder forwarder;
 
-	public AbstractReceiver(Forwarder forwarder) {
-		this.forwarder = forwarder;
-		forwarder.register(this);
-	}
+    public AbstractReceiver(Forwarder forwarder) {
+        this.forwarder = forwarder;
+        forwarder.register(this);
+    }
 
-	public void start() {
-		forwarder.start();		
-	}
+    public void start() {
+        forwarder.start();        
+    }
 
-	public void stop() {
-		forwarder.stop();		
-	}
+    public void stop() {
+        forwarder.stop();        
+    }
 
-	public void exit() {
-		forwarder.exit();		
-	}
+    public void exit() {
+        forwarder.exit();        
+    }
 
-	abstract public void receive(byte[] buffer);
+    abstract public void receive(byte[] buffer);
 }
