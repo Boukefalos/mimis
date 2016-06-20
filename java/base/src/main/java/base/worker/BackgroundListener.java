@@ -7,16 +7,15 @@ public class BackgroundListener<E> extends ThreadWorker implements Listener<E> {
     protected Listen<E> listen;
 
     public BackgroundListener(Listen<E> listen) {
-        super(listen);
-        this.listen = listen;
+        this(listen, true);
     }
 
-    public BackgroundListener(Listen<E> listen, boolean start) {
-        super(listen);
+    public BackgroundListener(Listen<E> listen, boolean thread) {
+       super(listen, thread);
+       this.listen = listen;
     }
 
     public void add(E element) {
-        listen.queue.add(element);
         listen.notify();
     }
 }

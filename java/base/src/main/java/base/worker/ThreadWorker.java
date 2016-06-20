@@ -39,7 +39,7 @@ public class ThreadWorker extends Worker implements Runnable {
     }
 
     public void exit() {
-        work.stop();
         run = false;
+        work.stop();
     }
 }

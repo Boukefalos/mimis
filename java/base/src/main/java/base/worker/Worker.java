@@ -29,7 +29,7 @@ public abstract class Worker {
     }
 
     public boolean active() {
-        logger.debug("Worker: active()");
+        logger.trace("Worker: active()");
         return deactivate || active;
     }
 
@@ -44,7 +44,7 @@ public abstract class Worker {
 
     public void runActivate() {        
         if (activate && !active) {
-            logger.debug("Worker: runActivate()");
+            logger.trace("Worker: runActivate()");
             try {
                 work.activate();
                 active = true;
@@ -58,7 +58,7 @@ public abstract class Worker {
 
     public void runDeactivate() {
         if (deactivate && active) {
-            logger.debug("Worker: runDeactivate()");
+            logger.trace("Worker: runDeactivate()");
             try {
                work.deactivate();
             } catch (DeactivateException e) {
@@ -72,11 +72,11 @@ public abstract class Worker {
 
     public void runWork() {
         if (active) {
-            logger.debug("Worker: runWork() > work");
+            logger.trace("Worker: runWork() > work");
             work.work();
         } else if (run) {
             try {
-                logger.debug("Worker: runWork() > wait");
+                logger.trace("Worker: runWork() > wait");
                 synchronized (this) {
                     wait();
                 }
@@ -103,7 +103,7 @@ public abstract class Worker {
     public abstract void start();
 
     public void stop() {
-        logger.debug("Worker: stop()");
+        logger.trace("Worker: stop()");
         if (active && !activate) {
             deactivate = true;
         }

@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
     TestTcpSocketCommunication.class,
     TestTcpChannelCommunication.class,
     TestUdpUnicastCommunication.class,
-    TestUdpMulticastCommunication.class
+    TestUdpMulticastCommunication.class,
+    TestUdpDuplexCommunication.class
 })
 
 public class AllTests {}

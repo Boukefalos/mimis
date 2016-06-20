@@ -48,17 +48,17 @@ public abstract class Work implements Control {
     }
 
     public void start() {
-        logger.debug("Work: start()");
+        logger.trace("Work: start()");
         worker.start();
     }
 
     public void stop() {
-        logger.debug("Work: stop()");
+        logger.trace("Work: stop()");
         worker.stop();
     }
 
     public boolean active() {
-        logger.debug("Work: active()");
+        logger.trace("Work: active()");
         return worker.active();
     }
 

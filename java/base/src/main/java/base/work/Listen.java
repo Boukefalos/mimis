@@ -1,14 +1,11 @@
 package base.work;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import base.exception.worker.ActivateException;
-import base.worker.ForegroundListener;
 import base.worker.BackgroundListener;
+import base.worker.ForegroundListener;
 import base.worker.Worker;
 import base.worker.pool.Listener;
 import base.worker.pool.ListenerPool;
@@ -26,6 +23,7 @@ public abstract class Listen<E> extends Work implements Listener<E> {
     }
 
     protected Listen(Worker.Type workerType) {
+        queue = new ConcurrentLinkedQueue<E>();
         this.workerType = workerType;
         switch (workerType) {
             case DIRECT:
@@ -37,7 +35,6 @@ public abstract class Listen<E> extends Work implements Listener<E> {
                 listener = new BackgroundListener<E>(this);
                 break;
         }
-        queue = new ConcurrentLinkedQueue<E>();
     }
 
     protected Listen(Worker worker) {
@@ -55,6 +52,7 @@ public abstract class Listen<E> extends Work implements Listener<E> {
         if (workerType.equals(Worker.Type.DIRECT)) {
             input(element);
         } else {
+            queue.add(element);
             listener.add(element);
         }
     }
@@ -92,17 +90,7 @@ public abstract class Listen<E> extends Work implements Listener<E> {
         }
     }
 
-    public void input(Object object) {
-        MethodType methodType = MethodType.methodType(void.class, object.getClass());
-        MethodHandles.Lookup lookup = MethodHandles.lookup();
-        MethodHandle methodHandle;
-        try {
-            methodHandle = lookup.findVirtual(getClass(), "input", methodType);
-            methodHandle.invoke(this, object);
-        } catch (Exception e) {
-            logger.error("", e);
-        } catch (Throwable e) {
-            logger.error("", e);
-        }
+    public void input(E element) {
+        System.err.println(element);
     }
 }
