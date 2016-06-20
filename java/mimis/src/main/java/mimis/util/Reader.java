@@ -30,6 +30,7 @@ public class Reader {
         while ((line = bufferedReader.readLine()) != null) {
             stringBuffer.append(line + "\n");
         }
+        bufferedReader.close();
         return stringBuffer.toString();
     }
 }

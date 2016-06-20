@@ -37,11 +37,10 @@ public class Main extends Mimis {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {}
-        
     }
 
     public static Component[] getApplications() {
-        return  getComponents(mimis.application.Application.class);
+        return getComponents(mimis.application.Application.class);
     }
 
     public static Component[] getDevices() {
@@ -96,6 +95,9 @@ public class Main extends Mimis {
         logger.debug("Exit managers");
         applicationManager.exit();
         deviceManager.exit();
+        gui.exit();
+        router.exit();
+        parser.exit();
     }
 
     public void end(Action action) {

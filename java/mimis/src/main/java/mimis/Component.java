@@ -28,6 +28,7 @@ import mimis.router.Router;
 import mimis.state.TaskMap;
 import mimis.value.Action;
 import base.work.Listen;
+import base.worker.Worker;
 import base.worker.Worker.Type;
 
 public abstract class Component extends Listen<Input> {
@@ -45,6 +46,7 @@ public abstract class Component extends Listen<Input> {
     }
 
     public Component(String title) {
+        super(Worker.Type.BACKGROUND);
         this.title = title;
     }
 

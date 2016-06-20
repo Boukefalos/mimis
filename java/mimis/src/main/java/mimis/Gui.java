@@ -27,8 +27,11 @@ import javax.swing.WindowConstants;
 import base.exception.worker.ActivateException;
 import mimis.input.Feedback;
 import mimis.input.Input;
+import mimis.input.Task;
 import mimis.manager.ButtonManager;
 import mimis.util.Swing;
+import mimis.value.Action;
+import mimis.value.Target;
 
 public class Gui extends Component {
     public static final String ICON = "M.png";
@@ -44,6 +47,7 @@ public class Gui extends Component {
             protected void processWindowEvent(WindowEvent event) {
                 if (event.getID() == WindowEvent.WINDOW_CLOSING) {
                     logger.debug("Window closing");
+                    route(new Task(Action.EXIT, Target.MIMIS));
                     component.exit();
                 }
             }

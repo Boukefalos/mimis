@@ -16,8 +16,6 @@
  */
 package mimis.device.javainput;
 
-import base.exception.worker.ActivateException;
-import base.exception.worker.DeactivateException;
 import mimis.Component;
 import mimis.device.Device;
 import mimis.exception.ButtonException;
@@ -27,6 +25,9 @@ import mimis.exception.device.DeviceNotFoundException;
 import mimis.input.Button;
 import mimis.input.state.Press;
 import mimis.input.state.Release;
+import base.exception.worker.ActivateException;
+import base.exception.worker.DeactivateException;
+import de.hardcode.jxinput.Axis;
 import de.hardcode.jxinput.JXInputDevice;
 import de.hardcode.jxinput.JXInputManager;
 import de.hardcode.jxinput.event.JXInputAxisEvent;
@@ -61,7 +62,16 @@ public abstract class JavaInputDevice extends Component implements Device {
         javaInputListener.stop();
     }
 
-    public void processEvent(JXInputAxisEvent event) {}
+    public void processEvent(JXInputAxisEvent event) {
+        logger.error("AxisEvent");
+        Axis axis = event.getAxis();
+        double delta = event.getDelta();
+        System.out.println(axis.getName());
+        System.out.println(axis.getResolution());
+        System.out.println(axis.getType());
+        System.out.println(axis.getValue());
+        System.out.println(delta);
+    }
 
     public void processEvent(JXInputButtonEvent event) throws ButtonException {
         Button button = getButton(event);

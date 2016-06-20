@@ -31,6 +31,7 @@ import base.worker.Worker;
 public abstract class Mimis extends Component {
     protected Component[] currentArray;
     protected Manager manager;
+    protected Parser parser;
 
     protected ArrayCycle<Component> componentCycle;
 
@@ -39,7 +40,8 @@ public abstract class Mimis extends Component {
         this.currentArray = initialize(false, currentArray);        
         componentCycle = new ArrayCycle<Component>(currentArray);        
         router = new Router();
-        manager = new Manager(initialize(true, router, new Parser()));
+        parser = new Parser();
+        manager = new Manager(initialize(true, router, parser));
     }
 
     public void activate() throws ActivateException {

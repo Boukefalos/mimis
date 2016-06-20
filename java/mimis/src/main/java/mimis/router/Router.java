@@ -35,6 +35,7 @@ public class Router extends Component {
     }
 
     public synchronized void listen(Component component, Class<? extends Input> clazz) {
+        logger.debug(component + " is listening to " + clazz);
         if (!listenMap.containsKey(component)) {
             listenMap.put(component, new ArrayList<Class<? extends Input>>());
         }
@@ -54,11 +55,16 @@ public class Router extends Component {
         }        
     }
 
-    public synchronized void input(Input input) {
+    public void input(Input input) {
         for (Entry<Component, ArrayList<Class<? extends Input>>> entry : listenMap.entrySet()) {
             Component component = entry.getKey();
 
             if (input instanceof Task) {
+                System.err.println(component + " " + target((Task) input, component));
+                
+                Task x = (Task) input;
+                System.err.println(x.getTarget());
+                
                 if (!target((Task) input, component)) {
                     continue;
                 }

@@ -1,8 +1,2 @@
-mimis.application.cmd.windows.gomplayer.GomPlayerApplication
-mimis.application.cmd.windows.photoviewer.PhotoViewerApplication
-mimis.application.cmd.windows.winamp.WinampApplication
-mimis.application.cmd.windows.wmp.WMPApplication
 mimis.application.itunes.iTunesApplication
-mimis.application.lirc.ipod.iPodApplication
-mimis.application.mpc.MPCApplication
-mimis.application.vlc.VLCApplication
+mimis.application.cmd.windows.lightroom.LightroomApplication

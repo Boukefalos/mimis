@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import base.exception.worker.ActivateException;
 import mimis.Component;
 import mimis.input.Input;
 import mimis.input.Task;
@@ -31,6 +30,7 @@ import mimis.state.TaskMap;
 import mimis.value.Action;
 import mimis.value.Signal;
 import mimis.value.Target;
+import base.exception.worker.ActivateException;
 
 public class Parser extends Component {
     protected TaskMap taskMap;
@@ -71,6 +71,8 @@ public class Parser extends Component {
                 case RESET:
                     reset(parserInput.getComponent(), parserInput.getEnd());
                     return;
+                default:
+                    break;
             }
         } catch (NullPointerException e) {
             logger.error("Illegal use of ParserInput");
@@ -78,7 +80,7 @@ public class Parser extends Component {
     }
 
     public void input(State state) {
-        //log.trace("input(State)");
+        logger.trace("input(State)");
         Component component = state.getComponent();
         if (!activeMap.containsKey(component)) {
             activeMap.put(component, new ArrayList<Active>());

@@ -21,6 +21,7 @@ import java.util.Queue;
 
 import mimis.exception.ButtonException;
 import base.work.Work;
+import de.hardcode.jxinput.Axis;
 import de.hardcode.jxinput.Button;
 import de.hardcode.jxinput.Directional;
 import de.hardcode.jxinput.JXInputDevice;
@@ -50,12 +51,12 @@ public class JavaInputListener extends Work implements JXInputAxisEventListener,
     }
 
     protected void addListeners() {
-        /*for (int i = 0; i < jxinputDevice.getMaxNumberOfAxes(); ++i) {
+        for (int i = 0; i < jxinputDevice.getMaxNumberOfAxes(); ++i) {
             Axis axis = jxinputDevice.getAxis(i);
             if (axis != null) {
                 JXInputEventManager.addListener(this, axis);
             }
-        }*/
+        }
         for (int i = 0; i < jxinputDevice.getMaxNumberOfButtons(); ++i) {
             Button button = jxinputDevice.getButton(i);
             if (button != null) {
@@ -89,11 +90,11 @@ public class JavaInputListener extends Work implements JXInputAxisEventListener,
         } else if (!buttonEventQueue.isEmpty()) {
             try {
                 javaInputDevice.processEvent(buttonEventQueue.poll());
-            } catch (ButtonException e) {}
+            } catch (ButtonException e) {logger.error("fail", e);}
         } else if (!directionalEventQueue.isEmpty()) {
             try {
                 javaInputDevice.processEvent(directionalEventQueue.poll());
-            } catch (ButtonException e) {}
+            } catch (ButtonException e) {logger.error("fail", e);}
         } else {
             worker.sleep();
         }

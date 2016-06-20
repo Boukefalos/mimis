@@ -52,5 +52,4 @@ public class TaskMap extends HashMap<Sequence, Task> implements Input {
     public void add(Sequence sequence, Task task) {
         put(sequence, task);
     }
-
 }
