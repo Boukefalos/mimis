@@ -2,7 +2,7 @@ package connected;
 
 import java.util.Properties;
 
-import base.work.Work;
+import base.Control;
 
 import com.github.boukefalos.ibuddy.iBuddy;
 import com.github.boukefalos.lirc.Lirc;
@@ -11,8 +11,7 @@ import com.github.boukefalos.lirc.Loader;
 import dummy.Dummy;
 
 public class TestTcpCommunication {
-	public static void main(String[] args) {
-		try {
+	public static void main(String[] args) throws Exception {
 			Properties localProperties = new Properties();
 			localProperties.setProperty("implementation", "local");
 			localProperties.setProperty("server", "true");
@@ -28,27 +27,20 @@ public class TestTcpCommunication {
 			Loader localLoader = new Loader(localProperties);
 			Loader remoteLoader = new Loader(remoteProperties);
 
-			//Lirc localLirc = localLoader.getLirc();
+			Lirc localLirc = localLoader.getLirc();
 			Lirc remoteLirc = remoteLoader.getLirc();
 
 			Properties iBuddyProperties = new Properties();
 			iBuddyProperties.setProperty("implementation", "local");
 			iBuddy iBuddy = new com.github.boukefalos.ibuddy.Loader(iBuddyProperties).getiBuddy();		
-			Dummy dummy = new Dummy(remoteLirc, iBuddy);
+			Dummy dummy = new Dummy(localLirc, iBuddy);
 
-			Work server = localLoader.getServer();
+			Control server = localLoader.getServer();
 
-			// Can we reuse the same Thread for all Listens?
-			//localLirc.start();
 			remoteLirc.start();
 			server.start();
 			dummy.start();
-			
 
 			Thread.sleep(10000);
-			//server.exit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
 	}
 }

@@ -10,5 +10,5 @@ repositories {
 }
 
 dependencies {	
-	
+    compile 'com.esotericsoftware.yamlbeans:yamlbeans:1.09'
 }
