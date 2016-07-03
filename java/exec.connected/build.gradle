@@ -1,14 +1,9 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
+dependencies {
+	compile project(':core.legacy')
+	compile project(':exec.mimis')
 
-task wrapper(type: Wrapper) {
-	gradleVersion = '2.2'
-}
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {	
     compile 'com.esotericsoftware.yamlbeans:yamlbeans:1.09'
+
+    // compile 'com.github.boukefalos:jlibibuddy:1.1'
+    // compile 'com.github.boukefalos:jliblirc:1.1'
 }

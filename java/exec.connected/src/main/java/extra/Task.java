@@ -16,12 +16,10 @@
  */
 package extra;
 
-import com.github.boukefalos.lirc.input.Input;
-import com.github.boukefalos.lirc.util.Signal;
-import com.github.boukefalos.lirc.value.Action;
-import com.github.boukefalos.lirc.value.Target;
-
-import extra.Task;
+import mimis.input.Input;
+import mimis.value.Action;
+import mimis.value.Signal;
+import mimis.value.Target;
 
 public class Task implements Input {
     protected static final long serialVersionUID = 1L;

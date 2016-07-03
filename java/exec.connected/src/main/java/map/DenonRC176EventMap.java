@@ -17,11 +17,11 @@
 package map;
 
 import com.github.boukefalos.lirc.button.remote.DenonRC176Button;
-import com.github.boukefalos.lirc.state.TaskMap;
-import com.github.boukefalos.lirc.value.Action;
-import com.github.boukefalos.lirc.value.Target;
 
 import extra.Task;
+import mimis.state.TaskMap;
+import mimis.value.Action;
+import mimis.value.Target;
 
 public class DenonRC176EventMap extends TaskMap {
     protected static final long serialVersionUID = 1L;

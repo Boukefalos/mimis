@@ -1,4 +1,6 @@
-dependencies {	
+dependencies {
+	compile project(':core.legacy')
+
 	compile 'commons-io:commons-io:2.+'
 	compile 'commons-cli:commons-cli:1.+'	
 	compile 'commons-pool:commons-pool:1.+'
