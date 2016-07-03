@@ -1,0 +1,4 @@
+dependencies {
+	compile project(':core.legacy')
+	compile project(':exec.mimis')
+}
