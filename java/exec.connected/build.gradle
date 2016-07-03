@@ -1,0 +1,14 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.2'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {	
+    compile 'com.esotericsoftware.yamlbeans:yamlbeans:1.09'
+}
