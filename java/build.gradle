@@ -1,7 +1,12 @@
-allprojects  {
+subprojects  {
     apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'eclipse'
+    apply plugin: 'license'
 
-	version = '0.1'
+    task wrapper(type: Wrapper) {
+        gradleVersion = '2.14'
+    }
 
     repositories {
         maven {
@@ -34,8 +39,37 @@ allprojects  {
         maven {
             url 'https://github.com/Boukefalos/jlibxinput/raw/mvn-repo/'
         }
+        maven {
+            url 'https://github.com/Boukefalos/jlibxinput/raw/mvn-repo/'
+        }
+        maven {
+            url 'https://github.com/Boukefalos/jlibwinapi/raw/mvn-repo/'
+        }
         mavenCentral()
     }
+
+    license {
+        header rootProject.file('HEADER.txt')
+        strictCheck true
+
+        skipExistingHeaders false
+        ext.year = Calendar.getInstance().get(Calendar.YEAR)
+        ext.name = 'Rik Veenboer'
+        ext.email = 'rik.veenboer@gmail.com'
+        ext.project = 'this program'
+        ext.Project = 'This program'
+        include "**/*.java"
+    }
+
+	group = 'com.github.boukefalos'
+	version = '0.1'
+	archivesBaseName = 'mimis-' + project.name
+
+    uploadArchives {
+		repositories.mavenDeployer {
+			repository(url: uri('../../.maven'))
+		}
+	}
 }
 
 buildscript {
