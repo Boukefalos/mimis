@@ -21,13 +21,10 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import mimis.Component;
-import mimis.Main;
-import mimis.application.Application;
-import mimis.device.Device;
 import mimis.input.Input;
 import mimis.input.Task;
 
-public class Router extends Component {
+public abstract class Router extends Component {
     protected HashMap<Component, ArrayList<Class<? extends Input>>> listenMap;
 
     public Router() {
@@ -79,19 +76,5 @@ public class Router extends Component {
         }
     }
 
-    protected boolean target(Task task, Component component) {
-        switch (task.getTarget()) {
-            case ALL:
-                return true;
-            case MAIN:
-            case CURRENT:
-                return component instanceof Main;
-            case DEVICES:
-                return component instanceof Device;
-            case APPLICATIONS:
-                return component instanceof Application;
-            default:
-                return false;
-        }
-    }
+    protected abstract boolean target(Task task, Component component);
 }

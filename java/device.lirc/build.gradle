@@ -1,4 +1,6 @@
 dependencies {
 	compile project(':core.legacy')
-	compile project(':exec.mimis')
+	compile project(':core.mimis')
+	
+	compile 'com.github.boukefalos:jlibmimis:0.1'
 }

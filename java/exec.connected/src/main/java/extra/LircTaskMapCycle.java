@@ -19,9 +19,8 @@ package extra;
 import map.DenonRC176EventMap;
 import map.PhiliphsRCLE011EventMap;
 import map.SamsungBN5901015AEventMap;
-
-import com.github.boukefalos.lirc.state.TaskMap;
-import com.github.boukefalos.lirc.state.TaskMapCycle;
+import mimis.state.TaskMap;
+import mimis.state.TaskMapCycle;
 
 public class LircTaskMapCycle extends TaskMapCycle {
     protected static final long serialVersionUID = 1L;
@@ -29,8 +28,8 @@ public class LircTaskMapCycle extends TaskMapCycle {
     public TaskMap denonRC176, philiphsRCLE011, samsungBN5901015A;
 
     public LircTaskMapCycle() {      
-        register(denonRC176 = new DenonRC176EventMap());
-        register(philiphsRCLE011 = new PhiliphsRCLE011EventMap());
-        register(samsungBN5901015A = new SamsungBN5901015AEventMap());
+        add(denonRC176 = new DenonRC176EventMap());
+        add(philiphsRCLE011 = new PhiliphsRCLE011EventMap());
+        add(samsungBN5901015A = new SamsungBN5901015AEventMap());
     }
 }

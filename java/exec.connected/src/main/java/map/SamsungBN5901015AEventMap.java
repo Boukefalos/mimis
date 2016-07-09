@@ -17,16 +17,16 @@
 package map;
 
 import com.github.boukefalos.lirc.button.remote.SamsungBN5901015AButton;
-import com.github.boukefalos.lirc.state.TaskMap;
-import com.github.boukefalos.lirc.value.Action;
-import com.github.boukefalos.lirc.value.Target;
 
-import extra.Task;
+import mimis.input.Task;
+import mimis.state.TaskMap;
+import mimis.value.Action;
+import mimis.value.Target;
 
 public class SamsungBN5901015AEventMap extends TaskMap {
     protected static final long serialVersionUID = 1L;
 
     public SamsungBN5901015AEventMap() {
-        receive(SamsungBN5901015AButton.VOLUME_UP, new Task(Action.VOLUME_UP, Target.CURRENT));
+        add(SamsungBN5901015AButton.VOLUME_UP, new Task(Action.VOLUME_UP, Target.CURRENT));
     }
 }

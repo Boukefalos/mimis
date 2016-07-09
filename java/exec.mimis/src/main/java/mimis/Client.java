@@ -17,6 +17,9 @@
 package mimis;
 
 import base.exception.worker.ActivateException;
+import mimis.application.Application;
+import mimis.device.Device;
+import mimis.input.Task;
 import mimis.router.GlobalRouter;
 import mimis.util.swing.Dialog;
 
@@ -26,7 +29,23 @@ public class Client extends Main {
 
     public Client(String ip, int port) {
         super();
-        router = new GlobalRouter(ip, port);
+        router = new GlobalRouter(ip, port) {
+            protected boolean target(Task task, Component component) {
+                switch (task.getTarget()) {
+            		case ALL:
+                        return true;
+            		case MAIN:
+                    case CURRENT:
+                        return component instanceof Main;
+                    case DEVICES:
+                        return component instanceof Device;
+                    case APPLICATIONS:
+                        return component instanceof Application;
+                    default:
+                        return false;
+                }
+            }
+        };
     }
 
     public void activate() throws ActivateException {

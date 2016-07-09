@@ -16,26 +16,17 @@
  */
 package mimis.device.javainput.xbox360;
 
+import base.exception.worker.ActivateException;
+import de.hardcode.jxinput.event.JXInputButtonEvent;
+import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import mimis.device.javainput.DirectionButton;
 import mimis.device.javainput.JavaInputDevice;
 import mimis.exception.button.UnknownButtonException;
 import mimis.exception.button.UnknownDirectionException;
 import mimis.input.Button;
-import mimis.router.Router;
 import mimis.value.Action;
-import base.exception.worker.ActivateException;
-import de.hardcode.jxinput.event.JXInputButtonEvent;
-import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public class Xbox360Device extends JavaInputDevice {
-    public static void main(String[] args) {
-        Xbox360Device device = new Xbox360Device();
-        Router router = new Router();
-        router.start();
-        device.setRouter(router);        
-        device.start();
-    }
-
     protected static final String TITLE = "Xbox360";
     protected static final String NAME = "Controller (XBOX 360 For Windows)";
 

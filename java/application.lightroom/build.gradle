@@ -1,3 +1,7 @@
 dependencies {
+	compile project(':core.mimis')
+
 	compile 'com.github.boukefalos:jlibwinapi:0.1'
+
+	compile 'org.slf4j:slf4j-log4j12:1.7.7'	
 }

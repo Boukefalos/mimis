@@ -18,7 +18,7 @@ package map;
 
 import com.github.boukefalos.lirc.button.remote.DenonRC176Button;
 
-import extra.Task;
+import mimis.input.Task;
 import mimis.state.TaskMap;
 import mimis.value.Action;
 import mimis.value.Target;
@@ -28,23 +28,23 @@ public class DenonRC176EventMap extends TaskMap {
     
     public DenonRC176EventMap() {
         /* Mimis */
-        receive(DenonRC176Button.TUNER_UP, new Task(Action.NEXT, Target.MAIN));
-        receive(DenonRC176Button.TUNER_DOWN, new Task(Action.PREVIOUS, Target.MAIN));
+        add(DenonRC176Button.TUNER_UP, new Task(Action.NEXT, Target.MAIN));
+        add(DenonRC176Button.TUNER_DOWN, new Task(Action.PREVIOUS, Target.MAIN));
 
         /* Application */
-        receive(DenonRC176Button.AMP_POWER, new Task(Action.START, Target.CURRENT));
-        receive(DenonRC176Button.CD_NEXT, new Task(Action.NEXT, Target.CURRENT));
-        receive(DenonRC176Button.CD_PREVIOUS, new Task(Action.PREVIOUS, Target.CURRENT));
-        receive(DenonRC176Button.TAPE_REWIND, new Task(Action.REWIND, Target.CURRENT));
-        receive(DenonRC176Button.CD_PLAY, new Task(Action.PLAY, Target.CURRENT));
-        receive(DenonRC176Button.CD_PAUSE, new Task(Action.PLAY, Target.CURRENT));
-        receive(DenonRC176Button.TAPE_FORWARD, new Task(Action.FORWARD, Target.CURRENT));
-        receive(DenonRC176Button.AMP_MUTE, new Task(Action.MUTE, Target.CURRENT));
-        receive(DenonRC176Button.AMP_VOLUME_UP, new Task(Action.VOLUME_UP, Target.CURRENT));
-        receive(DenonRC176Button.AMP_VOLUME_DOWN, new Task(Action.VOLUME_DOWN, Target.CURRENT));
-        receive(DenonRC176Button.CD_REPEAT, new Task(Action.REPEAT, Target.CURRENT));
-        receive(DenonRC176Button.CD_SHUFFLE, new Task(Action.SHUFFLE, Target.CURRENT));
-        receive(DenonRC176Button.TAPE_AB, new Task(Action.LIKE, Target.CURRENT));
-        receive(DenonRC176Button.TAPE_REC, new Task(Action.DISLIKE, Target.CURRENT));
+        add(DenonRC176Button.AMP_POWER, new Task(Action.START, Target.CURRENT));
+        add(DenonRC176Button.CD_NEXT, new Task(Action.NEXT, Target.CURRENT));
+        add(DenonRC176Button.CD_PREVIOUS, new Task(Action.PREVIOUS, Target.CURRENT));
+        add(DenonRC176Button.TAPE_REWIND, new Task(Action.REWIND, Target.CURRENT));
+        add(DenonRC176Button.CD_PLAY, new Task(Action.PLAY, Target.CURRENT));
+        add(DenonRC176Button.CD_PAUSE, new Task(Action.PLAY, Target.CURRENT));
+        add(DenonRC176Button.TAPE_FORWARD, new Task(Action.FORWARD, Target.CURRENT));
+        add(DenonRC176Button.AMP_MUTE, new Task(Action.MUTE, Target.CURRENT));
+        add(DenonRC176Button.AMP_VOLUME_UP, new Task(Action.VOLUME_UP, Target.CURRENT));
+        add(DenonRC176Button.AMP_VOLUME_DOWN, new Task(Action.VOLUME_DOWN, Target.CURRENT));
+        add(DenonRC176Button.CD_REPEAT, new Task(Action.REPEAT, Target.CURRENT));
+        add(DenonRC176Button.CD_SHUFFLE, new Task(Action.SHUFFLE, Target.CURRENT));
+        add(DenonRC176Button.TAPE_AB, new Task(Action.LIKE, Target.CURRENT));
+        add(DenonRC176Button.TAPE_REC, new Task(Action.DISLIKE, Target.CURRENT));
     }
 }

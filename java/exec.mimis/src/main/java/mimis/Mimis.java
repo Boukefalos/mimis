@@ -16,6 +16,8 @@
  */
 package mimis;
 
+import mimis.application.Application;
+import mimis.device.Device;
 import mimis.input.Feedback;
 import mimis.input.Task;
 import mimis.manager.Manager;
@@ -39,7 +41,23 @@ public abstract class Mimis extends Component {
         super(Worker.Type.FOREGROUND);
         this.currentArray = initialize(false, currentArray);        
         componentCycle = new ArrayCycle<Component>(currentArray);        
-        router = new Router();
+        router = new Router() {
+            protected boolean target(Task task, Component component) {
+                switch (task.getTarget()) {
+            		case ALL:
+                        return true;
+            		case MAIN:
+                    case CURRENT:
+                        return component instanceof Main;
+                    case DEVICES:
+                        return component instanceof Device;
+                    case APPLICATIONS:
+                        return component instanceof Application;
+                    default:
+                        return false;
+                }
+            }
+        };
         parser = new Parser();
         manager = new Manager(initialize(true, router, parser));
     }

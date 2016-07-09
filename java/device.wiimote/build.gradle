@@ -1,5 +1,9 @@
 dependencies {
 	compile project(':core.legacy')
-	compile project(':exec.mimis')
+	compile project(':core.mimis')
 	compile project(':device.lirc')
+	
+	compile 'com.github.boukefalos:jlibwiiuse:0.13'
+	
+	compile 'org.wiigee:wiigee:1.5.6'
 }

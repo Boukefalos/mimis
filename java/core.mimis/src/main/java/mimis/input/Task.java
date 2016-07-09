@@ -16,8 +16,8 @@
  */
 package mimis.input;
 
-import mimis.value.Action;import mimis.input.Task;
-
+import mimis.input.Input;
+import mimis.value.Action;
 import mimis.value.Signal;
 import mimis.value.Target;
 

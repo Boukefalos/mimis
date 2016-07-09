@@ -27,7 +27,7 @@ import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.work.Work;
 
-public class GlobalRouter extends Router {
+public abstract class GlobalRouter extends Router {
     protected String ip;
     protected int port;
     protected Client client;

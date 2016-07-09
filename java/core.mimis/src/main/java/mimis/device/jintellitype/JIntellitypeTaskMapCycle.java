@@ -43,10 +43,10 @@ public class JIntellitypeTaskMapCycle extends TaskMapCycle {
         player = new TaskMap();
         player.add(
             CommandButton.VOLUME_DOWN,
-            new Task(Action.VOLUME_DOWN, Target.APPLICATIONS));
+            new Task(Action.VOLUME_DOWN, Target.CURRENT));
         player.add(
             CommandButton.VOLUME_UP,
-            new Task(Action.VOLUME_UP, Target.APPLICATIONS));
+            new Task(Action.VOLUME_UP, Target.CURRENT));
         player.add(
             new Hotkey(Modifier.CTRL | Modifier.WIN, 'x'),
             new Task(Action.EXIT, Target.MAIN));
