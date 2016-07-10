@@ -1,5 +1,7 @@
 dependencies {
 	compile project(':core.mimis')
+	
+	compile project(':device.wiimote')
 }
 
 buildscript {
