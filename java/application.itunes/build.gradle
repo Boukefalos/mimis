@@ -1,3 +1,5 @@
 dependencies {
 	compile project(':core.mimis')
+
+	compile 'com.github.boukefalos:jlibitunes:0.3'
 }

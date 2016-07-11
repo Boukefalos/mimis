@@ -1,3 +1,5 @@
 dependencies {
 	compile project(':core.windows')
+
+	compile 'com.github.boukefalos:jlibxinput:1.0'
 }
