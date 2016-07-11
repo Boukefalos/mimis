@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':core.mimis')
+	compile project(':core.windows')
 
 	compile 'com.github.boukefalos:jlibwinapi:0.1'
 
