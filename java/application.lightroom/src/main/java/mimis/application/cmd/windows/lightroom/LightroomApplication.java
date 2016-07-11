@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Rik Veenboer <rik.veenboer@gmail.com>
+ * Copyright (C) 2016 Rik Veenboer <rik.veenboer@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package mimis.application.cmd.windows.lightroom;
 
 import base.exception.worker.ActivateException;
