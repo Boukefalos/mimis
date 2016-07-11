@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':core.legacy')
+	compile project(':core.worker')
 
 	compile 'commons-io:commons-io:2.+'
 	compile 'commons-cli:commons-cli:1.+'	

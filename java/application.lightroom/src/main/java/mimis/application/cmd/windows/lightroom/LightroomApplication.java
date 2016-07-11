@@ -17,14 +17,14 @@
 
 package mimis.application.cmd.windows.lightroom;
 
+import base.exception.worker.ActivateException;
+import base.util.ArrayCycle;
 import mimis.application.cmd.windows.WindowsApplication;
 import mimis.input.Task;
 import mimis.value.Action;
 import winapi.Amount;
 import winapi.Slider;
 import winapi.Test;
-import base.exception.worker.ActivateException;
-import base.util.ArrayCycle;
 
 public class LightroomApplication extends WindowsApplication {
     protected final static String PROGRAM = "lightroom.exe";

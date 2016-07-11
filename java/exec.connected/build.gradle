@@ -1,7 +1,7 @@
 dependencies {
 	compile project(':core.networking')
 	compile project(':core.mimis')
-	compile project(':core.legacy')
+	compile project(':core.worker')
 	compile project(':device.lirc')
 	compile project(':exec.mimis')
 

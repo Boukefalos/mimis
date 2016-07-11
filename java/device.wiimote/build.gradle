@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':core.legacy')
+	compile project(':core.worker')
 	compile project(':core.mimis')
 	compile project(':device.lirc')
 	

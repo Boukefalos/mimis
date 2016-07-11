@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':core.legacy')
+	compile project(':core.worker')
 
 	compile 'com.github.boukefalos:jlibmimis:0.1'
 	compile 'com.github.boukefalos:jlibxinput:1.0'
