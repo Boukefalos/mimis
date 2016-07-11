@@ -21,8 +21,8 @@ import de.hardcode.jxinput.event.JXInputButtonEvent;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 import mimis.device.javainput.DirectionButton;
 import mimis.device.javainput.JavaInputDevice;
+import mimis.exception.UnknownDirectionException;
 import mimis.exception.button.UnknownButtonException;
-import mimis.exception.button.UnknownDirectionException;
 import mimis.input.Button;
 import mimis.value.Action;
 

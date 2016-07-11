@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package mimis.exception.task;
+package mimis.exception.device;
 
-public class TaskNotSupportedException extends Exception {
+import mimis.exception.DeviceException;
+
+public class DeviceNotFoundException extends DeviceException {
     protected static final long serialVersionUID = 1L;
 }

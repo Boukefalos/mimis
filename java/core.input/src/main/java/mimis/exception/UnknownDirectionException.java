@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package mimis.exception.application;
+package mimis.exception;
 
-import mimis.exception.ApplicationException;
+import mimis.exception.ButtonException;
 
-public class ApplicationExitException extends ApplicationException {
+public class UnknownDirectionException extends ButtonException {
     protected static final long serialVersionUID = 1L;
 }

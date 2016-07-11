@@ -16,8 +16,8 @@
  */
 package mimis.exception.event.router;
 
-import mimis.exception.event.SpreaderException;
+import mimis.exception.EventException;
 
-public class GlobalRouterException extends SpreaderException {
+public class GlobalRouterException extends EventException {
     protected static final long serialVersionUID = 1L;
 }

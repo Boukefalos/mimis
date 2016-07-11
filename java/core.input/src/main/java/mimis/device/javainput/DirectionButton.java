@@ -16,8 +16,8 @@
  */
 package mimis.device.javainput;
 
+import mimis.exception.UnknownDirectionException;
 import mimis.input.Button;
-import mimis.exception.button.UnknownDirectionException;
 import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public enum DirectionButton implements Button {

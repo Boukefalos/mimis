@@ -14,10 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package mimis.exception.task;
+package mimis.util.swing;
 
-import mimis.exception.TaskException;
+import javax.swing.ImageIcon;
 
-public class ActionException extends TaskException {
+import base.util.ArrayCycle;
+
+public class CycleButton extends HoldButton {
     protected static final long serialVersionUID = 1L;
+
+    protected ArrayCycle<ImageIcon> imageIconCycle;
+
+    public CycleButton(HoldButtonListener holdButtonListener, ArrayCycle<ImageIcon> imageIconCycle) {
+        super(holdButtonListener);
+        this.imageIconCycle = imageIconCycle;
+        cycle();
+    }
+
+    public void cycle() {
+        setIcon(imageIconCycle.current());
+        imageIconCycle.next();
+    }
 }
