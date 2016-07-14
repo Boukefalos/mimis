@@ -16,6 +16,8 @@
  */
 package pipe;
 
+import com.github.boukefalos.jlibloader.Native;
+
 /**
  * @author Vikram S Khatri vikram.khatri@us.ibm.com
  */
@@ -26,7 +28,7 @@ public class Pipe {
     static final int PIPE_WAIT = 0x00000000;
     
     static {
-        System.loadLibrary("pipe");
+        Native.load("com.github.boukefalos", "jlibpipe");
     }
 
     public static final native int CreateNamedPipe(

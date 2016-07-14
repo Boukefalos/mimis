@@ -18,13 +18,13 @@ package yaml;
 
 import java.util.HashMap;
 
-import lirc.Lirc;
-import base.work.Listen;
-
 import com.github.boukefalos.lirc.LircButton;
 import com.github.boukefalos.lirc.implementation.Local;
-import com.github.boukefalos.lirc.util.SignalObject;
-public class TestParsing extends Listen<SignalObject<LircButton>> {
+
+import base.work.ReflectiveListen;
+import lirc.Lirc;
+
+public class TestParsing extends ReflectiveListen {
 	public static void main(String[] args) {
 		new TestParsing().start();
 	}

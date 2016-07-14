@@ -95,8 +95,8 @@ public class TestPipe {
 
     public static void main(String[] args) {
         String pipeName = "\\\\.\\pipe\\detest";
-        String fileName = "txt/bla.txt";
-        //fileName = "C:\\Users\\Rik\\Music\\Artists\\+44\\When Your Heart Stops Beating\\+44 - 155.mp3";
+        String fileName = "txt/mp3";
+        fileName = "C:\\Users\\Rik\\Music\\Artists\\+44\\When Your Heart Stops Beating\\+44 - 155.mp3";
         TestPipe testPipe = new TestPipe(pipeName, fileName);
         testPipe.runPipe();
     }
