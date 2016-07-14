@@ -16,18 +16,18 @@
  */
 package dummy;
 
-import lirc.Lirc.Color;
-import lirc.Lirc.Direction;
-import lirc.Lirc.Number;
-import lirc.Lirc.Signal;
-import base.work.Listen;
-
 import com.github.boukefalos.ibuddy.iBuddy;
 import com.github.boukefalos.lirc.Lirc;
 import com.github.boukefalos.lirc.LircButton;
 import com.github.boukefalos.lirc.util.SignalObject;
 
-public class Dummy extends Listen<Object> {
+import base.work.ReflectiveListen;
+import lirc.Lirc.Color;
+import lirc.Lirc.Direction;
+import lirc.Lirc.Number;
+import lirc.Lirc.Signal;
+
+public class Dummy extends ReflectiveListen {
 	protected Lirc lirc;
 	protected iBuddy iBuddy;
 
@@ -45,7 +45,6 @@ public class Dummy extends Listen<Object> {
 	public void input(SignalObject<Object> signalObject) {
 		Signal signal = signalObject.signal;
 		Object object = signalObject.object;
-		System.out.println(object);
 		try {
 			// Move these mappings to config file?
 			if (object instanceof LircButton) {

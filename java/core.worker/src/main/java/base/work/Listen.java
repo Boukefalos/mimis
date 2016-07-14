@@ -106,7 +106,5 @@ public abstract class Listen<E> extends Work implements Listener<E> {
         }
     }
 
-    public void input(E element) {
-        System.err.println(element);
-    }
+    public abstract void input(E element);
 }

@@ -23,4 +23,10 @@ public class DummyListen<T> extends Listen<T> {
     public void input(byte[] input) {
         System.out.println("#" + id + ", input = " + new String(input).trim());
     }
+
+	@Override
+	public void input(T element) {
+		// TODO Auto-generated method stub
+		
+	}
 }

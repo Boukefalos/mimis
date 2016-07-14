@@ -45,6 +45,9 @@ subprojects  {
         maven {
             url 'https://github.com/Boukefalos/jlibwinapi/raw/mvn-repo/'
         }
+        maven {
+            url 'https://github.com/Boukefalos/jlibusb/raw/mvn-repo/'
+        }
         mavenCentral()
     }
 

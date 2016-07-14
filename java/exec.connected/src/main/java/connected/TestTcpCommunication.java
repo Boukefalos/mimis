@@ -48,7 +48,8 @@ public class TestTcpCommunication {
 
 		Properties iBuddyProperties = new Properties();
 		iBuddyProperties.setProperty("implementation", "local");
-		iBuddy iBuddy = new com.github.boukefalos.ibuddy.Loader(iBuddyProperties).getiBuddy();		
+		iBuddy iBuddy = new com.github.boukefalos.ibuddy.Loader(iBuddyProperties).getiBuddy();
+
 		Dummy dummy = new Dummy(localLirc, iBuddy);
 
 		Control server = localLoader.getServer();

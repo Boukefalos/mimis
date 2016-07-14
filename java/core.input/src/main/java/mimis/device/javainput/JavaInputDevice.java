@@ -36,14 +36,13 @@ import de.hardcode.jxinput.event.JXInputDirectionalEvent;
 
 public abstract class JavaInputDevice extends Component implements Device {
     protected String name;
+    protected JavaInputListener javaInputListener;
+    protected Button previousDirectionalButton;
 
     public JavaInputDevice(String title, String name) {
         super(title);
         this.name = name;
     }
-
-    protected JavaInputListener javaInputListener;
-    protected Button previousDirectionalButton;
 
     public void activate() throws ActivateException {
         try {
