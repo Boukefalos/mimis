@@ -1,6 +1,6 @@
 dependencies {
 	compile project(':core.mimis')
-	
+	compile project(':application.itunes')	
 	compile project(':device.wiimote')
 }
 
