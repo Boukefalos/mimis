@@ -5,5 +5,5 @@
 .maven
 bin
 build
-*.exe
 *.dll
+*.exe
