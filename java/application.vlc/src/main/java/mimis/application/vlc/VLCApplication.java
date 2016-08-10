@@ -23,14 +23,14 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import mimis.application.cmd.CMDApplication;
-import mimis.util.Native;
-import mimis.value.Action;
-import mimis.value.Amount;
-import mimis.value.Registry;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import base.work.Work;
+import mimis.application.cmd.CMDApplication;
+import mimis.value.Action;
+import mimis.value.Amount;
+import util.Native;
+import value.Registry;
 
 public class VLCApplication extends CMDApplication {
     protected final static Registry REGISTRY = Registry.CLASSES_ROOT;

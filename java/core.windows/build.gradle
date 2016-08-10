@@ -1,6 +1,5 @@
 dependencies {
 	compile project(':core.mimis')
 	
-	
-	compile 'com.github.boukefalos:jlibmimis:0.1'
+	compile 'com.github.boukefalos:jlibwindows:0.1'
 }

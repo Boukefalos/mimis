@@ -23,8 +23,8 @@ import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import mimis.Component;
 import mimis.application.Application;
-import mimis.util.Native;
-import mimis.value.Registry;
+import util.Native;
+import value.Registry;
 
 public abstract class CMDApplication extends Component implements Application {
     protected final static Registry REGISTRY = Registry.LOCAL_MACHINE;

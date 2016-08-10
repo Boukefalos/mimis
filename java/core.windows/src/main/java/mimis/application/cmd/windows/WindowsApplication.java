@@ -19,11 +19,11 @@ package mimis.application.cmd.windows;
 import base.exception.worker.ActivateException;
 import base.exception.worker.DeactivateException;
 import mimis.application.cmd.CMDApplication;
-import mimis.util.Native;
 import mimis.value.Command;
 import mimis.value.Key;
 import mimis.value.Type;
-import mimis.value.Windows;
+import util.Native;
+import value.Windows;
 
 public abstract class WindowsApplication extends CMDApplication {
     protected final static int TERMINATE_SLEEP = 500;
